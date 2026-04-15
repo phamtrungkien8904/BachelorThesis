@@ -1,0 +1,25 @@
+1	KP,VP,JL,GJ	Str	User Initials:	EOL
+2	ALD1106	Str	Sample Name:	EOL
+3	FET IGS vs. VGS	Str	Meas. type:	EOL
+4	0-5V	Str	Comment 1:	EOL
+5		Str	Comment 2:	EOL
+6		Str	Comment 3:	EOL
+7	void	Str	Comment 4:	EOL
+8	void	Str	Comment 5:	EOL
+9	void	Str	void:	EOL
+10	0.0	Dbl	Initial GS-voltage VG4 (V):	EOL
+11	8	Dbl	Final GS-voltage VG4 (V):	EOL
+12	201	Lng	Bins for GS-voltage ():	EOL
+13	2	Lng	Scans to do ():	EOL
+14	-666	Dbl	void:	EOL
+15	1	Dbl	DS-voltage V34 (V):	EOL
+16	1e-2	Dbl	GS-current limit for IG4 (A):	EOL
+17	1e-3	Dbl	DS-current limit for I34 (A):	EOL
+18	-666	Dbl	void:	EOL
+19	-666	Dbl	void:	EOL
+20	50	Lng	Basic wait time (ms):	EOL
+21	-666	Lng	void:	EOL
+22	-666	Lng	void:	EOL
+23	-666	Dbl	void:	EOL
+24	-666	Dbl	void:	EOL
+25	-666	Dbl	void:	EOL
