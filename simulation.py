@@ -3,27 +3,22 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 
-x = np.linspace(-10, 10, 100)
-y = np.linspace(0, 20, 100)
+N = 10000 # Resolution of the grid
+x = np.linspace(-10, 10, N)
+y = np.linspace(0, 20, N)
 X, Y = np.meshgrid(x, y)
-sigma = 0.5
 
 # Gate region
 
 Z = np.zeros_like(Y)
-gate_mask = (Y > 0) & (Y < 3)
-Z[gate_mask] = 1.4-(
-    np.exp(-(Y[gate_mask] - 0.0)**2 / (2 * sigma**2))
-    + np.exp(-(Y[gate_mask] - 3.0)**2 / (2 * sigma**2))
-    + np.exp(-(X[gate_mask] + 10.0)**2 / (2 * sigma**2))
-    + np.exp(-(X[gate_mask] - 10.0)**2 / (2 * sigma**2))
-)
+gate_mask = (Y > 0) & (Y < 3) & (X > -10) & (X < 10)
+Z[gate_mask] = -np.exp(-(Y[gate_mask] - 1.5)**2 / (2 * 1.5**2)-X[gate_mask]**2 / (2 * 9.5**2))
 
 # Insulator region
 insulator_mask = (Y >= 3) & (Y < 10)
 Z[insulator_mask] = (
-    - np.exp(-(Y[insulator_mask] - 3.0)**2 / (2 * sigma**2))
-    + np.exp(-(Y[insulator_mask] - 10.0)**2 / (2 * sigma**2))
+    + np.exp(-(Y[insulator_mask] - 3.0)**2 / (2 * 0.5**2))
+    - np.exp(-(Y[insulator_mask] - 10.0)**2 / (2 * 0.5**2))
 )
 
 
