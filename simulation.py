@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 
-N = 10000 # Resolution of the grid
+N = 100 # Resolution of the grid
 x = np.linspace(-10, 10, N)
 y = np.linspace(0, 20, N)
 X, Y = np.meshgrid(x, y)
