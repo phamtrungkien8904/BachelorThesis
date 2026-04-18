@@ -16,13 +16,11 @@ plt.rcParams['mathtext.fontset'] = 'dejavusans'
 plt.rcParams['figure.dpi'] = 100
 
 start_time = time.time()
-n = 1000
-n_iter = 20000
+
+# Simulation parameters
+n = 100
+n_iter = 2000
 edge = np.linspace(-1, 1, n)
-upper_y = np.cos(np.pi * edge / 2)
-lower_y = edge**4
-upper_x = 1/(np.e**-1 - np.e) * (np.exp(edge)-np.e)
-lower_x = 0.5 * (edge**2-edge)
 xv, yv = np.meshgrid(edge, edge)
 
 def compute_potential(potential, fixed_bool, n_iter):
@@ -90,7 +88,7 @@ print(f"Bottom-right (Measured): V = {V_bottom_right:.4f} V0")
 potential_fraction = (V_top_right - V_bottom_right) / (V_minus - V_plus)
 print(f"Potential fraction: V21/V34 = {potential_fraction:.4f}")
 
-log_index = "20261804002"
+log_index = "20261804003"
 log_filename = "vdP_log_" + log_index + ".txt"
 python_filename = os.path.basename(__file__)
 today_str = date.today().isoformat()
@@ -117,6 +115,7 @@ plt.tight_layout(rect=[0, 0, 1, 0.94])
 
 # Save the figure as EPS
 fig.savefig("vdP_simulation_" + log_index + ".eps", format='eps', bbox_inches='tight')
+fig.savefig("vdP_simulation_" + log_index + ".png", format='png', bbox_inches='tight', dpi=300)
 plt.show()
 
 # Export data to log file (txt)
