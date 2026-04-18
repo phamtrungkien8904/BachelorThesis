@@ -8,9 +8,9 @@ plt.style.use('classic')
 plt.rcParams['figure.facecolor'] = 'white'
 plt.rcParams['axes.facecolor'] = 'white'
 plt.rcParams['savefig.facecolor'] = 'white'
-plt.rcParams['font.family'] = 'serif'
-plt.rcParams['font.serif'] = ['Times New Roman', 'Times', 'DejaVu Serif']
-plt.rcParams['mathtext.fontset'] = 'stix'
+plt.rcParams['font.family'] = 'sans-serif'
+plt.rcParams['font.sans-serif'] = ['DejaVu Sans', 'Arial', 'Helvetica']
+plt.rcParams['mathtext.fontset'] = 'dejavusans'
 plt.rcParams['figure.dpi'] = 100
 
 start_time = time.time()

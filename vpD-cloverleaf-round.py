@@ -8,9 +8,9 @@ plt.style.use('classic')
 plt.rcParams['figure.facecolor'] = 'white'
 plt.rcParams['axes.facecolor'] = 'white'
 plt.rcParams['savefig.facecolor'] = 'white'
-plt.rcParams['font.family'] = 'serif'
-plt.rcParams['font.serif'] = ['Times New Roman', 'Times', 'DejaVu Serif']
-plt.rcParams['mathtext.fontset'] = 'stix'
+plt.rcParams['font.family'] = 'sans-serif'
+plt.rcParams['font.sans-serif'] = ['DejaVu Sans', 'Arial', 'Helvetica']
+plt.rcParams['mathtext.fontset'] = 'dejavusans'
 plt.rcParams['figure.dpi'] = 100
 
 start_time = time.time()
@@ -36,13 +36,13 @@ def compute_potential(potential, fixed_bool, n_iter):
 
 
 # Cloverleaf with grounded rectangular arms + round corner contacts
-rec_size = np.array([0.8, 0.1])  # [arm_length_from_edge, arm_thickness]
+rec_size = np.array([0.5, 0.05])  # [arm_length_from_edge, arm_thickness]
 rec_len, rec_thickness = rec_size
 
 if not (0 < rec_len <= 2.0 and 0 < rec_thickness <= 2.0):
     raise ValueError('rec_size must satisfy 0 < rec_len, rec_thickness <= 2.0')
 
-contact_frac = 0.2
+contact_frac = 0.4
 contact_radius = 2.0 * contact_frac
 V_plus = 1.0
 V_minus = -1.0
@@ -89,7 +89,7 @@ if vmax < 1e-9:
     vmax = 1.0
 
 levels_filled = np.linspace(-vmax, vmax, n)
-contours = ax.contourf(xv, yv, potential_vdp, levels=levels_filled, cmap='seismic')
+contours = ax.contourf(xv, yv, potential_vdp, levels=levels_filled, cmap='jet')
 ax.contour(xv, yv, cloverleaf_mask.astype(float), levels=[0.5], colors='black', linewidths=1.2)
 # ax.contour(xv, yv, plus_contact.astype(float), levels=[0.5], colors='gold', linewidths=1.0)
 # ax.contour(xv, yv, minus_contact.astype(float), levels=[0.5], colors='gold', linewidths=1.0)

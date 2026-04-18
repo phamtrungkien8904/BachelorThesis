@@ -8,9 +8,9 @@ plt.style.use('classic')
 plt.rcParams['figure.facecolor'] = 'white'
 plt.rcParams['axes.facecolor'] = 'white'
 plt.rcParams['savefig.facecolor'] = 'white'
-plt.rcParams['font.family'] = 'serif'
-plt.rcParams['font.serif'] = ['Times New Roman', 'Times', 'DejaVu Serif']
-plt.rcParams['mathtext.fontset'] = 'stix'
+plt.rcParams['font.family'] = 'sans-serif'
+plt.rcParams['font.sans-serif'] = ['DejaVu Sans', 'Arial', 'Helvetica']
+plt.rcParams['mathtext.fontset'] = 'dejavusans'
 plt.rcParams['figure.dpi'] = 100
 
 start_time = time.time()
@@ -92,7 +92,7 @@ vmax = np.max(np.abs(potential_vdp))
 if vmax < 1e-9:
     vmax = 1.0
 levels_filled = np.linspace(-vmax, vmax, n)
-contours = ax.contourf(xv, yv, potential_vdp, levels=levels_filled, cmap='seismic')
+contours = ax.contourf(xv, yv, potential_vdp, levels=levels_filled, cmap='jet')
 ax.contour(xv, yv, cloverleaf_mask.astype(float), levels=[0.5], colors='black', linewidths=1.2)
 
 end_time = time.time()
