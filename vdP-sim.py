@@ -51,8 +51,6 @@ fixed_vdp[-contact_size:, :contact_size] = True
 # Relax the solution while preserving corner contacts
 potential_vdp = compute_potential(potential_vdp, fixed_vdp, n_iter=n_iter)
 
-
-
 # Plot the potential distribution
 fig, ax = plt.subplots(figsize=(10, 8))
 
@@ -61,36 +59,24 @@ levels_filled = np.linspace(V_minus, V_plus, n)
 # norm = mpl.colors.TwoSlopeNorm(vmin=V_minus, vcenter=0, vmax=V_plus)
 contours = ax.contourf(xv, yv, potential_vdp, levels=levels_filled, cmap='jet')
 
-# # Equipotential lines with 0.1 V_0 spacing
-# equipotential_levels = np.arange(V_minus, V_plus + 0.1, 0.1)
-# contour_lines = ax.contour(xv, yv, potential_vdp, levels=equipotential_levels, colors='black', linewidths=0.5, alpha=0.4)
-# ax.clabel(contour_lines, inline=True, fontsize=8, fmt='%.1f')
-
-# # Compute electric field E = -∇V
-# dy, dx = np.gradient(-potential_vdp)
-
-# # Downsample for cleaner quiver plot
-# skip = max(1, n // 15)  # Show ~15x15 arrows
-# Ex_sparse = dx[::skip, ::skip]
-# Ey_sparse = dy[::skip, ::skip]
-# xv_sparse = xv[::skip, ::skip]
-# yv_sparse = yv[::skip, ::skip]
-
-# # Normalize arrows for visual clarity
-# magnitude = np.sqrt(Ex_sparse**2 + Ey_sparse**2)
-# magnitude[magnitude == 0] = 1
-# Ex_norm = Ex_sparse / magnitude
-# Ey_norm = Ey_sparse / magnitude
-
-# # Plot electric field
-# quiv = ax.quiver(xv_sparse, yv_sparse, Ex_norm, Ey_norm, magnitude, cmap='cool', scale=30, width=0.003)
-# ax.quiverkey(quiv, X=0.9, Y=1.05, U=1, label='E-field', labelpos='E')
+# Extract potential at the 4 corners
+V_top_left = potential_vdp[0, 0]
+V_top_right = potential_vdp[0, -1]
+V_bottom_left = potential_vdp[-1, 0]
+V_bottom_right = potential_vdp[-1, -1]
 
 end_time = time.time()
+
 print(f"Execution time: {end_time - start_time:.2f} seconds")
 print(f"Contact fraction: {contact_frac:.2f}")
 print(f"Grid size: {n}x{n}")
 print(f"Iterations: {n_iter}")
+print("--- Corner Potentials ---")
+print(f"Top-left (Drain):     V = {V_top_left:.4f} V0")
+print(f"Bottom-left (Source):  V = {V_bottom_left:.4f} V0")
+print(f"Top-right (Measured):  V = {V_top_right:.4f} V0")
+print(f"Bottom-right (Measured): V = {V_bottom_right:.4f} V0")
+
 
 ax.set_xlabel('x-Position (a.u.)')
 ax.set_ylabel('y-Position (a.u.)')
@@ -99,3 +85,5 @@ fig.colorbar(contours, label='Potential V/V0')
 ax.set_aspect('equal')
 plt.tight_layout()
 plt.show()
+
+

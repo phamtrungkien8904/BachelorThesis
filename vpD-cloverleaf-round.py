@@ -93,14 +93,25 @@ contours = ax.contourf(xv, yv, potential_vdp, levels=levels_filled, cmap='jet')
 ax.contour(xv, yv, cloverleaf_mask.astype(float), levels=[0.5], colors='black', linewidths=1.2)
 # ax.contour(xv, yv, plus_contact.astype(float), levels=[0.5], colors='gold', linewidths=1.0)
 # ax.contour(xv, yv, minus_contact.astype(float), levels=[0.5], colors='gold', linewidths=1.0)
+# Extract potential at the 4 corners
+V_top_left = potential_vdp[0, 0]
+V_top_right = potential_vdp[0, -1]
+V_bottom_left = potential_vdp[-1, 0]
+V_bottom_right = potential_vdp[-1, -1]
 
 end_time = time.time()
-print(f'Execution time: {end_time - start_time:.2f} seconds')
-print(f'Grounded cloverleaf points: {np.count_nonzero(cloverleaf_mask)}')
-print(f'Driven +V round contact points: {np.count_nonzero(plus_contact)}')
-print(f'Driven -V round contact points: {np.count_nonzero(minus_contact)}')
-print(f'Grid size: {n}x{n}')
-print(f'Iterations: {n_iter}')
+
+print(f"Execution time: {end_time - start_time:.2f} seconds")
+print(f"Contact fraction: {contact_frac:.2f}")
+print(f"Grid size: {n}x{n}")
+print(f"Iterations: {n_iter}")
+print("--- Corner Potentials ---")
+print(f"Top-left (Drain):     V = {V_top_left:.4f} V0")
+print(f"Bottom-left (Source):  V = {V_bottom_left:.4f} V0")
+print(f"Top-right (Measured):  V = {V_top_right:.4f} V0")
+print(f"Bottom-right (Measured): V = {V_bottom_right:.4f} V0")
+
+
 
 ax.set_xlabel('x-Position (a.u.)')
 ax.set_ylabel('y-Position (a.u.)')

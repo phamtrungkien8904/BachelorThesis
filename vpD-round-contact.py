@@ -98,11 +98,24 @@ contours = ax.contourf(xv, yv, potential_vdp, levels=levels_filled, cmap='jet')
 # quiv = ax.quiver(xv_sparse, yv_sparse, Ex_norm, Ey_norm, magnitude, cmap='cool', scale=30, width=0.003)
 # ax.quiverkey(quiv, X=0.9, Y=1.05, U=1, label='E-field', labelpos='E')
 
+# Extract potential at the 4 corners
+V_top_left = potential_vdp[0, 0]
+V_top_right = potential_vdp[0, -1]
+V_bottom_left = potential_vdp[-1, 0]
+V_bottom_right = potential_vdp[-1, -1]
+
 end_time = time.time()
+
 print(f"Execution time: {end_time - start_time:.2f} seconds")
 print(f"Contact fraction: {contact_frac:.2f}")
 print(f"Grid size: {n}x{n}")
 print(f"Iterations: {n_iter}")
+print("\n--- Corner Potentials ---")
+print(f"Top-left (Drain):     V = {V_top_left:.4f} V0")
+print(f"Bottom-left (Source):  V = {V_bottom_left:.4f} V0")
+print(f"Top-right (Measured):  V = {V_top_right:.4f} V0")
+print(f"Bottom-right (Measured): V = {V_bottom_right:.4f} V0")
+
 
 ax.set_xlabel('x-Position (a.u.)')
 ax.set_ylabel('y-Position (a.u.)')
