@@ -30,11 +30,20 @@ def compute_potential(potential, fixed_bool, n_iter):
             for j in range(1, length-1):
                 if not(fixed_bool[j][i]):
                     potential[j][i] = 1/4 * (potential[j+1][i] + potential[j-1][i] + potential[j][i+1] + potential[j][i-1])
+
+        # Keep the outer boundary free to float by mirroring the nearest interior values.
+        potential[0, :] = potential[1, :]
+        potential[-1, :] = potential[-2, :]
+        potential[:, 0] = potential[:, 1]
+        potential[:, -1] = potential[:, -2]
+
+        # Restore fixed contact values after updating the boundary.
+        potential[fixed_bool] = potential_vdp[fixed_bool]
     return potential
 
 # Van der Pauw corner voltage simulation
 
-contact_frac = 0.2
+contact_frac = 0.4
 contact_size = int(contact_frac * n)
 contact_radius = 2.0 * contact_frac
 V_plus = 1.0
@@ -59,6 +68,7 @@ potential_vdp[top_left_contact] = V_plus
 potential_vdp[bottom_left_contact] = V_minus
 fixed_vdp[top_left_contact] = True
 fixed_vdp[bottom_left_contact] = True
+
 
 # Relax the solution while preserving corner contacts
 potential_vdp = compute_potential(potential_vdp, fixed_vdp, n_iter=n_iter)
@@ -110,11 +120,11 @@ print(f"Execution time: {end_time - start_time:.2f} seconds")
 print(f"Contact fraction: {contact_frac:.2f}")
 print(f"Grid size: {n}x{n}")
 print(f"Iterations: {n_iter}")
-print("\n--- Corner Potentials ---")
-print(f"Top-left (Drain):     V = {V_top_left:.4f} V0")
-print(f"Bottom-left (Source):  V = {V_bottom_left:.4f} V0")
-print(f"Top-right (Measured):  V = {V_top_right:.4f} V0")
-print(f"Bottom-right (Measured): V = {V_bottom_right:.4f} V0")
+print("--- Corner Potentials ---")
+print(f"Top-left (Drain):     V = {V_top_left:.10f} V0")
+print(f"Bottom-left (Source):  V = {V_bottom_left:.10f} V0")
+print(f"Top-right (Measured):  V = {V_top_right:.10f} V0")
+print(f"Bottom-right (Measured): V = {V_bottom_right:.10f} V0")
 
 
 ax.set_xlabel('x-Position (a.u.)')

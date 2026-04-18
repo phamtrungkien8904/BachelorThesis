@@ -30,6 +30,15 @@ def compute_potential(potential, fixed_bool, n_iter):
             for j in range(1, length-1):
                 if not(fixed_bool[j][i]):
                     potential[j][i] = 1/4 * (potential[j+1][i] + potential[j-1][i] + potential[j][i+1] + potential[j][i-1])
+
+        # Keep the outer boundary free to float by mirroring the nearest interior values.
+        potential[0, :] = potential[1, :]
+        potential[-1, :] = potential[-2, :]
+        potential[:, 0] = potential[:, 1]
+        potential[:, -1] = potential[:, -2]
+
+        # Restore fixed contact values after updating the boundary.
+        potential[fixed_bool] = potential_vdp[fixed_bool]
     return potential
 
 # Van der Pauw corner voltage simulation
