@@ -2,6 +2,8 @@ import numpy as np
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import time
+import os
+from datetime import date
 
 # Custom settings
 plt.style.use('classic')
@@ -69,10 +71,10 @@ levels_filled = np.linspace(V_minus, V_plus, n)
 contours = ax.contourf(xv, yv, potential_vdp, levels=levels_filled, cmap='jet')
 
 # Extract potential at the 4 corners
-V_top_left = potential_vdp[0, 0]
-V_top_right = potential_vdp[0, -1]
-V_bottom_left = potential_vdp[-1, 0]
-V_bottom_right = potential_vdp[-1, -1]
+V_bottom_left = potential_vdp[0, 0]
+V_bottom_right = potential_vdp[0, -1]
+V_top_left = potential_vdp[-1, 0]
+V_top_right = potential_vdp[-1, -1]
 
 end_time = time.time()
 
@@ -85,14 +87,52 @@ print(f"Top-left (Drain):     V = {V_top_left:.4f} V0")
 print(f"Bottom-left (Source):  V = {V_bottom_left:.4f} V0")
 print(f"Top-right (Measured):  V = {V_top_right:.4f} V0")
 print(f"Bottom-right (Measured): V = {V_bottom_right:.4f} V0")
+potential_fraction = (V_top_right - V_bottom_right) / (V_minus - V_plus)
+print(f"Potential fraction: V21/V34 = {potential_fraction:.4f}")
 
+log_index = "20261804001"
+log_filename = "vdP_log_" + log_index + ".txt"
+python_filename = os.path.basename(__file__)
+today_str = date.today().isoformat()
+
+left_info = (
+    f"Log file: {log_filename}\n"
+    f"Python file: {python_filename}\n"
+    f"Execution time: {end_time - start_time:.2f} s\n"
+    f"Grid size: {n} x {n}\n"
+    f"Potential steps: {n_iter}\n"
+    f"Potential fraction: {potential_fraction:.4f}"
+)
+
+right_info = f"Date: {today_str}"
 
 ax.set_xlabel('x-Position (a.u.)')
 ax.set_ylabel('y-Position (a.u.)')
-ax.set_title("Van der Pauw's Method simulation")
+ax.set_title("Van der Pauw's Method simulation", pad=80)
+ax.text(0.0, 1.01, left_info, transform=ax.transAxes, ha='left', va='bottom', fontsize=10)
+ax.text(1.0, 1.01, right_info, transform=ax.transAxes, ha='right', va='bottom', fontsize=10)
 fig.colorbar(contours, label='Potential V/V0')
 ax.set_aspect('equal')
-plt.tight_layout()
+plt.tight_layout(rect=[0, 0, 1, 0.94])
+
+# Save the figure as EPS
+fig.savefig("vdP_simulation_" + log_index + ".eps", format='eps', bbox_inches='tight')
 plt.show()
 
+# Export data to log file (txt)
+log_file = open("vdP_log_" + log_index + ".txt", 'w')
+with log_file:
+    log_file.write("Van der Pauw Simulation Log-File\n")
+    log_file.write("-------------------------------\n")
+    log_file.write(f"Python file: {python_filename}\n")
+    log_file.write(f"Execution time: {end_time - start_time:.2f} seconds\n")
+    log_file.write(f"Contact size fraction: {contact_frac:.2f}\n")
+    log_file.write(f"Grid size: {n} x {n}\n")
+    log_file.write(f"Potential steps: {n_iter}\n")
+    log_file.write("--- Corner Potentials ---\n")
+    log_file.write(f"Top-left (Drain):     V = {V_top_left:.4f} V0\n")
+    log_file.write(f"Bottom-left (Source):  V = {V_bottom_left:.4f} V0\n")
+    log_file.write(f"Top-right (Measured):  V = {V_top_right:.4f} V0\n")
+    log_file.write(f"Bottom-right (Measured): V = {V_bottom_right:.4f} V0\n")
+    log_file.write(f"Potential fraction: V21/V34 = {potential_fraction:.4f}\n")
 
