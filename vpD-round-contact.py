@@ -36,17 +36,29 @@ def compute_potential(potential, fixed_bool, n_iter):
 
 contact_frac = 0.2
 contact_size = int(contact_frac * n)
+contact_radius = 2.0 * contact_frac
 V_plus = 1.0
 V_minus = -1.0
 
 potential_vdp = np.zeros((n, n))
 fixed_vdp = np.zeros((n, n), dtype=bool)
 
-# Top-left contact at +V, bottom-left contact at -V (same side)
-potential_vdp[:contact_size, :contact_size] = V_plus
-potential_vdp[-contact_size:, :contact_size] = V_minus
-fixed_vdp[:contact_size, :contact_size] = True
-fixed_vdp[-contact_size:, :contact_size] = True
+# Quarter-circle contacts centered at the left corners.
+top_left_contact = (
+    ((xv + 1.0) ** 2 + (yv - 1.0) ** 2 <= contact_radius ** 2)
+    & (xv <= -1.0 + contact_radius)
+    & (yv >= 1.0 - contact_radius)
+)
+bottom_left_contact = (
+    ((xv + 1.0) ** 2 + (yv + 1.0) ** 2 <= contact_radius ** 2)
+    & (xv <= -1.0 + contact_radius)
+    & (yv <= -1.0 + contact_radius)
+)
+
+potential_vdp[top_left_contact] = V_plus
+potential_vdp[bottom_left_contact] = V_minus
+fixed_vdp[top_left_contact] = True
+fixed_vdp[bottom_left_contact] = True
 
 # Relax the solution while preserving corner contacts
 potential_vdp = compute_potential(potential_vdp, fixed_vdp, n_iter=n_iter)
