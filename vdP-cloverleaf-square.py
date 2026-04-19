@@ -98,7 +98,7 @@ vmax = np.max(np.abs(potential_vdp))
 if vmax < 1e-9:
     vmax = 1.0
 levels_filled = np.linspace(-vmax, vmax, n_iter)
-contours = ax.contourf(xv, yv, potential_vdp, levels=levels_filled, cmap='jet', interpolation='bilinear')
+contours = ax.contourf(xv, yv, potential_vdp, levels=levels_filled, cmap='jet')
 ax.contour(xv, yv, cloverleaf_mask.astype(float), levels=[0.5], colors='black', linewidths=1.2)
 
 

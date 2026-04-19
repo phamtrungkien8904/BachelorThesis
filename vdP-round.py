@@ -78,7 +78,7 @@ fig, ax = plt.subplots(figsize=(8, 6))
 # Filled contour for background
 levels_filled = np.linspace(V_minus, V_plus, n_iter)
 # norm = mpl.colors.TwoSlopeNorm(vmin=V_minus, vcenter=0, vmax=V_plus)
-contours = ax.contourf(xv, yv, potential_vdp, levels=levels_filled, cmap='jet', interpolation='bilinear')
+contours = ax.contourf(xv, yv, potential_vdp, levels=levels_filled, cmap='jet')
 
 # Extract potential at the 4 corners
 V_bottom_left = potential_vdp[0, 0]
