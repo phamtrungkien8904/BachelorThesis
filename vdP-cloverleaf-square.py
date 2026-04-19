@@ -1,3 +1,4 @@
+from matplotlib.patches import Rectangle
 import numpy as np
 import matplotlib.pyplot as plt
 import time
@@ -100,9 +101,25 @@ vmax = np.max(np.abs(potential_vdp))
 if vmax < 1e-9:
     vmax = 1.0
 levels_filled = np.linspace(-vmax, vmax, n_iter)
-contours = ax.contourf(xv, yv, potential_vdp, levels=levels_filled, cmap='jet')
-ax.contour(xv, yv, cloverleaf_mask.astype(float), levels=[0.5], colors='black', linewidths=1.2)
-
+# Smooth visualization for the computed grid (does not modify simulation values)
+image = ax.imshow(
+    potential_vdp,
+    extent=[edge.min(), edge.max(), edge.min(), edge.max()],
+    origin='lower',
+    cmap='jet',
+    interpolation='bicubic', # 'nearest' for exact grid values, 'bicubic' for smooth visualization
+    vmin=V_minus,
+    vmax=V_plus
+)
+# Draw exact rectangular
+arm_rectangles = [
+    (-1.0, -half_thickness, rec_len, rec_thickness),
+    (1.0 - rec_len, -half_thickness, rec_len, rec_thickness),
+    (-half_thickness, 1.0 - rec_len, rec_thickness, rec_len),
+    (-half_thickness, -1.0, rec_thickness, rec_len),
+]
+for x0, y0, w, h in arm_rectangles:
+    ax.add_patch(Rectangle((x0, y0), w, h, fill=False, edgecolor='black', linewidth=1.0))   
 
 # Extract potential at the 4 corners
 V_bottom_left = potential_vdp[0, 0]
@@ -145,13 +162,13 @@ ax.set_ylabel('y-Position (a.u.)')
 ax.set_title("Van der Pauw's Method simulation", pad=80)
 ax.text(0.0, 1.01, left_info, transform=ax.transAxes, ha='left', va='bottom', fontsize=10)
 ax.text(1.0, 1.01, right_info, transform=ax.transAxes, ha='right', va='bottom', fontsize=10)
-fig.colorbar(contours, label='Potential V/V0')
+fig.colorbar(image, label='Potential V/V0')
 ax.set_aspect('equal')
 plt.tight_layout(rect=[0, 0, 1, 0.94])
 
 # Save the figure as EPS
 fig.savefig("vdP_eps_" + log_index + ".eps", format='eps', bbox_inches='tight')
-fig.savefig("vdP_png_" + log_index + ".png", format='png', bbox_inches='tight', dpi=300)
+fig.savefig("vdP_png_" + log_index + ".png", format='png', bbox_inches='tight', dpi=600)
 # plt.show()
 
 # Export data to log file (txt)

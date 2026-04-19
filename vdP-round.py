@@ -77,10 +77,16 @@ potential_vdp = compute_potential(potential_vdp, fixed_vdp, n_iter=n_iter)
 # Plot the potential distribution
 fig, ax = plt.subplots(figsize=(8, 6))
 
-# Filled contour for background
-levels_filled = np.linspace(V_minus, V_plus, n_iter)
-# norm = mpl.colors.TwoSlopeNorm(vmin=V_minus, vcenter=0, vmax=V_plus)
-contours = ax.contourf(xv, yv, potential_vdp, levels=levels_filled, cmap='jet')
+# Smooth visualization for the computed grid (does not modify simulation values)
+image = ax.imshow(
+    potential_vdp,
+    extent=[edge.min(), edge.max(), edge.min(), edge.max()],
+    origin='lower',
+    cmap='jet',
+    interpolation='bicubic', # 'nearest' for exact grid values, 'bicubic' for smooth visualization
+    vmin=V_minus,
+    vmax=V_plus
+)
 
 # Extract potential at the 4 corners
 V_bottom_left = potential_vdp[0, 0]
@@ -123,14 +129,14 @@ ax.set_ylabel('y-Position (a.u.)')
 ax.set_title("Van der Pauw's Method simulation", pad=80)
 ax.text(0.0, 1.01, left_info, transform=ax.transAxes, ha='left', va='bottom', fontsize=10)
 ax.text(1.0, 1.01, right_info, transform=ax.transAxes, ha='right', va='bottom', fontsize=10)
-fig.colorbar(contours, label='Potential V/V0')
+fig.colorbar(image, label='Potential V/V0')
 ax.set_aspect('equal')
 plt.tight_layout(rect=[0, 0, 1, 0.94])
 
 
 # Save the figure as EPS
 fig.savefig("vdP_eps_" + log_index + ".eps", format='eps', bbox_inches='tight')
-fig.savefig("vdP_png_" + log_index + ".png", format='png', bbox_inches='tight', dpi=300)
+fig.savefig("vdP_png_" + log_index + ".png", format='png', bbox_inches='tight', dpi=600)
 plt.show()
 
 # Export data to log file (txt)
