@@ -16,9 +16,9 @@ plt.rcParams['figure.dpi'] = 100
 
 start_time = time.time()
 
-# Simulation parameters
-n = 1000
-n_iter = 10000
+# Simulation parameters (Defaults: n=100, n_iter=1000 for quick testing; n=1000, n_iter=10000 for higher accuracy (2 hours))
+n = 100
+n_iter = 1000
 edge = np.linspace(-1, 1, n)
 xv, yv = np.meshgrid(edge, edge)
 
@@ -115,7 +115,7 @@ plt.tight_layout(rect=[0, 0, 1, 0.94])
 # Save the figure as EPS
 fig.savefig("vdP_eps_" + log_index + ".eps", format='eps', bbox_inches='tight')
 fig.savefig("vdP_png_" + log_index + ".png", format='png', bbox_inches='tight', dpi=300)
-# plt.show()
+plt.show()
 
 # Export data to log file (txt)
 log_file = open("vdP_log_" + log_index + ".txt", 'w')

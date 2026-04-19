@@ -15,8 +15,10 @@ plt.rcParams['mathtext.fontset'] = 'dejavusans'
 plt.rcParams['figure.dpi'] = 100
 
 start_time = time.time()
-n = 1000
-n_iter = 10000
+
+# Simulation parameters (Defaults: n=100, n_iter=1000 for quick testing; n=1000, n_iter=10000 for higher accuracy (2 hours))
+n = 100
+n_iter = 1000
 edge = np.linspace(-1, 1, n)
 xv, yv = np.meshgrid(edge, edge)
 
