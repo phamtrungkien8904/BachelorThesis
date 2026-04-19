@@ -150,7 +150,7 @@ plt.tight_layout(rect=[0, 0, 1, 0.94])
 # Save the figure as EPS
 fig.savefig("vdP_eps_" + log_index + ".eps", format='eps', bbox_inches='tight')
 fig.savefig("vdP_png_" + log_index + ".png", format='png', bbox_inches='tight', dpi=300)
-plt.show()
+# plt.show()
 
 # Export data to log file (txt)
 log_file = open("vdP_log_" + log_index + ".txt", 'w')
