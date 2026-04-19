@@ -19,7 +19,7 @@ start_time = time.time()
 
 # Simulation parameters
 n = 100
-n_iter = 10000
+n_iter = 1000
 edge = np.linspace(-1, 1, n)
 xv, yv = np.meshgrid(edge, edge)
 
@@ -88,7 +88,7 @@ print(f"Bottom-right (Measured): V = {V_bottom_right:.4f} V0")
 potential_fraction = (V_top_right - V_bottom_right) / (V_minus - V_plus)
 print(f"Potential fraction: V21/V34 = {potential_fraction:.4f}")
 
-log_index = "20261804006"
+log_index = "20261804003"
 log_filename = "vdP_log_" + log_index + ".txt"
 python_filename = os.path.basename(__file__)
 today_str = date.today().isoformat()
