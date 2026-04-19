@@ -1,7 +1,8 @@
 import numpy as np
-import matplotlib as mpl
 import matplotlib.pyplot as plt
 import time
+import os
+from datetime import date
 
 # Custom settings
 plt.style.use('classic')
@@ -14,8 +15,8 @@ plt.rcParams['mathtext.fontset'] = 'dejavusans'
 plt.rcParams['figure.dpi'] = 100
 
 start_time = time.time()
-n = 100
-n_iter = 1000
+n = 1000
+n_iter = 10000
 edge = np.linspace(-1, 1, n)
 xv, yv = np.meshgrid(edge, edge)
 
@@ -40,13 +41,13 @@ def compute_potential(potential, fixed_bool, n_iter):
 
 
 # Cloverleaf with grounded rectangular arms + round corner contacts
-rec_size = np.array([0.5, 0.05])  # [arm_length_from_edge, arm_thickness]
+rec_size = np.array([0.6, 0.1])  # [arm_length_from_edge, arm_thickness]
 rec_len, rec_thickness = rec_size
 
 if not (0 < rec_len <= 2.0 and 0 < rec_thickness <= 2.0):
     raise ValueError('rec_size must satisfy 0 < rec_len, rec_thickness <= 2.0')
 
-contact_frac = 0.4
+contact_frac = 0.1
 contact_radius = 2.0 * contact_frac
 V_plus = 1.0
 V_minus = -1.0
@@ -66,12 +67,12 @@ potential_vdp[cloverleaf_mask] = 0.0
 fixed_vdp[cloverleaf_mask] = True
 
 # Quarter-circle driving contacts centered at the left corners.
-plus_contact = (
+minus_contact = (
     ((xv + 1.0) ** 2 + (yv - 1.0) ** 2 <= contact_radius ** 2)
     & (xv <= -1.0 + contact_radius)
     & (yv >= 1.0 - contact_radius)
 )
-minus_contact = (
+plus_contact = (
     ((xv + 1.0) ** 2 + (yv + 1.0) ** 2 <= contact_radius ** 2)
     & (xv <= -1.0 + contact_radius)
     & (yv <= -1.0 + contact_radius)
@@ -86,22 +87,23 @@ fixed_vdp[minus_contact] = True
 potential_vdp = compute_potential(potential_vdp, fixed_vdp, n_iter=n_iter)
 
 # Plot the potential distribution
-fig, ax = plt.subplots(figsize=(10, 8))
+fig, ax = plt.subplots(figsize=(8, 6))
 
 vmax = np.max(np.abs(potential_vdp))
 if vmax < 1e-9:
     vmax = 1.0
 
-levels_filled = np.linspace(-vmax, vmax, n)
+levels_filled = np.linspace(-vmax, vmax, n_iter)
 contours = ax.contourf(xv, yv, potential_vdp, levels=levels_filled, cmap='jet')
 ax.contour(xv, yv, cloverleaf_mask.astype(float), levels=[0.5], colors='black', linewidths=1.2)
 # ax.contour(xv, yv, plus_contact.astype(float), levels=[0.5], colors='gold', linewidths=1.0)
 # ax.contour(xv, yv, minus_contact.astype(float), levels=[0.5], colors='gold', linewidths=1.0)
+
 # Extract potential at the 4 corners
-V_top_left = potential_vdp[0, 0]
-V_top_right = potential_vdp[0, -1]
-V_bottom_left = potential_vdp[-1, 0]
-V_bottom_right = potential_vdp[-1, -1]
+V_bottom_left = potential_vdp[0, 0]
+V_bottom_right = potential_vdp[0, -1]
+V_top_left = potential_vdp[-1, 0]
+V_top_right = potential_vdp[-1, -1]
 
 end_time = time.time()
 
@@ -114,13 +116,53 @@ print(f"Top-left (Drain):     V = {V_top_left:.4f} V0")
 print(f"Bottom-left (Source):  V = {V_bottom_left:.4f} V0")
 print(f"Top-right (Measured):  V = {V_top_right:.4f} V0")
 print(f"Bottom-right (Measured): V = {V_bottom_right:.4f} V0")
+potential_fraction = (V_top_right - V_bottom_right) / (V_minus - V_plus)
+print(f"Potential fraction: V21/V34 = {potential_fraction:.4f}")
 
 
+log_index = "20261804006"
+log_filename = "vdP_log_" + log_index + ".txt"
+python_filename = os.path.basename(__file__)
+today_str = date.today().isoformat()
+
+left_info = (
+    f"Log file: {log_filename}\n"
+    f"Python file: {python_filename}\n"
+    f"Execution time: {end_time - start_time:.2f} s\n"
+    f"Grid size: {n} x {n}\n"
+    f"Potential steps: {n_iter}\n"
+    f"Potential fraction: {potential_fraction:.4f}"
+)
+
+right_info = f"Date: {today_str}"
 
 ax.set_xlabel('x-Position (a.u.)')
 ax.set_ylabel('y-Position (a.u.)')
-ax.set_title("Van der Pauw's Method simulation (cloverleaf + round contacts)")
+ax.set_title("Van der Pauw's Method simulation", pad=80)
+ax.text(0.0, 1.01, left_info, transform=ax.transAxes, ha='left', va='bottom', fontsize=10)
+ax.text(1.0, 1.01, right_info, transform=ax.transAxes, ha='right', va='bottom', fontsize=10)
 fig.colorbar(contours, label='Potential V/V0')
 ax.set_aspect('equal')
-plt.tight_layout()
+plt.tight_layout(rect=[0, 0, 1, 0.94])
+
+# Save the figure as EPS
+fig.savefig("vdP_eps_" + log_index + ".eps", format='eps', bbox_inches='tight')
+fig.savefig("vdP_png_" + log_index + ".png", format='png', bbox_inches='tight', dpi=300)
 plt.show()
+
+# Export data to log file (txt)
+log_file = open("vdP_log_" + log_index + ".txt", 'w')
+with log_file:
+    log_file.write("Van der Pauw Simulation Log-File\n")
+    log_file.write("-------------------------------\n")
+    log_file.write(f"Python file:            {python_filename}\n")
+    log_file.write(f"Execution time:         {end_time - start_time:.2f} seconds\n")
+    log_file.write(f"Contact size fraction:  {contact_frac:.2f}\n")
+    log_file.write(f"Grid size:              {n} x {n}\n")
+    log_file.write(f"Potential steps:        {n_iter}\n")
+    log_file.write("--- Corner Potentials ---\n")
+    log_file.write(f"Top-left (Drain):        V = {V_top_left:.4f} V0\n")
+    log_file.write(f"Bottom-left (Source):    V = {V_bottom_left:.4f} V0\n")
+    log_file.write(f"Top-right (Measured):    V = {V_top_right:.4f} V0\n")
+    log_file.write(f"Bottom-right (Measured): V = {V_bottom_right:.4f} V0\n")
+    log_file.write(f"Potential fraction:      V21/V34 = {potential_fraction:.4f}\n")

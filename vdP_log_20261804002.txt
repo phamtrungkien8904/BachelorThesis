@@ -1,7 +1,7 @@
 Van der Pauw Simulation Log-File
 -------------------------------
-Python file:            vdP-sim.py
-Execution time:         73.44 seconds
+Python file:            vdP-square.py
+Execution time:         73.94 seconds
 Contact size fraction:  0.10
 Grid size:              100 x 100
 Potential steps:        10000
