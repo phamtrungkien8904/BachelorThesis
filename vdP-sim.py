@@ -19,7 +19,7 @@ start_time = time.time()
 
 # Simulation parameters
 n = 100
-n_iter = 2000
+n_iter = 10000
 edge = np.linspace(-1, 1, n)
 xv, yv = np.meshgrid(edge, edge)
 
@@ -43,7 +43,7 @@ def compute_potential(potential, fixed_bool, n_iter):
 
 # Van der Pauw corner voltage simulation
 
-contact_frac = 0.2
+contact_frac = 0.1
 contact_size = int(contact_frac * n)
 V_plus = 1.0
 V_minus = -1.0
@@ -61,12 +61,12 @@ fixed_vdp[-contact_size:, :contact_size] = True
 potential_vdp = compute_potential(potential_vdp, fixed_vdp, n_iter=n_iter)
 
 # Plot the potential distribution
-fig, ax = plt.subplots(figsize=(10, 8))
+fig, ax = plt.subplots(figsize=(8, 6))
 
 # Filled contour for background
-levels_filled = np.linspace(V_minus, V_plus, n)
+levels_filled = np.linspace(V_minus, V_plus, n_iter)
 # norm = mpl.colors.TwoSlopeNorm(vmin=V_minus, vcenter=0, vmax=V_plus)
-contours = ax.contourf(xv, yv, potential_vdp, levels=levels_filled, cmap='jet')
+contours = ax.contourf(xv, yv, potential_vdp, levels=levels_filled, cmap='jet', interpolation='bilinear')
 
 # Extract potential at the 4 corners
 V_bottom_left = potential_vdp[0, 0]
@@ -88,7 +88,7 @@ print(f"Bottom-right (Measured): V = {V_bottom_right:.4f} V0")
 potential_fraction = (V_top_right - V_bottom_right) / (V_minus - V_plus)
 print(f"Potential fraction: V21/V34 = {potential_fraction:.4f}")
 
-log_index = "20261804003"
+log_index = "20261804006"
 log_filename = "vdP_log_" + log_index + ".txt"
 python_filename = os.path.basename(__file__)
 today_str = date.today().isoformat()
@@ -114,8 +114,8 @@ ax.set_aspect('equal')
 plt.tight_layout(rect=[0, 0, 1, 0.94])
 
 # Save the figure as EPS
-fig.savefig("vdP_simulation_" + log_index + ".eps", format='eps', bbox_inches='tight')
-fig.savefig("vdP_simulation_" + log_index + ".png", format='png', bbox_inches='tight', dpi=300)
+fig.savefig("vdP_eps_" + log_index + ".eps", format='eps', bbox_inches='tight')
+fig.savefig("vdP_png_" + log_index + ".png", format='png', bbox_inches='tight', dpi=300)
 plt.show()
 
 # Export data to log file (txt)
@@ -123,15 +123,15 @@ log_file = open("vdP_log_" + log_index + ".txt", 'w')
 with log_file:
     log_file.write("Van der Pauw Simulation Log-File\n")
     log_file.write("-------------------------------\n")
-    log_file.write(f"Python file: {python_filename}\n")
-    log_file.write(f"Execution time: {end_time - start_time:.2f} seconds\n")
-    log_file.write(f"Contact size fraction: {contact_frac:.2f}\n")
-    log_file.write(f"Grid size: {n} x {n}\n")
-    log_file.write(f"Potential steps: {n_iter}\n")
+    log_file.write(f"Python file:            {python_filename}\n")
+    log_file.write(f"Execution time:         {end_time - start_time:.2f} seconds\n")
+    log_file.write(f"Contact size fraction:  {contact_frac:.2f}\n")
+    log_file.write(f"Grid size:              {n} x {n}\n")
+    log_file.write(f"Potential steps:        {n_iter}\n")
     log_file.write("--- Corner Potentials ---\n")
-    log_file.write(f"Top-left (Drain):     V = {V_top_left:.4f} V0\n")
-    log_file.write(f"Bottom-left (Source):  V = {V_bottom_left:.4f} V0\n")
-    log_file.write(f"Top-right (Measured):  V = {V_top_right:.4f} V0\n")
+    log_file.write(f"Top-left (Drain):        V = {V_top_left:.4f} V0\n")
+    log_file.write(f"Bottom-left (Source):    V = {V_bottom_left:.4f} V0\n")
+    log_file.write(f"Top-right (Measured):    V = {V_top_right:.4f} V0\n")
     log_file.write(f"Bottom-right (Measured): V = {V_bottom_right:.4f} V0\n")
-    log_file.write(f"Potential fraction: V21/V34 = {potential_fraction:.4f}\n")
+    log_file.write(f"Potential fraction:      V21/V34 = {potential_fraction:.4f}\n")
 
