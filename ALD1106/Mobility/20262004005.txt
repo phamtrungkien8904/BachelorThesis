@@ -1,0 +1,11 @@
+xxx: 	Description of column values:
+col. 1:	VG4 with unit V, applied
+col. 2:	IG4 with unit A, measured
+col. 3:	I34 with unit A, sourced
+col. 4:	V34 with unit V, measured
+col. 5:	V14 with unit V, measured
+col. 6:	V24 with unit V, measured
+col. 7:	V12 withn unit V, difference between V14 and V24
+col. 8:	Sheet conductivity sigma2D=e*n2D*mu with unit Siemens square = 1/Ohm
+col. 9:	n2D with unit cm-2
+col. 10:	mobility with unit cm2/Vs
