@@ -12,13 +12,29 @@ set xlabel 'Gate Voltage V_{G4} (V)'
 # set format x "%.0s%c"
 set samples 10000
 
+Ci = 1e-6 # F/cm^2, capacitance per unit area of the gate oxide
+# sigma2D = n2D * mu = Ci*(V_GS - V_T) * mu # 2D sheet conductance
+# V_T = -b/a # Threshold voltage from fit
+# mu = a/Ci # Mobility from fit
+n2D(V_GS) = Ci*(V_GS - V_T) # 2D carrier density per charge
+
 
 set fit quiet
 f(x) = a*x + b 
-fit[1:5] f(x) '.\Data_Mobility_ALD\20262004003.dat' using 1:(-$8) via a,b
+fit[2:6] f(x) '.\Mobility\20262004004.dat' using 1:8 via a,b
+
+# R^2 = 1 - SS_res / SS_tot, evaluated on the same fit range [2:5]
+stats '.\Mobility\20262004004.dat' using (($1>=2 && $1<=5) ? $8 : 1/0) nooutput
+SST = STATS_sumsq - (STATS_sum**2)/STATS_records
+r2 = 1.0 - FIT_WSSR/SST
+
 V_T = -b/a
-print sprintf("Fitted parameters: a = %g, b = %g", a, b)
-print sprintf("Threshold voltage: V_T = %g", V_T)
+mu = a/Ci
+mu_err = a_err/Ci
+print sprintf("Fitted parameters: a = (%.4f +- %.4f), b = (%.4f +- %.4f), r^2 = %.4f", a, a_err, b, b_err, r2)
+print sprintf("Threshold voltage: V_T = (%.4f +- %.4f)", V_T, sqrt((b/a**2)**2 * (a_err)**2 + (1/a)**2 * (b_err)**2))
+print sprintf("Mobility: mu = (%.4f +- %.4f) cm^2/Vs (%.2f%%)", mu*1e4, mu_err*1e4, mu_err/mu*100) # Convert from m^2/Vs to cm^2/Vs
+
 
 
 # Styling
@@ -35,10 +51,10 @@ mu(sigma, V_GS) = sigma/(V_GS - V_T)
 
 # Plot
 plot \
-    '.\Data_Mobility_ALD\20262004003.dat' using 1:(-$8) with lines ls 4 notitle,\
+    '.\Mobility\20262004004.dat' using 1:8 with lines ls 4 notitle,\
     f(x) with lines ls 2 notitle
 
 # plot \
-#     '.\Data_Mobility_ALD\20262004001.dat' using 1:(mu(($8),($1))) with lines ls 4 notitle,\
+#     '.\Mobility\20262004001.dat' using 1:(mu(($8),($1))) with lines ls 4 notitle,\
 
 # set out
