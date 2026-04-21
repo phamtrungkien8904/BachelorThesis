@@ -1,7 +1,7 @@
 reset
 set encoding utf8 
 
-# set terminal postscript eps enhanced color font 'Helvetica,12' size 6.5,4.5
+# set terminal postscript eps enhanced color font 'Arial,12' size 6.5,4.5
 # set output 'fit.eps' 
 
 # ============================ Plot Settings ============================
