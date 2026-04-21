@@ -1,6 +1,8 @@
 reset
 set encoding utf8 
 
+# set terminal postscript eps enhanced color font 'Helvetica,12' size 6.5,4.5
+# set output 'fit.eps' 
 
 # ============================ Plot Settings ============================
 set title "Title"
@@ -12,7 +14,7 @@ set xlabel 'Gate Voltage V_{G4} (V)'
 # set format x "%.0s%c"
 set samples 10000
 
-Ci = 1e-6 # F/cm^2, capacitance per unit area of the gate oxide
+Ci = 1e-2 # F/m^2, capacitance per unit area of the gate oxide
 # sigma2D = n2D * mu = Ci*(V_GS - V_T) * mu # 2D sheet conductance
 # V_T = -b/a # Threshold voltage from fit
 # mu = a/Ci # Mobility from fit
@@ -55,6 +57,6 @@ plot \
     f(x) with lines ls 2 notitle
 
 # plot \
-#     '.\Mobility\20262004001.dat' using 1:(mu(($8),($1))) with lines ls 4 notitle,\
+#     '.\Mobility\20262004004.dat' using 1:($8/(Ci*($1 - V_T))*1e4) with lines ls 4 notitle,\
 
-# set out
+# set output
