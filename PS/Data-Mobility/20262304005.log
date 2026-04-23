@@ -1,0 +1,25 @@
+1	KP	Str	User Initials:
+2	PS12	Str	Sample Name:
+3	gvdP2026	Str	Meas. type:
+4		Str	Comment 1:
+5		Str	Comment 2:
+6		Str	Comment 3:
+7	Varying IDS	Str	Comment 4:
+8	IDS:-50nA	Str	Comment 5:
+9	0	Lng	Simulation (0: NO, 1: YES):
+10	0	Dbl	Initial G4 voltage V_G4 (V):
+11	-40	Dbl	Final G4 voltage V_G4 (V):
+12	401	Lng	Bins for G4 voltage ():
+13	1	Lng	Scans to do ():
+14	-666	Dbl	void:
+15	-50e-9	Dbl	Source current I_34 (A):
+16	40	Dbl	Voltage Limit V_34 (V):
+17	1E-6	Dbl	Current Limit I_G4 (A):
+18	-666	Dbl	void:
+19	-666	Dbl	void:
+20	100	Dbl	Basic wait time (ms):
+21	10	Lng	MM2000 NPLC (fast: 0.1, med: 1, slow: 10):
+22	0	Lng	Adjust I34 (0: NO, 1: YES):
+23	1	Lng	Sign for V12 (-1, 1):
+24	2.6e-9	Dbl	Capacitance (F):
+25	45e-6	Dbl	Device area (m2):
