@@ -106,4 +106,5 @@ As the thesis progresses, notebook outputs and folder contents may continue to e
 Bachelor thesis project on O-FET electrical characterization via current-driven gated van der Pauw methodology.
 
 ## Supervisor
+
 Prof. Dr. R. Kersting, roland.kersting@lmu.de, Nano-Institut der Ludwig-Maximilians-Universität München, Germany.
