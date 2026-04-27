@@ -30,7 +30,7 @@ plt.plot(t, V_in, label='V_in')
 plt.plot(t, V_C, label='V_C')
 plt.xlabel('Time (s)')
 plt.ylabel('Voltage (V)')
-plt.xlim(0.02, 0.22)
+# plt.xlim(0.02, 0.22)
 
 plt.title('Input and Output Voltage vs Time')
 plt.legend()
