@@ -2,10 +2,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 sample_rate = 10000  # samples per second
-start = int(0.02*sample_rate) # seconds
-end = int(0.3*sample_rate) # seconds
+t_start = 0.02  # seconds
+t_end = 0.42  # seconds
 
-A = 5.0 # amplitude in volts
+start = int(t_start * sample_rate) # samples
+end = int(t_end * sample_rate) # samples
+
+A = 3.0 # amplitude in volts
 # f = 10/sample_rate # 10 Hz
 
 # with open("waveform.wfm", "w") as f_out:
@@ -15,18 +18,21 @@ A = 5.0 # amplitude in volts
 
 # AC sweep
 f0 = 10/sample_rate   # 10 Hz
-f1 = 100/sample_rate  # 100 Hz
+f1 = 2000/sample_rate  # 1000 Hz
+df = 5/sample_rate  # frequency step of 10 Hz
 
-T = end - start  # total duration (in your time units)
+# Build stepped frequencies in normalized units (cycles per sample)
+freqs = np.arange(f0, f1 + 0.5 * df, df)
+N = end - start + 1
+samples_per_step = max(1, N // len(freqs))
 
 with open("waveform.wfm", "w") as f_out:
+    phase = 0.0
     for t in range(start, end + 1):
-        tau = t - start  # normalized time starting at 0
-        # phase for linear chirp
-        phase = 2 * np.pi * (
-            f0 * tau +
-            0.5 * (f1 - f0) * (tau ** 2) / T
-        )
+        n = t - start
+        step_idx = min(n // samples_per_step, len(freqs) - 1)
+        f = freqs[step_idx]
+        phase += 2 * np.pi * f
         v = A * np.sin(phase)
         f_out.write(f"{t}\t{v:.6f}\t0\t0\t0\n")
 

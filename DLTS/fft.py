@@ -14,17 +14,17 @@ plt.rcParams['font.sans-serif'] = ['Arial']
 plt.rcParams['mathtext.fontset'] = 'cm'
 plt.rcParams['figure.dpi'] = 100
 
-data = np.loadtxt("./Data/20262704003.dat")
+data = np.loadtxt("./Data/20262704005.dat")
 
 t_min = 0.02
-t_max = 0.3
+t_max = 0.22
 
 # Keep only samples in the requested time window
 time_mask = (data[:, 0] >= t_min) & (data[:, 0] <= t_max)
 data = data[time_mask]
 
 f_min = 10.0  # Hz
-f_max = 100.0  # Hz
+f_max = 2000.0  # Hz
 
 R = 100e3  # Resistance in ohms
 C = 2.1e-9  # Capacitance in farads
