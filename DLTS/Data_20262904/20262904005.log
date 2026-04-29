@@ -1,0 +1,39 @@
+1	KP	Initials:
+2	PS9 with Amp, Wiring	Sample name:
+3	Forward Bias	Comment 1:
+4	Pulse: -40V	Comment 2:
+5		Comment 3:
+6		Comment 4:
+7	-666	void
+8	-666	void
+9	-666	void
+10	-666	void
+11	0	Simulation (0: FALSE, 1: TRUE):
+12	1000000	NI6733 sampl. freq. (Hz):
+13	0.8	NI6733 sampl. time (s):
+14	102400	NI4744 sampl. freq. (Hz):
+15	2.0	NI4744 sampl. time (s):
+16	-666	void
+17	-666	void
+18	-666	void
+19	-666	void
+20	-666	void
+21	75	Repetitions to do (1): 
+22	4	Trigger main threshold (V):
+23	1	Trigger main slope (up: 1, down: -1):
+24	1	Repetitions before plot (1):
+25	20	Repetitions before auto save (1):
+26	3	Trigger secondary min threshold:
+27	3	Trigger secondary max threshold:
+28	20	Bins to skip after secondary trigger:
+29	20	Bins to skip before next secondary trigger:
+30	1	Subtr. ave. after last 2nd triggger (0/1):
+31	1e6	Resistor 1 (Ohms):
+32	1e5	Resistor 2 (Ohms):
+33	20	Amplifiers multiplicator:
+34	32e-6	Area of capacitor in unit m2:
+35	-666	void:
+36	-666	void:
+37	-666	void:
+38	-666	void:
+39	-666	void:
