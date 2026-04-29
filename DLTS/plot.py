@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from scipy.optimize import curve_fit
 
 # Custom settings
 plt.style.use('classic')
@@ -13,25 +14,15 @@ plt.rcParams['font.sans-serif'] = ['Arial']
 plt.rcParams['mathtext.fontset'] = 'cm'
 plt.rcParams['figure.dpi'] = 100
 
-data = np.loadtxt("./Data/20262704003.dat")
+t = np.linspace(0, 0.05, 500)  # Time array from 0 to 50 ms
+C1 = 3e-9  # Capacitance in farads
+C2 = 6e-9  # Capacitance in farads
+R = 1e6  # Resistance in ohms
 
-R = 100e3  # Resistance in ohms
+def func(t):
+    return 1*np.exp(-t/(R*C1)) + 0.1*np.exp(-(t/(R*C2))**0.5)
 
-t = data[:, 0]
-V_R = data[:, 1]
-main_trigger = data[:, 2]
-V_in = data[:, 3]
-second_trigger = data[:, 4]
-I = data[:, 5]
-V_C = V_in - V_R
-
-plt.plot(t, V_in, label='V_in')
-# plt.plot(t, V_R, label='V_R')
-plt.plot(t, V_C, label='V_C')
-plt.xlabel('Time (s)')
-plt.ylabel('Voltage (V)')
-# plt.xlim(0.02, 0.22)
-
-plt.title('Input and Output Voltage vs Time')
-plt.legend()
-plt.show()
+plt.plot(t*1e3, func(t), label='Theoretical Fit', color='blue', lw=2, linestyle='--')
+plt.xlabel('Time (ms)')
+plt.ylabel('Voltage signal (V)')
+plt.show() 
