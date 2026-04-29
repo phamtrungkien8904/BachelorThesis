@@ -16,11 +16,11 @@ plt.rcParams['figure.dpi'] = 100
 
 t = np.linspace(0, 0.05, 500)  # Time array from 0 to 50 ms
 C1 = 3e-9  # Capacitance in farads
-C2 = 6e-9  # Capacitance in farads
+C2 = 4e-9  # Capacitance in farads
 R = 1e6  # Resistance in ohms
 
 def func(t):
-    return 1*np.exp(-t/(R*C1)) + 0.1*np.exp(-(t/(R*C2))**0.5)
+    return 1*np.exp(-t/(R*C1)) - 0.5*np.exp(-(t/(R*C2))**0.5) - 1*np.exp(-t/(R*C1)) 
 
 plt.plot(t*1e3, func(t), label='Theoretical Fit', color='blue', lw=2, linestyle='--')
 plt.xlabel('Time (ms)')
