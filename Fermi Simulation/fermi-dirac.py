@@ -16,10 +16,13 @@ plt.rcParams['figure.dpi'] = 100
 # Constants
 kT = 1.0  # Thermal energy (k_B * T)
 beta = 1/kT  # 1/(k_B * T)
-E_F = 2.0  # Fermi energy
+E_V = 0  # Valence band edge energy
+E_g = 4  # Band gap energy
+E_L = E_V + E_g  # Conduction band edge energy
+E_F = (E_V + E_L) / 2 + 1 * E_g  # Fermi energy at mid-gap
 # Fermi-Dirac distribution function
 
-E = np.linspace(-10, 10, 400)  # Energy range
+E = np.linspace(-20, 20, 400)  # Energy range
 f_E = 1 / (np.exp(beta * (E - E_F)) + 1)  # Fermi-Dirac distribution
 
 # Plotting
@@ -30,7 +33,9 @@ plt.xlabel('Energy (E)')
 plt.ylabel('Occupation Probability (f(E))')
 plt.axhline(0.5, color='k', linestyle='--')
 plt.axvline(E_F, color='k', linestyle='--')
+plt.axvline(E_V, color='red', linestyle='--', label='Valence Band (E_V)')
+plt.axvline(E_L, color='green', linestyle='--', label='Conduction Band (E_L)')
 plt.legend()
-plt.xlim(-10, 10)
+plt.xlim(-20, 20)
 plt.ylim(-0.05, 1.05)
 plt.show()
