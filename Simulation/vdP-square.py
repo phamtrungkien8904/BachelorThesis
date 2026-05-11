@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import time
 import os
 from datetime import date
+from mpl_toolkits.mplot3d import Axes3D
 
 # Custom settings
 plt.style.use('classic')
@@ -21,14 +22,26 @@ n = 100
 n_iter = 1000
 edge = np.linspace(-1, 1, n)
 xv, yv = np.meshgrid(edge, edge)
+grid_spacing = edge[1] - edge[0]
 
-def compute_potential(potential, fixed_bool, n_iter):
+# Homogeneous charge density for the Poisson equation test case.
+charge_density_value = 3.0
+charge_density = np.full((n, n), charge_density_value)
+epsilon_0 = 1.0
+
+def compute_potential(potential, fixed_bool, charge_density, n_iter):
     length = len(potential[0])
     for n in range(n_iter):
         for i in range(1, length-1):
             for j in range(1, length-1):
                 if not(fixed_bool[j][i]):
-                    potential[j][i] = 1/4 * (potential[j+1][i] + potential[j-1][i] + potential[j][i+1] + potential[j][i-1])
+                    potential[j][i] = 1/4 * (
+                        potential[j+1][i]
+                        + potential[j-1][i]
+                        + potential[j][i+1]
+                        + potential[j][i-1]
+                        + (grid_spacing ** 2) * charge_density[j][i] / epsilon_0
+                    )
 
         # Keep the outer boundary free to float by mirroring the nearest interior values.
         potential[0, :] = potential[1, :]
@@ -57,7 +70,7 @@ fixed_vdp[:contact_size, :contact_size] = True
 fixed_vdp[-contact_size:, :contact_size] = True
 
 # Relax the solution while preserving corner contacts
-potential_vdp = compute_potential(potential_vdp, fixed_vdp, n_iter=n_iter)
+potential_vdp = compute_potential(potential_vdp, fixed_vdp, charge_density, n_iter=n_iter)
 
 # Plot the potential distribution
 fig, ax = plt.subplots(figsize=(8, 6))
@@ -77,6 +90,8 @@ image = ax.imshow(
     vmin=V_minus,
     vmax=V_plus
 )
+
+
 
 # Extract potential at the 4 corners
 V_bottom_left = potential_vdp[0, 0]
@@ -98,7 +113,7 @@ print(f"Bottom-right (Measured): V = {V_bottom_right:.4f} V0")
 potential_fraction = (V_top_right - V_bottom_right) / (V_minus - V_plus)
 print(f"Potential fraction: V21/V34 = {potential_fraction:.4f}")
 
-log_index = "20261904006_imshow"
+log_index = "20261105001"
 log_filename = "vdP_log_" + log_index + ".txt"
 python_filename = os.path.basename(__file__)
 today_str = date.today().isoformat()
@@ -109,6 +124,7 @@ left_info = (
     f"Execution time: {end_time - start_time:.2f} s\n"
     f"Grid size: {n} x {n}\n"
     f"Potential steps: {n_iter}\n"
+    f"Charge density: homogeneous (rho={charge_density_value:.2f})\n"
     f"Potential fraction: {potential_fraction:.4f}"
 )
 
@@ -126,6 +142,30 @@ plt.tight_layout()
 # Save the figure as EPS
 fig.savefig("vdP_eps_" + log_index + ".eps", format='eps', bbox_inches='tight')
 fig.savefig("vdP_png_" + log_index + ".png", format='png', bbox_inches='tight', dpi=600)
+
+# 3D surface plot of the potential distribution
+fig3d = plt.figure(figsize=(8, 6))
+ax3d = fig3d.add_subplot(111, projection='3d')
+surface = ax3d.plot_surface(
+    xv,
+    yv,
+    potential_vdp,
+    cmap='jet',
+    linewidth=0,
+    antialiased=True,
+    rcount=potential_vdp.shape[0],
+    ccount=potential_vdp.shape[1],
+    vmin=V_minus,
+    vmax=V_plus,
+)
+ax3d.set_xlabel('x-Position (a.u.)')
+ax3d.set_ylabel('y-Position (a.u.)')
+ax3d.set_zlabel('Potential V/V0')
+ax3d.set_title("Van der Pauw's Method simulation - 3D potential")
+ax3d.view_init(elev=30, azim=-135)
+fig3d.colorbar(surface, ax=ax3d, shrink=0.75, pad=0.1, label='Potential V/V0')
+fig3d.savefig("vdP_3d_" + log_index + ".eps", format='eps', bbox_inches='tight')
+fig3d.savefig("vdP_3d_" + log_index + ".png", format='png', bbox_inches='tight', dpi=600)
 plt.show()
 
 # Export data to log file (txt)
@@ -138,6 +178,7 @@ with log_file:
     log_file.write(f"Contact size fraction:  {contact_frac:.2f}\n")
     log_file.write(f"Grid size:              {n} x {n}\n")
     log_file.write(f"Potential steps:        {n_iter}\n")
+    log_file.write(f"Charge density:         homogeneous (rho={charge_density_value:.2f})\n")
     log_file.write("--- Corner Potentials ---\n")
     log_file.write(f"Top-left (Drain):        V = {V_top_left:.4f} V0\n")
     log_file.write(f"Bottom-left (Source):    V = {V_bottom_left:.4f} V0\n")
