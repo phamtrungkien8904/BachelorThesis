@@ -1,14 +1,14 @@
 Van der Pauw Simulation Log-File
 -------------------------------
 Python file:            vdP-square.py
-Execution time:         10.97 seconds
+Execution time:         10.21 seconds
 Contact size fraction:  0.10
 Grid size:              100 x 100
 Potential steps:        1000
-Charge density:         homogeneous (rho=3.00)
+Charge density:         homogeneous (rho=-3.00)
 --- Corner Potentials ---
-Top-left (Drain):        V = -1.0000 V0
-Bottom-left (Source):    V = 1.0000 V0
-Top-right (Measured):    V = 0.6076 V0
-Bottom-right (Measured): V = 0.6008 V0
-Potential fraction:      V21/V34 = -0.0034
+Top-left (Drain):        V = -4.0000 V0
+Bottom-left (Source):    V = 0.0000 V0
+Top-right (Measured):    V = -0.6284 V0
+Bottom-right (Measured): V = -0.5970 V0
+Potential fraction:      V21/V34 = 0.0079

@@ -25,7 +25,7 @@ xv, yv = np.meshgrid(edge, edge)
 grid_spacing = edge[1] - edge[0]
 
 # Homogeneous charge density for the Poisson equation test case.
-charge_density_value = 3.0
+charge_density_value = -3.0
 charge_density = np.full((n, n), charge_density_value)
 epsilon_0 = 1.0
 
@@ -57,8 +57,8 @@ def compute_potential(potential, fixed_bool, charge_density, n_iter):
 
 contact_frac = 0.1
 contact_size = int(contact_frac * n)
-V_plus = 1.0
-V_minus = -1.0
+V_plus = 0.0
+V_minus = -4.0
 
 potential_vdp = np.zeros((n, n))
 fixed_vdp = np.zeros((n, n), dtype=bool)
