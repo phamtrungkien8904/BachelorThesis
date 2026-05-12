@@ -1,7 +1,6 @@
 import time
 import numpy as np
 import matplotlib.pyplot as plt
-from pandas import NA
 
 # Custom settings
 plt.style.use('classic')
@@ -22,18 +21,16 @@ start_time = time.time()
 kB = 1  # Boltzmann constant in J/K
 T = 1
 beta = 1 / (kB * T)
-beta = 1
 e = 1
 Nv = 1.0  # Scaled down to prevent divergence
 E_F = 1.0
-Ev0 = 0.9
-EA0 = 1.0
-gA = 4
+Ev0 = 0.0
+
 epsilon = 1
 
 
 N = 101
-iter = 10000
+iter = 20000
 
 x = np.linspace(0, 1, N)
 y = np.linspace(0, 1, N)
@@ -42,6 +39,7 @@ X, Y = np.meshgrid(x, y)
 
 V = np.zeros((N, N))
 rho = np.zeros((N, N))
+p = np.zeros((N, N))
 contact_mask = np.zeros((N, N), dtype=bool)
 
 
@@ -50,8 +48,8 @@ contact_size = 0.1
 contact_width = int(contact_size * N)
 V[:contact_width, :contact_width] = 0.0
 V[-contact_width:, :contact_width] = 0.0
-rho[:contact_width, :contact_width] = 0.0
-rho[-contact_width:, :contact_width] = 0.0
+p[:contact_width, :contact_width] = 0.0
+p[-contact_width:, :contact_width] = 0.0
 contact_mask[:contact_width, :contact_width] = True
 contact_mask[-contact_width:, :contact_width] = True
 
@@ -59,11 +57,13 @@ contact_mask[-contact_width:, :contact_width] = True
 
 
 def solve():
-    global V, rho
+    global V, rho, p
 
     dx = x[1] - x[0]
 
     contact_V = V.copy()
+
+    p0 = Nv / (1 + np.exp(beta * (E_F - Ev0)))
 
 
     alpha = 0.05
@@ -74,16 +74,14 @@ def solve():
         Ev = Ev0 - e * V
 
         # Hole density from Fermi-Dirac
-        p = Nv *(1 + np.exp(np.clip(beta * (E_F - Ev), -100, 100)))
-        
-        EA = EA0 - e * V
-        NA_minus = NA / (1 + gA * np.exp(np.clip((EA - E_F)*beta, -100, 100)))
+        p = Nv / (1 + np.exp(beta * (E_F - Ev)))
+
 
         # Neutral-background charge density
-        rho = e * (p - NA_minus)
+        rho = e * (p - 50*p0)
 
         # No semiconductor charge inside metal contacts
-        rho[contact_mask] = 0.0
+        p[contact_mask] = 0.0
 
         # Poisson update
         V_new = V.copy()
@@ -108,9 +106,9 @@ def solve():
         # Relaxation
         V = (1 - alpha) * V + alpha * V_new
 
-    return V, rho
+    return V, rho, p
 
-V, rho = solve()
+V, rho, p = solve()
 
 end_time = time.time()
 print(f"Execution time: {end_time - start_time:.2f} seconds.")
@@ -118,13 +116,13 @@ print(f"Execution time: {end_time - start_time:.2f} seconds.")
 fig2D_density = plt.figure(figsize=(8, 6))
 ax2D = fig2D_density.add_subplot(111)
 density_image = ax2D.imshow(
-    rho,
+    p,
     extent=[x.min(), x.max(), y.min(), y.max()],
     origin='lower',
     cmap='viridis',
     interpolation='bicubic', # 'nearest' for exact grid values, 'bicubic' for smooth visualization
-    vmin=rho.min(),
-    vmax=rho.max()
+    vmin=p.min(),
+    vmax=p.max()
 )
 fig2D_density.colorbar(density_image, ax=ax2D)
 ax2D.set_xlabel('X-axis')
@@ -137,7 +135,7 @@ plt.show()
 
 fig3D_density = plt.figure(figsize=(8, 6))
 ax3D = fig3D_density.add_subplot(111, projection='3d')
-density_surf = ax3D.plot_surface(X, Y, rho, cmap='viridis') #, rcount=N, ccount=N, linewidth=0, antialiased=False)
+density_surf = ax3D.plot_surface(X, Y, p, cmap='viridis') #, rcount=N, ccount=N, linewidth=0, antialiased=False)
 fig3D_density.colorbar(density_surf, ax=ax3D, shrink=0.5, pad=0.1)
 ax3D.set_xlabel('X-axis')
 ax3D.set_ylabel('Y-axis')
