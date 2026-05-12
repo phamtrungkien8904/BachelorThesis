@@ -27,6 +27,12 @@ grid_spacing = edge[1] - edge[0]
 # Homogeneous charge density for the Poisson equation test case.
 charge_density_value = -3.0
 charge_density = np.full((n, n), charge_density_value)
+
+# # Gaussian charge defect in the middle of the grid
+# defect_amplitude = 50.0
+# defect_sigma = 0.1
+# charge_density += defect_amplitude * np.exp(-(xv**2 + yv**2) / (2 * defect_sigma**2))
+
 epsilon_0 = 1.0
 
 def compute_potential(potential, fixed_bool, charge_density, n_iter):
@@ -57,8 +63,8 @@ def compute_potential(potential, fixed_bool, charge_density, n_iter):
 
 contact_frac = 0.1
 contact_size = int(contact_frac * n)
-V_plus = 0.0
-V_minus = -4.0
+V_plus = 1.0
+V_minus = -1.0
 
 potential_vdp = np.zeros((n, n))
 fixed_vdp = np.zeros((n, n), dtype=bool)
@@ -166,6 +172,18 @@ ax3d.view_init(elev=30, azim=-135)
 fig3d.colorbar(surface, ax=ax3d, shrink=0.75, pad=0.1, label='Potential V/V0')
 fig3d.savefig("vdP_3d_" + log_index + ".eps", format='eps', bbox_inches='tight')
 fig3d.savefig("vdP_3d_" + log_index + ".png", format='png', bbox_inches='tight', dpi=600)
+
+# 2D cross-section plot along the bottom edge (y = -1)
+fig1d = plt.figure(figsize=(8, 6))
+ax1d = fig1d.add_subplot(111)
+ax1d.plot(edge, potential_vdp[0, :], 'b-', linewidth=2)
+ax1d.set_xlabel('x-Position (a.u.)')
+ax1d.set_ylabel('Potential V/V0')
+ax1d.set_title('Potential profile along the bottom edge')
+ax1d.grid(True)
+fig1d.savefig("vdP_1d_edge_" + log_index + ".eps", format='eps', bbox_inches='tight')
+fig1d.savefig("vdP_1d_edge_" + log_index + ".png", format='png', bbox_inches='tight', dpi=600)
+
 plt.show()
 
 # Export data to log file (txt)
