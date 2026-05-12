@@ -18,34 +18,63 @@ plt.rcParams['figure.dpi'] = 100
 start_time = time.time()
 
 
+kB = 1  # Boltzmann constant in J/K
+T = 1
+beta = 1 / (kB * T)
+e = 1
+Nv = 10.0  # Scaled down to prevent divergence
+E_F = 1
+Ev0 = 0.8
+epsilon = 10
+
+
 N = 101
+iter = 1000
 
 x = np.linspace(0, 1, N)
 y = np.linspace(0, 1, N)
 X, Y = np.meshgrid(x, y)
 
 
-rho = np.zeros((N, N))
 V = np.zeros((N, N))
+rho = np.zeros((N, N))
+contact_mask = np.zeros((N, N), dtype=bool)
 
-contact_size = 0.2
+
+
+contact_size = 0.1
 contact_width = int(contact_size * N)
-V[:contact_width, :contact_width] = 1.0 # Set a square at one corner to fixed potential 10
-V[-contact_width:, :contact_width] = -1.0 # Set a square at the opposite corner to fixed potential 10
+V[:contact_width, :contact_width] = 0.0
+V[-contact_width:, :contact_width] = 0.0
+rho[:contact_width, :contact_width] = 0.0
+rho[-contact_width:, :contact_width] = 0.0
+contact_mask[:contact_width, :contact_width] = True
+contact_mask[-contact_width:, :contact_width] = True
 
 
 
-def compute_potential(V, rho, max_iter=10000):
+
+def solve():
+    global V, rho
     dx = x[1] - x[0]
-    fixed_mask = (V != 0)
     original_V = V.copy()
+    original_rho = rho.copy()
     
-    for _ in range(max_iter):
+    for _ in range(iter):
+        # Update charge density based on the current potential
+        Ev = Ev0 - e * V
+        # Hole density using Fermi-Dirac statistics
+        p = Nv / (1 + np.exp(beta * (E_F - Ev)))
+        rho = e * p
+        
+        # Enforce small density at the Schottky contacts
+        rho[contact_mask] = 0.0 
+            
         # Update using nearest neighbors (Jacobi method)
         V[1:-1, 1:-1] = 0.25 * (
             V[2:, 1:-1] + V[:-2, 1:-1] + 
             V[1:-1, 2:] + V[1:-1, :-2] + 
-            rho[1:-1, 1:-1] * dx**2 
+            rho[1:-1, 1:-1]/epsilon * dx**2 
         )
 
         V[0, :] = V[1, :]
@@ -54,11 +83,12 @@ def compute_potential(V, rho, max_iter=10000):
         V[:, -1] = V[:, -2]
         
         # Enforce fixed potential for contacts
-        V[fixed_mask] = original_V[fixed_mask]
+        V[contact_mask] = original_V[contact_mask]
+        rho[contact_mask] = original_rho[contact_mask]  # Ensure charge density is zero at contacts
         
-    return V
+    return V, rho
 
-V = compute_potential(V, rho)
+V, rho = solve()
 
 end_time = time.time()
 print(f"Execution time: {end_time - start_time:.2f} seconds.")
@@ -70,7 +100,7 @@ density_image = ax2D.imshow(
     extent=[x.min(), x.max(), y.min(), y.max()],
     origin='lower',
     cmap='viridis',
-    interpolation='nearest', # 'nearest' for exact grid values, 'bicubic' for smooth visualization
+    interpolation='bicubic', # 'nearest' for exact grid values, 'bicubic' for smooth visualization
     vmin=rho.min(),
     vmax=rho.max()
 )
