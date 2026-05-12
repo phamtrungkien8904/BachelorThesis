@@ -25,7 +25,7 @@ xv, yv = np.meshgrid(edge, edge)
 grid_spacing = edge[1] - edge[0]
 
 # Homogeneous charge density for the Poisson equation test case.
-charge_density_value = -0.1
+charge_density_value = 16.0
 charge_density = np.full((n, n), charge_density_value)
 
 # # Gaussian charge defect in the middle of the grid
@@ -63,8 +63,8 @@ def compute_potential(potential, fixed_bool, charge_density, n_iter):
 
 contact_frac = 0.1
 contact_size = int(contact_frac * n)
-V_plus = 0.0
-V_minus = -5.0
+V_plus = 5.0
+V_minus = 0.0
 
 potential_vdp = np.zeros((n, n))
 fixed_vdp = np.zeros((n, n), dtype=bool)
@@ -74,6 +74,9 @@ potential_vdp[:contact_size, :contact_size] = V_plus
 potential_vdp[-contact_size:, :contact_size] = V_minus
 fixed_vdp[:contact_size, :contact_size] = True
 fixed_vdp[-contact_size:, :contact_size] = True
+
+# Schottky contacts have no charge density
+charge_density[fixed_vdp] = 0.0
 
 # Relax the solution while preserving corner contacts
 potential_vdp = compute_potential(potential_vdp, fixed_vdp, charge_density, n_iter=n_iter)
@@ -184,6 +187,42 @@ ax1d.set_ylabel('Potential V/V0')
 ax1d.set_title('Potential profile along the bottom edge')
 fig1d.savefig("vdP_1d_edge_" + log_index + ".eps", format='eps', bbox_inches='tight')
 fig1d.savefig("vdP_1d_edge_" + log_index + ".png", format='png', bbox_inches='tight', dpi=600)
+
+# 2D imshow of charge density
+fig_rho_2d, ax_rho_2d = plt.subplots(figsize=(8, 6))
+image_rho = ax_rho_2d.imshow(
+    charge_density,
+    extent=[edge.min(), edge.max(), edge.min(), edge.max()],
+    origin='lower',
+    cmap='viridis',
+    interpolation='nearest'
+)
+ax_rho_2d.set_xlabel('x-Position (a.u.)')
+ax_rho_2d.set_ylabel('y-Position (a.u.)')
+ax_rho_2d.set_title("Charge Density 2D")
+fig_rho_2d.colorbar(image_rho, label='Charge density')
+fig_rho_2d.savefig("vdP_rho_2d_" + log_index + ".png", format='png', bbox_inches='tight', dpi=600)
+
+# 3D surface plot of the charge density distribution
+fig_rho_3d = plt.figure(figsize=(8, 6))
+ax_rho_3d = fig_rho_3d.add_subplot(111, projection='3d')
+surface_rho = ax_rho_3d.plot_surface(
+    xv,
+    yv,
+    charge_density,
+    cmap='viridis',
+    linewidth=0,
+    antialiased=True,
+    rcount=charge_density.shape[0],
+    ccount=charge_density.shape[1],
+)
+ax_rho_3d.set_xlabel('x-Position (a.u.)')
+ax_rho_3d.set_ylabel('y-Position (a.u.)')
+ax_rho_3d.set_zlabel('Charge density')
+ax_rho_3d.set_title("Charge Density 3D")
+ax_rho_3d.view_init(elev=30, azim=-135)
+fig_rho_3d.colorbar(surface_rho, ax=ax_rho_3d, shrink=0.75, pad=0.1, label='Charge density')
+fig_rho_3d.savefig("vdP_rho_3d_" + log_index + ".png", format='png', bbox_inches='tight', dpi=600)
 
 plt.show()
 
