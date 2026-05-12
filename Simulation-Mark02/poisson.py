@@ -22,14 +22,14 @@ kB = 1  # Boltzmann constant in J/K
 T = 1
 beta = 1 / (kB * T)
 e = 1
-Nv = 10.0  # Scaled down to prevent divergence
-E_F = 1
-Ev0 = 0.8
-epsilon = 10
+Nv = 1.0  # Scaled down to prevent divergence
+E_F = 0.0
+Ev0 = -1.0
+epsilon = 1
 
 
 N = 101
-iter = 1000
+iter = 10000
 
 x = np.linspace(0, 1, N)
 y = np.linspace(0, 1, N)
@@ -42,12 +42,12 @@ contact_mask = np.zeros((N, N), dtype=bool)
 
 
 
-contact_size = 0.1
+contact_size = 0.05
 contact_width = int(contact_size * N)
-V[:contact_width, :contact_width] = 0.0
-V[-contact_width:, :contact_width] = 0.0
-rho[:contact_width, :contact_width] = 0.0
-rho[-contact_width:, :contact_width] = 0.0
+V[:contact_width, :contact_width] = 2.0
+V[-contact_width:, :contact_width] = 4.0
+rho[:contact_width, :contact_width] = 1e-6
+rho[-contact_width:, :contact_width] = 1e-6
 contact_mask[:contact_width, :contact_width] = True
 contact_mask[-contact_width:, :contact_width] = True
 
@@ -61,14 +61,12 @@ def solve():
     original_rho = rho.copy()
     
     for _ in range(iter):
-        # Update charge density based on the current potential
-        Ev = Ev0 - e * V
         # Hole density using Fermi-Dirac statistics
-        p = Nv / (1 + np.exp(beta * (E_F - Ev)))
+        p = Nv / (1 + np.exp(beta * (E_F - Ev0 + e * V)))
         rho = e * p
         
         # Enforce small density at the Schottky contacts
-        rho[contact_mask] = 0.0 
+        rho[contact_mask] = 1e-6
             
         # Update using nearest neighbors (Jacobi method)
         V[1:-1, 1:-1] = 0.25 * (
@@ -115,7 +113,7 @@ plt.show()
 
 fig3D_density = plt.figure(figsize=(8, 6))
 ax3D = fig3D_density.add_subplot(111, projection='3d')
-density_surf = ax3D.plot_surface(X, Y, rho, cmap='viridis', rcount=N, ccount=N, linewidth=0, antialiased=False)
+density_surf = ax3D.plot_surface(X, Y, rho, cmap='viridis') #, rcount=N, ccount=N, linewidth=0, antialiased=False)
 fig3D_density.colorbar(density_surf, ax=ax3D, shrink=0.5, pad=0.1)
 ax3D.set_xlabel('X-axis')
 ax3D.set_ylabel('Y-axis')
@@ -145,7 +143,7 @@ plt.show()
 
 fig3D_potential = plt.figure(figsize=(8, 6))
 ax3D = fig3D_potential.add_subplot(111, projection='3d')
-surf = ax3D.plot_surface(X, Y, V, cmap='jet', rcount=N, ccount=N, linewidth=0, antialiased=False)
+surf = ax3D.plot_surface(X, Y, V, cmap='jet') #, rcount=N, ccount=N, linewidth=0, antialiased=False)
 fig3D_potential.colorbar(surf, ax=ax3D, shrink=0.5, pad=0.1)
 ax3D.set_xlabel('X-axis')
 ax3D.set_ylabel('Y-axis')
