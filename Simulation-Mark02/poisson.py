@@ -1,6 +1,7 @@
 import time
 import numpy as np
 import matplotlib.pyplot as plt
+from pandas import NA
 
 # Custom settings
 plt.style.use('classic')
@@ -21,10 +22,13 @@ start_time = time.time()
 kB = 1  # Boltzmann constant in J/K
 T = 1
 beta = 1 / (kB * T)
+beta = 1
 e = 1
 Nv = 1.0  # Scaled down to prevent divergence
-E_F = 0.0
-Ev0 = -1.0
+E_F = 1.0
+Ev0 = 0.9
+EA0 = 1.0
+gA = 4
 epsilon = 1
 
 
@@ -42,12 +46,12 @@ contact_mask = np.zeros((N, N), dtype=bool)
 
 
 
-contact_size = 0.05
+contact_size = 0.1
 contact_width = int(contact_size * N)
-V[:contact_width, :contact_width] = 2.0
-V[-contact_width:, :contact_width] = 4.0
-rho[:contact_width, :contact_width] = 1e-6
-rho[-contact_width:, :contact_width] = 1e-6
+V[:contact_width, :contact_width] = 0.0
+V[-contact_width:, :contact_width] = 0.0
+rho[:contact_width, :contact_width] = 0.0
+rho[-contact_width:, :contact_width] = 0.0
 contact_mask[:contact_width, :contact_width] = True
 contact_mask[-contact_width:, :contact_width] = True
 
@@ -56,34 +60,54 @@ contact_mask[-contact_width:, :contact_width] = True
 
 def solve():
     global V, rho
+
     dx = x[1] - x[0]
-    original_V = V.copy()
-    original_rho = rho.copy()
-    
+
+    contact_V = V.copy()
+
+
+    alpha = 0.05
+
     for _ in range(iter):
-        # Hole density using Fermi-Dirac statistics
-        p = Nv / (1 + np.exp(beta * (E_F - Ev0 + e * V)))
-        rho = e * p
+
+        # Valence band / HOMO energy
+        Ev = Ev0 - e * V
+
+        # Hole density from Fermi-Dirac
+        p = Nv *(1 + np.exp(np.clip(beta * (E_F - Ev), -100, 100)))
         
-        # Enforce small density at the Schottky contacts
-        rho[contact_mask] = 1e-6
-            
-        # Update using nearest neighbors (Jacobi method)
-        V[1:-1, 1:-1] = 0.25 * (
-            V[2:, 1:-1] + V[:-2, 1:-1] + 
-            V[1:-1, 2:] + V[1:-1, :-2] + 
-            rho[1:-1, 1:-1]/epsilon * dx**2 
+        EA = EA0 - e * V
+        NA_minus = NA / (1 + gA * np.exp(np.clip((EA - E_F)*beta, -100, 100)))
+
+        # Neutral-background charge density
+        rho = e * (p - NA_minus)
+
+        # No semiconductor charge inside metal contacts
+        rho[contact_mask] = 0.0
+
+        # Poisson update
+        V_new = V.copy()
+
+        V_new[1:-1, 1:-1] = 0.25 * (
+            V[2:, 1:-1]
+            + V[:-2, 1:-1]
+            + V[1:-1, 2:]
+            + V[1:-1, :-2]
+            + dx**2 * rho[1:-1, 1:-1] / epsilon
         )
 
-        V[0, :] = V[1, :]
-        V[-1, :] = V[-2, :]
-        V[:, 0] = V[:, 1]
-        V[:, -1] = V[:, -2]
-        
-        # Enforce fixed potential for contacts
-        V[contact_mask] = original_V[contact_mask]
-        rho[contact_mask] = original_rho[contact_mask]  # Ensure charge density is zero at contacts
-        
+        # Neumann outer boundaries: dV/dn = 0
+        V_new[0, :] = V_new[1, :]
+        V_new[-1, :] = V_new[-2, :]
+        V_new[:, 0] = V_new[:, 1]
+        V_new[:, -1] = V_new[:, -2]
+
+        # Dirichlet contacts
+        V_new[contact_mask] = contact_V[contact_mask]
+
+        # Relaxation
+        V = (1 - alpha) * V + alpha * V_new
+
     return V, rho
 
 V, rho = solve()
