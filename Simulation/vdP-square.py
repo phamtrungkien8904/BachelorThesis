@@ -25,7 +25,7 @@ xv, yv = np.meshgrid(edge, edge)
 grid_spacing = edge[1] - edge[0]
 
 # Homogeneous charge density for the Poisson equation test case.
-charge_density_value = -3.0
+charge_density_value = -0.1
 charge_density = np.full((n, n), charge_density_value)
 
 # # Gaussian charge defect in the middle of the grid
@@ -63,8 +63,8 @@ def compute_potential(potential, fixed_bool, charge_density, n_iter):
 
 contact_frac = 0.1
 contact_size = int(contact_frac * n)
-V_plus = 1.0
-V_minus = -1.0
+V_plus = 0.0
+V_minus = -5.0
 
 potential_vdp = np.zeros((n, n))
 fixed_vdp = np.zeros((n, n), dtype=bool)
@@ -176,11 +176,12 @@ fig3d.savefig("vdP_3d_" + log_index + ".png", format='png', bbox_inches='tight',
 # 2D cross-section plot along the bottom edge (y = -1)
 fig1d = plt.figure(figsize=(8, 6))
 ax1d = fig1d.add_subplot(111)
-ax1d.plot(edge, potential_vdp[0, :], 'b-', linewidth=2)
+ax1d.plot(edge, potential_vdp[:, 0], 'b-', linewidth=2)
+ax1d.set_xlim(-1, 1)
+ax1d.set_ylim(V_minus * 1.1, V_plus * 1.1)
 ax1d.set_xlabel('x-Position (a.u.)')
 ax1d.set_ylabel('Potential V/V0')
 ax1d.set_title('Potential profile along the bottom edge')
-ax1d.grid(True)
 fig1d.savefig("vdP_1d_edge_" + log_index + ".eps", format='eps', bbox_inches='tight')
 fig1d.savefig("vdP_1d_edge_" + log_index + ".png", format='png', bbox_inches='tight', dpi=600)
 
