@@ -22,21 +22,14 @@ kB = 1  # Boltzmann constant in J/K
 T = 1
 beta = 1 / (kB * T)
 e = 1
+Nv = 1.0  # Scaled down to prevent divergence
 E_F = 1.0
-epsilon = 1
-
-# HOMO
-Nv = 1.0  # effective HOMO DOS
 Ev0 = 0.0
 
-# LUMO
-Nc = 1.0       # effective conduction/LUMO density of states
-Ec0 = 4.0      # conduction band / LUMO energy, should be above EF for p-type
+epsilon = 1
 
 
-
-
-N = 101
+N = 151
 iter = 100000
 
 x = np.linspace(0, 1, N)
@@ -47,61 +40,125 @@ X, Y = np.meshgrid(x, y)
 V = np.zeros((N, N))
 rho = np.zeros((N, N))
 p = np.zeros((N, N))
-n = np.zeros((N, N))
 contact_mask = np.zeros((N, N), dtype=bool)
 
 
-# Contact configuration (Schottky-injection)
+
 contact_size = 0.1
 contact_width = int(contact_size * N)
 V[:contact_width, :contact_width] = 0.0
-V[-contact_width:, :contact_width] = -5.0
+V[-contact_width:, :contact_width] = 0.0
 rho[:contact_width, :contact_width] = 0.0
 rho[-contact_width:, :contact_width] = 0.0
 p[:contact_width, :contact_width] = 0.0
 p[-contact_width:, :contact_width] = 0.0
-n[:contact_width, :contact_width] = 0.0
-n[-contact_width:, :contact_width] = 0.0
 contact_mask[:contact_width, :contact_width] = True
 contact_mask[-contact_width:, :contact_width] = True
 
 
+# ============================================================
+# DOS method for HOMO / valence states
+# ============================================================
 
+# Energy grid for DOS integral
+NE = 1000
+E_min = Ev0 - 3.0
+E_max = Ev0 + 3.0
+E_grid = np.linspace(E_min, E_max, NE)
+
+# Gaussian HOMO / valence DOS
+sigma_v = 0.25   # energetic disorder / DOS width
+
+Dv = np.exp(-0.5 * ((E_grid - Ev0) / sigma_v)**2)
+
+# normalize DOS so that integral Dv dE = Nv
+Dv = Dv * Nv / np.trapezoid(Dv, E_grid)
+
+
+def hole_density_DOS_direct(V_array):
+    """
+    Full DOS integral:
+    p(V) = integral Dv(E) / [1 + exp(beta*(EF - E + eV))] dE
+
+    V_array: 2D potential array
+    returns: 2D hole density array
+    """
+    exponent = beta * (
+        E_F
+        - E_grid[:, None, None]
+        + e * V_array[None, :, :]
+    )
+
+    hole_probability = 1.0 / (
+        1.0 + np.exp(np.clip(exponent, -100, 100))
+    )
+
+    p_array = np.trapezoid(
+        Dv[:, None, None] * hole_probability,
+        E_grid,
+        axis=0
+    )
+
+    return p_array
+
+# ============================================================
+# Fast lookup table for p(V)
+# ============================================================
+
+V_lookup = np.linspace(-10.0, 5.0, 3000)
+
+exponent_lookup = beta * (
+    E_F
+    - E_grid[None, :]
+    + e * V_lookup[:, None]
+)
+
+hole_probability_lookup = 1.0 / (
+    1.0 + np.exp(np.clip(exponent_lookup, -100, 100))
+)
+
+p_lookup = np.trapezoid(
+    Dv[None, :] * hole_probability_lookup,
+    E_grid,
+    axis=1
+)
+
+
+def hole_density_DOS(V_array):
+    """
+    Fast DOS-based hole density using interpolation.
+    """
+    return np.interp(V_array, V_lookup, p_lookup)
 
 def solve():
-    global V, rho, p, n
+    global V, rho, p
 
     dx = x[1] - x[0]
 
     contact_V = V.copy()
 
-    p0 = Nv / (1 + np.exp(beta * (E_F - Ev0)))
-    n0 = Nc / (1 + np.exp(beta * (Ec0 - E_F)))
+    # Neutral bulk hole density from DOS at V = 0
+    p0 = hole_density_DOS(np.array([[0.0]]))[0, 0]
 
+    print("p0 from DOS =", p0)
+
+    # Use 1.0 for physical neutral background.
+    # Your old code used 2*p0, but that creates artificial net negative charge.
+    background_factor = 1.0
 
     alpha = 0.05
 
     for i in range(iter):
 
-        # Valence band / HOMO energy
-        Ev = Ev0 - e * V
+        # Hole density from full DOS integral
+        p = hole_density_DOS(V)
 
-        # Conduction band / LUMO energy
-        Ec = Ec0 - e * V
-
-        # Hole density from Fermi-Dirac
-        p = Nv / (1 + np.exp(beta * (E_F - Ev)))
-
-        # Electron density from Fermi-Dirac
-        n = Nc / (1 + np.exp(beta * (Ec - E_F)))
-
-        # Neutral-background charge density
-        rho = e * (p - 5*p0) - e * (n - 5*n0)
+        # Net charge density
+        rho = e * (p - background_factor * p0)
 
         # No semiconductor charge inside metal contacts
-        rho[contact_mask] = 0.0
         p[contact_mask] = 0.0
-        n[contact_mask] = 0.0
+        rho[contact_mask] = 0.0
 
         # Poisson update
         V_new = V.copy()
@@ -127,12 +184,15 @@ def solve():
         error = np.max(np.abs(V_new - V))
         V = (1 - alpha) * V + alpha * V_new
 
+        # Enforce contacts again after relaxation
+        V[contact_mask] = contact_V[contact_mask]
+
         if (i + 1) % 5000 == 0:
             print(f"Step {i + 1}/{iter}, Error: {error:.6e}")
 
-    return V, rho, p, n
+    return V, rho, p
 
-V, rho, p, n = solve()
+V, rho, p = solve()
 
 end_time = time.time()
 print(f"Execution time: {end_time - start_time:.2f} seconds.")

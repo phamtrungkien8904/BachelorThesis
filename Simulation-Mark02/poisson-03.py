@@ -26,14 +26,8 @@ E_F = 1.0
 epsilon = 1
 
 # HOMO
-Nv = 1.0  # effective HOMO DOS
+Nv =2.0  # effective HOMO DOS
 Ev0 = 0.0
-
-# LUMO
-Nc = 1.0       # effective conduction/LUMO density of states
-Ec0 = 4.0      # conduction band / LUMO energy, should be above EF for p-type
-
-
 
 
 N = 101
@@ -47,7 +41,6 @@ X, Y = np.meshgrid(x, y)
 V = np.zeros((N, N))
 rho = np.zeros((N, N))
 p = np.zeros((N, N))
-n = np.zeros((N, N))
 contact_mask = np.zeros((N, N), dtype=bool)
 
 
@@ -60,48 +53,59 @@ rho[:contact_width, :contact_width] = 0.0
 rho[-contact_width:, :contact_width] = 0.0
 p[:contact_width, :contact_width] = 0.0
 p[-contact_width:, :contact_width] = 0.0
-n[:contact_width, :contact_width] = 0.0
-n[-contact_width:, :contact_width] = 0.0
 contact_mask[:contact_width, :contact_width] = True
 contact_mask[-contact_width:, :contact_width] = True
 
+# Cross geometry
+cross_mask = np.zeros((N, N), dtype=bool)
+
+# Cross geometry
+cross_width = 0.08
+cw = int(cross_width * N)
+half_cw = cw // 2
+center = N // 2
+
+# vertical arm
+cross_mask[:, center-half_cw:center+half_cw+1] = True
+
+# horizontal arm
+cross_mask[center-half_cw:center+half_cw+1, :] = True
+
+# masks
+non_semiconductor_mask = contact_mask | cross_mask
+
+# fixed-potential regions
+fixed_mask = contact_mask | cross_mask
 
 
 
 def solve():
-    global V, rho, p, n
+    global V, rho, p
 
     dx = x[1] - x[0]
 
-    contact_V = V.copy()
-
-    p0 = Nv / (1 + np.exp(beta * (E_F - Ev0)))
-    n0 = Nc / (1 + np.exp(beta * (Ec0 - E_F)))
-
+    # neutral bulk values at V = 0
+    p0 = Nv / (1 + np.exp(np.clip(beta * (E_F - Ev0), -100, 100)))
 
     alpha = 0.05
 
     for i in range(iter):
 
-        # Valence band / HOMO energy
+        # All electron energy levels shift as E = E0 - eV
         Ev = Ev0 - e * V
 
-        # Conduction band / LUMO energy
-        Ec = Ec0 - e * V
+        # hole density
+        p = Nv / (
+            1 + np.exp(np.clip(beta * (E_F - Ev), -100, 100))
+        )
 
-        # Hole density from Fermi-Dirac
-        p = Nv / (1 + np.exp(beta * (E_F - Ev)))
+        # net charge density referenced to the neutral equilibrium bulk
+        rho = e * (p - p0)
 
-        # Electron density from Fermi-Dirac
-        n = Nc / (1 + np.exp(beta * (Ec - E_F)))
+        # no semiconductor charge inside metal/contact/cross region
+        rho[non_semiconductor_mask] = 0.0
+        p[non_semiconductor_mask] = 0.0
 
-        # Neutral-background charge density
-        rho = e * (p - 5*p0) - e * (n - 5*n0)
-
-        # No semiconductor charge inside metal contacts
-        rho[contact_mask] = 0.0
-        p[contact_mask] = 0.0
-        n[contact_mask] = 0.0
 
         # Poisson update
         V_new = V.copy()
@@ -114,25 +118,25 @@ def solve():
             + dx**2 * rho[1:-1, 1:-1] / epsilon
         )
 
-        # Neumann outer boundaries: dV/dn = 0
+        # Neumann outer boundaries
         V_new[0, :] = V_new[1, :]
         V_new[-1, :] = V_new[-2, :]
         V_new[:, 0] = V_new[:, 1]
         V_new[:, -1] = V_new[:, -2]
 
         # Dirichlet contacts
-        V_new[contact_mask] = contact_V[contact_mask]
+        V_new[contact_mask] = V[contact_mask]
 
-        # Relaxation
+        # relaxation
         error = np.max(np.abs(V_new - V))
         V = (1 - alpha) * V + alpha * V_new
 
         if (i + 1) % 5000 == 0:
             print(f"Step {i + 1}/{iter}, Error: {error:.6e}")
 
-    return V, rho, p, n
+    return V, rho, p
 
-V, rho, p, n = solve()
+V, rho, p = solve()
 
 end_time = time.time()
 print(f"Execution time: {end_time - start_time:.2f} seconds.")
