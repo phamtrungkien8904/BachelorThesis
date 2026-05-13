@@ -18,67 +18,72 @@ plt.rcParams['figure.dpi'] = 100
 start_time = time.time()
 
 
-
-V0 = 5.0  # External field magnitude
-d = 1.0 # Plate separation
-E0 = V0/d # External field magnitude
-R = 0.1 # Sphere radius
+kB = 1  # Boltzmann constant in J/K
+T = 1
+beta = 1 / (kB * T)
+e = 1
+NA = 1.0
+ND = 0.5
 
 epsilon = 1
 
 
-N = 201
-iter = 200000
+N = 101
+iter = 100000
 
 x = np.linspace(0, 1, N)
 y = np.linspace(0, 1, N)
 X, Y = np.meshgrid(x, y)
-dx = x[1] - x[0]
-
-sphere_center_x = 0.5
-sphere_center_y = 0.5
-radial_distance = np.sqrt((X - sphere_center_x) ** 2 + (Y - sphere_center_y) ** 2)
-sphere_surface_mask = np.abs(radial_distance - R) <= 0.5 * dx
-
-# Polar angle measured from the capacitor field direction (-Y axis).
-theta = np.arctan2(X - sphere_center_x, sphere_center_y - Y)
-surface_charge_density = 3 * epsilon * E0 * np.cos(theta)
 
 
 V = np.zeros((N, N))
 rho = np.zeros((N, N))
+p = np.zeros((N, N))
+n = np.zeros((N, N))
 contact_mask = np.zeros((N, N), dtype=bool)
 
-# Capacitor plates
+
+
 contact_size = 0.1
 contact_width = int(contact_size * N)
-V[:contact_width, :] = -V0/2
-V[-contact_width:, :] = +V0/2
-rho[:contact_width, :] = 0.0
-rho[-contact_width:, :] = 0.0
-contact_mask[:contact_width, :] = True
-contact_mask[-contact_width:, :] = True
-
-# Thin-shell approximation of the sphere surface charge density.
-rho[sphere_surface_mask] = surface_charge_density[sphere_surface_mask] / dx
-V[sphere_surface_mask] = 0.0
-contact_mask[sphere_surface_mask] = True
+V[:contact_width, :contact_width] = 0.0
+V[-contact_width:, :contact_width] = -5.0
+rho[:contact_width, :contact_width] = 0.0
+rho[-contact_width:, :contact_width] = 0.0
+p[:contact_width, :contact_width] = 0.0
+p[-contact_width:, :contact_width] = 0.0
+n[:contact_width, :contact_width] = 0.0
+n[-contact_width:, :contact_width] = 0.0
+contact_mask[:contact_width, :contact_width] = True
+contact_mask[-contact_width:, :contact_width] = True
 
 
 
 
 def solve():
-    global V, rho
+    global V, rho, p
 
     dx = x[1] - x[0]
-    contact_V = V.copy()
 
+    contact_V = V.copy()
 
     alpha = 0.05
 
+    p0 = NA
+    n0 = ND
+
     for i in range(iter):
 
-        # No charge inside the fixed-potential capacitor plates.
+        # Hole density from Fermi-Dirac
+        p = NA* np.exp(-beta*e*V)
+        n = ND* np.exp(beta*e*V)
+
+        # Neutral-background charge density
+        rho = e * ((p - p0) - (n - n0))
+
+        # No semiconductor charge inside metal contacts
+        p[contact_mask] = 0.0
+        n[contact_mask] = 0.0
         rho[contact_mask] = 0.0
 
         # Poisson update
@@ -98,9 +103,8 @@ def solve():
         V_new[:, 0] = V_new[:, 1]
         V_new[:, -1] = V_new[:, -2]
 
-        # Dirichlet capacitor plates.
+        # Dirichlet contacts
         V_new[contact_mask] = contact_V[contact_mask]
-        V_new[sphere_surface_mask] = 0.0
 
         # Relaxation
         error = np.max(np.abs(V_new - V))
@@ -109,34 +113,42 @@ def solve():
         if (i + 1) % 5000 == 0:
             print(f"Step {i + 1}/{iter}, Error: {error:.6e}")
 
-    return V, rho
+    return V, rho, p
 
-V, rho = solve()
+V, rho, p = solve()
 
 end_time = time.time()
 print(f"Execution time: {end_time - start_time:.2f} seconds.")
 
+fig2D_density = plt.figure(figsize=(8, 6))
+ax2D = fig2D_density.add_subplot(111)
+density_image = ax2D.imshow(
+    p,
+    extent=[x.min(), x.max(), y.min(), y.max()],
+    origin='lower',
+    cmap='viridis',
+    interpolation='bicubic', # 'nearest' for exact grid values, 'bicubic' for smooth visualization
+    vmin=p.min(),
+    vmax=p.max()
+)
+fig2D_density.colorbar(density_image, ax=ax2D)
+ax2D.set_xlabel('X-axis')
+ax2D.set_ylabel('Y-axis')
+ax2D.set_aspect('equal')
+ax2D.set_xlim(0, 1)
+ax2D.set_ylim(0, 1)
+ax2D.set_title('2D Charge Density Distribution')
+plt.show()
 
-# fig2D_density = plt.figure(figsize=(8, 6))
-# ax2D = fig2D_density.add_subplot(111)
-# density_image = ax2D.imshow(
-#     surface_charge_density,
-#     extent=[x.min(), x.max(), y.min(), y.max()],
-#     origin='lower',
-#     cmap='seismic',
-#     interpolation='nearest',
-#     vmin=-np.max(np.abs(surface_charge_density)),
-#     vmax=np.max(np.abs(surface_charge_density))
-# )
-# fig2D_density.colorbar(density_image, ax=ax2D)
-# ax2D.set_xlabel('X-axis')
-# ax2D.set_ylabel('Y-axis')
-# ax2D.set_aspect('equal')
-# ax2D.set_xlim(0, 1)
-# ax2D.set_ylim(0, 1)
-# ax2D.set_title('Sphere Surface Charge Density')
-# plt.show()
-
+fig3D_density = plt.figure(figsize=(8, 6))
+ax3D = fig3D_density.add_subplot(111, projection='3d')
+density_surf = ax3D.plot_surface(X, Y, p, cmap='viridis') #, rcount=N, ccount=N, linewidth=0, antialiased=False)
+fig3D_density.colorbar(density_surf, ax=ax3D, shrink=0.5, pad=0.1)
+ax3D.set_xlabel('X-axis')
+ax3D.set_ylabel('Y-axis')
+ax3D.set_zlabel('Charge Density (rho)')
+ax3D.set_title('3D Charge Density Surface')
+plt.show()
 
 fig2D_potential = plt.figure(figsize=(8, 6))
 ax2D = fig2D_potential.add_subplot(111)
@@ -168,16 +180,20 @@ ax3D.set_zlabel('Potential (V)')
 ax3D.set_title('3D Potential Surface')
 plt.show()
 
-# 1D line curve along the grid center line (x = 0.5)
-fig1D = plt.figure(figsize=(8, 6))
-ax1D = fig1D.add_subplot(111)
+# 1D line curves along one side of the grid (bottom edge, index 0)
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 
+ax1.plot(y, p[:, 0], 'b-', linewidth=2)
+ax1.set_title('Charge Density Profile along 1 side')
+ax1.set_xlabel('Position (y)')
+ax1.set_ylabel('Density (p)')
+ax1.grid(True)
 
-ax1D.plot(y, V[:, N // 2], 'r-', linewidth=2)
-ax1D.set_title('Potential Profile along center line')
-ax1D.set_xlabel('Position (y)')
-ax1D.set_ylabel('Potential (V)')
-ax1D.grid(True)
+ax2.plot(y, V[:, 0], 'r-', linewidth=2)
+ax2.set_title('Potential Profile along 1 side')
+ax2.set_xlabel('Position (y)')
+ax2.set_ylabel('Potential (V)')
+ax2.grid(True)
 
 plt.tight_layout()
 plt.show()
