@@ -22,11 +22,18 @@ kB = 1  # Boltzmann constant in J/K
 T = 1
 beta = 1 / (kB * T)
 e = 1
-Nv = 1.0  # Scaled down to prevent divergence
 E_F = 1.0
+epsilon = 1
+
+# HOMO
+Nv = 1.0  # effective HOMO DOS
 Ev0 = 0.0
 
-epsilon = 1
+# LUMO
+Nc = 1.0       # effective conduction/LUMO density of states
+Ec0 = 4.0      # conduction band / LUMO energy, should be above EF for p-type
+
+
 
 
 N = 101
@@ -40,16 +47,21 @@ X, Y = np.meshgrid(x, y)
 V = np.zeros((N, N))
 rho = np.zeros((N, N))
 p = np.zeros((N, N))
+n = np.zeros((N, N))
 contact_mask = np.zeros((N, N), dtype=bool)
 
 
-
+# Contact configuration (Schottky-injection)
 contact_size = 0.1
 contact_width = int(contact_size * N)
 V[:contact_width, :contact_width] = 0.0
-V[-contact_width:, :contact_width] = 0.0
+V[-contact_width:, :contact_width] = -5.0
+rho[:contact_width, :contact_width] = 0.0
+rho[-contact_width:, :contact_width] = 0.0
 p[:contact_width, :contact_width] = 0.0
 p[-contact_width:, :contact_width] = 0.0
+n[:contact_width, :contact_width] = 0.0
+n[-contact_width:, :contact_width] = 0.0
 contact_mask[:contact_width, :contact_width] = True
 contact_mask[-contact_width:, :contact_width] = True
 
@@ -57,31 +69,39 @@ contact_mask[-contact_width:, :contact_width] = True
 
 
 def solve():
-    global V, rho, p
+    global V, rho, p, n
 
     dx = x[1] - x[0]
 
     contact_V = V.copy()
 
     p0 = Nv / (1 + np.exp(beta * (E_F - Ev0)))
+    n0 = Nc / (1 + np.exp(beta * (Ec0 - E_F)))
 
 
     alpha = 0.05
 
-    for _ in range(iter):
+    for i in range(iter):
 
         # Valence band / HOMO energy
         Ev = Ev0 - e * V
 
+        # Conduction band / LUMO energy
+        Ec = Ec0 + e * V
+
         # Hole density from Fermi-Dirac
         p = Nv / (1 + np.exp(beta * (E_F - Ev)))
 
+        # Electron density from Fermi-Dirac
+        n = Nc / (1 + np.exp(beta * (Ec - E_F)))
 
         # Neutral-background charge density
-        rho = e * (p - 50*p0)
+        rho = e * (p - 5*p0) - e * (n - 5*n0)
 
         # No semiconductor charge inside metal contacts
+        rho[contact_mask] = 0.0
         p[contact_mask] = 0.0
+        n[contact_mask] = 0.0
 
         # Poisson update
         V_new = V.copy()
@@ -104,11 +124,15 @@ def solve():
         V_new[contact_mask] = contact_V[contact_mask]
 
         # Relaxation
+        error = np.max(np.abs(V_new - V))
         V = (1 - alpha) * V + alpha * V_new
 
-    return V, rho, p
+        if (i + 1) % 5000 == 0:
+            print(f"Step {i + 1}/{iter}, Error: {error:.6e}")
 
-V, rho, p = solve()
+    return V, rho, p, n
+
+V, rho, p, n = solve()
 
 end_time = time.time()
 print(f"Execution time: {end_time - start_time:.2f} seconds.")
