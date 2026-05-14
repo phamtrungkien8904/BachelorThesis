@@ -1,128 +1,22 @@
-import time
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Custom settings
-plt.style.use('classic')
-plt.rcParams['figure.facecolor'] = 'white'
-plt.rcParams['axes.facecolor'] = 'white'
-plt.rcParams['axes.edgecolor'] = 'black'
-plt.rcParams['axes.linewidth'] = 1.2
-plt.rcParams['savefig.facecolor'] = 'white'
-plt.rcParams['font.family'] = 'sans-serif'
-plt.rcParams['font.sans-serif'] = ['Arial']
-plt.rcParams['mathtext.fontset'] = 'cm'
-plt.rcParams['figure.dpi'] = 100
+File_index = "02"
 
-# Test
-start_time = time.time()
-
-
-kB = 1.380649e-23  # Boltzmann constant in J/K
-T = 300
-e = 1.602176634e-19  # Elementary charge in Coulombs
-beta = 1 / (kB * T)
-VT = kB * T / e
-
-p0 = 1e18
-V_bi = 2.0 * VT 
-alpha = 0.005
-
-print(f"Calculated built-in potential (V_bi): {V_bi:.4f} V")
-print(f"Thermal voltage (VT): {VT:.4f} V")
-
-epsilon = 3 * 8.854187817e-12  # Permittivity of semiconductor (epsilon_r * epsilon_0) in F/m
-
+data_Poti = np.loadtxt(f"./Data/Data_Poti_{File_index}.dat")
+data_n2D = np.loadtxt(f"./Data/Data_n2D_{File_index}.dat")
+data_error = np.loadtxt(f"./Data/Data_Error_{File_index}.dat")
+error_index = np.arange(1, len(data_error) + 1)
 
 N = 101
-iter = 5000000 # Kerting's original code uses 1000 iterations, but you can increase this for better convergence at the cost of longer runtime. (Best: 2000000)
-step_iter = 100000
-L = 50e-9  # Physical size of the domain in meters
+L = 50  # Physical size of the domain in nm
 x = np.linspace(0, L, N)
 y = np.linspace(0, L, N)
 X, Y = np.meshgrid(x, y)
 
+V = data_Poti
+p = data_n2D
 
-V = np.zeros((N, N))
-rho = np.zeros((N, N))
-p = np.zeros((N, N))
-contact_mask = np.zeros((N, N), dtype=bool)
-
-
-
-contact_size = 0.05
-contact_width = int(contact_size * N)
-V[:contact_width, :contact_width] = V_bi + 0.0
-V[-contact_width:, :contact_width] = V_bi - 0.1
-# rho[:contact_width, :contact_width] = 0.0
-# rho[-contact_width:, :contact_width] = 0.0
-# p[:contact_width, :contact_width] = 0.0
-# p[-contact_width:, :contact_width] = 0.0
-contact_mask[:contact_width, :contact_width] = True
-contact_mask[-contact_width:, :contact_width] = True
-
-
-
-
-def solve():
-    global V, rho, p
-
-    dx = x[1] - x[0]
-
-    contact_V = V.copy()
-
-
-
-    alpha = 0.05
-    error = np.zeros(iter)
-
-    for i in range(iter):
-        p = p0 *(np.exp(-beta *e * (V-V_bi)) - 1)
-        # Neutral-background charge density
-        rho = e * p
-
-        # No semiconductor charge inside metal contacts
-        p[contact_mask] = 0.0
-        rho[contact_mask] = 0.0
-
-        # Poisson update
-        V_new = V.copy()
-
-        V_new[1:-1, 1:-1] = 0.25 * (
-            V[2:, 1:-1]
-            + V[:-2, 1:-1]
-            + V[1:-1, 2:]
-            + V[1:-1, :-2]
-            + dx**2 * rho[1:-1, 1:-1] / epsilon
-        )
-
-        # Neumann outer boundaries: dV/dn = 0
-        V_new[0, :] = V_new[1, :]
-        V_new[-1, :] = V_new[-2, :]
-        V_new[:, 0] = V_new[:, 1]
-        V_new[:, -1] = V_new[:, -2]
-
-        # Dirichlet contacts
-        V_new[contact_mask] = contact_V[contact_mask]
-
-        # Relaxation
-        error[i] = 100.0 * np.max(np.abs(V_new - V)) / max(np.max(np.abs(V)), 1e-30)
-        V = (1 - alpha) * V + alpha * V_new
-
-        if (i + 1) % step_iter == 0:
-            print(f"Iteration: {i + 1}/{iter}, Error: {error[i]:.6e} %")
-
-    return V, rho, p, error
-
-V, rho, p, error = solve()
-V = V - V_bi
-
-np.savetxt("./Data/Data_Poti_02.dat", V)
-np.savetxt("./Data/Data_n2D_02.dat", p)
-np.savetxt("./Data/Data_Error_02.dat", error[::step_iter])
-
-end_time = time.time()
-print(f"Execution time: {end_time - start_time:.2f} seconds.")
 
 fig_density = plt.figure(figsize=(14, 6), constrained_layout=True)
 gs_density = fig_density.add_gridspec(1, 2, width_ratios=[1, 1.05])
@@ -202,4 +96,13 @@ ax2.set_xlabel('Position (y) [nm]')
 ax2.set_ylabel('Potential (V)')
 
 plt.tight_layout()
+plt.show()
+
+
+plt.plot(error_index, data_error)
+plt.yscale("log")
+plt.xlabel("Iteration")
+plt.ylabel("Error (log scale)")
+plt.title("Convergence of Poisson Solver")
+plt.grid()
 plt.show()

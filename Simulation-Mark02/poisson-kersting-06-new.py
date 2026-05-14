@@ -14,6 +14,8 @@ plt.rcParams['font.sans-serif'] = ['Arial']
 plt.rcParams['mathtext.fontset'] = 'cm'
 plt.rcParams['figure.dpi'] = 100
 
+File_index = "03"
+
 # Test
 start_time = time.time()
 
@@ -47,22 +49,29 @@ V = np.zeros((N, N))
 rho = np.zeros((N, N))
 p = np.zeros((N, N))
 contact_mask = np.zeros((N, N), dtype=bool)
+cross_mask = np.zeros((N, N), dtype=bool)
 
 
 
 contact_size = 0.05
 contact_width = int(contact_size * N)
 V[:contact_width, :contact_width] = V_bi + 0.0
-V[-contact_width:, :contact_width] = V_bi - 0.1
-# rho[:contact_width, :contact_width] = 0.0
-# rho[-contact_width:, :contact_width] = 0.0
-# p[:contact_width, :contact_width] = 0.0
-# p[-contact_width:, :contact_width] = 0.0
+V[-contact_width:, :contact_width] = V_bi - 0.0
 contact_mask[:contact_width, :contact_width] = True
 contact_mask[-contact_width:, :contact_width] = True
 
+# Cross-shaped neutral region in the center of the domain
+cross_width = 0.05
+cw = int(cross_width * N)
+half_cw = cw // 2
+center = N // 2
+
+# Vertical arm
+cross_mask[:, center - half_cw:center + half_cw + 1] = True
 
 
+# Horizontal arm
+cross_mask[center - half_cw:center + half_cw + 1, :] = True
 
 def solve():
     global V, rho, p
@@ -81,12 +90,15 @@ def solve():
         # Neutral-background charge density
         rho = e * p
 
+        V_new = V.copy()
+
         # No semiconductor charge inside metal contacts
         p[contact_mask] = 0.0
         rho[contact_mask] = 0.0
 
-        # Poisson update
-        V_new = V.copy()
+        # No semiconductor charge in the cross region
+        p[cross_mask] = 0.0
+        rho[cross_mask] = 0.0
 
         V_new[1:-1, 1:-1] = 0.25 * (
             V[2:, 1:-1]
@@ -117,9 +129,9 @@ def solve():
 V, rho, p, error = solve()
 V = V - V_bi
 
-np.savetxt("./Data/Data_Poti_02.dat", V)
-np.savetxt("./Data/Data_n2D_02.dat", p)
-np.savetxt("./Data/Data_Error_02.dat", error[::step_iter])
+np.savetxt(f"./Data/Data_Poti_{File_index}.dat", V)
+np.savetxt(f"./Data/Data_n2D_{File_index}.dat", p)
+np.savetxt(f"./Data/Data_Error_{File_index}.dat", error[::step_iter])
 
 end_time = time.time()
 print(f"Execution time: {end_time - start_time:.2f} seconds.")

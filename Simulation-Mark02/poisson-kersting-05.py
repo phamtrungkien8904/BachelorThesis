@@ -117,88 +117,90 @@ def solve():
 V, rho, p, error = solve()
 V = V - V_bi
 
-np.savetxt("Data_Poti_01.dat", V)
-np.savetxt("Data_n2D_01.dat", p)
-np.savetxt("Data_Error_01.dat", error[::step_iter])
+# np.savetxt("./Data/Data_Poti_01.dat", V)
+# np.savetxt("./Data/Data_n2D_01.dat", p)
+# np.savetxt("./Data/Data_Error_01.dat", error[::step_iter])
 
 end_time = time.time()
 print(f"Execution time: {end_time - start_time:.2f} seconds.")
 
-# fig2D_density = plt.figure(figsize=(8, 6))
-# ax2D = fig2D_density.add_subplot(111)
-# density_image = ax2D.imshow(
-#     p,
-#     extent=[x.min(), x.max(), y.min(), y.max()],
-#     origin='lower',
-#     cmap='viridis',
-#     interpolation='bicubic', # 'nearest' for exact grid values, 'bicubic' for smooth visualization
-#     vmin=p.min(),
-#     vmax=p.max()
-# )
-# fig2D_density.colorbar(density_image, ax=ax2D)
-# ax2D.set_xlabel('X-axis')
-# ax2D.set_ylabel('Y-axis')
-# ax2D.set_aspect('equal')
-# ax2D.set_xlim(0, 1)
-# ax2D.set_ylim(0, 1)
-# ax2D.set_title('2D Charge Density Distribution')
-# plt.show()
+fig_density = plt.figure(figsize=(14, 6), constrained_layout=True)
+gs_density = fig_density.add_gridspec(1, 2, width_ratios=[1, 1.05])
 
-# fig3D_density = plt.figure(figsize=(8, 6))
-# ax3D = fig3D_density.add_subplot(111, projection='3d')
-# density_surf = ax3D.plot_surface(X, Y, p, cmap='viridis') #, rcount=N, ccount=N, linewidth=0, antialiased=False)
-# fig3D_density.colorbar(density_surf, ax=ax3D, shrink=0.5, pad=0.1)
-# ax3D.set_xlabel('X-axis')
-# ax3D.set_ylabel('Y-axis')
-# ax3D.set_zlabel('Charge Density (rho)')
-# ax3D.set_title('3D Charge Density Surface')
-# plt.show()
+ax2D_density = fig_density.add_subplot(gs_density[0, 0])
+density_image = ax2D_density.imshow(
+    p,
+    extent=[x.min(), x.max(), y.min(), y.max()],
+    origin='lower',
+    cmap='viridis',
+    interpolation='bicubic',  # 'nearest' for exact grid values, 'bicubic' for smooth visualization
+    vmin=p.min(),
+    vmax=p.max()
+)
+fig_density.colorbar(density_image, ax=ax2D_density, shrink=0.9)
+ax2D_density.set_xlabel('X-Position [nm]')
+ax2D_density.set_ylabel('Y-Position [nm]')
+ax2D_density.set_aspect('equal')
+ax2D_density.set_xlim(0, L)
+ax2D_density.set_ylim(0, L)
+ax2D_density.set_title('2D Charge Density Distribution')
 
-# fig2D_potential = plt.figure(figsize=(8, 6))
-# ax2D = fig2D_potential.add_subplot(111)
-# image = ax2D.imshow(
-#     V,
-#     extent=[x.min(), x.max(), y.min(), y.max()],
-#     origin='lower',
-#     cmap='jet',
-#     interpolation='bicubic', # 'nearest' for exact grid values, 'bicubic' for smooth visualization
-#     vmin=V.min(),
-#     vmax=V.max()
-# )
-# fig2D_potential.colorbar(image, ax=ax2D)
-# ax2D.set_xlabel('X-axis')
-# ax2D.set_ylabel('Y-axis')
-# ax2D.set_aspect('equal')
-# ax2D.set_xlim(0, 1)
-# ax2D.set_ylim(0, 1)
-# ax2D.set_title('2D Potential Distribution')
-# plt.show()
+ax3D_density = fig_density.add_subplot(gs_density[0, 1], projection='3d')
+ax3D_density.view_init(elev=30, azim=135)  # Adjust the viewing angle for better visualization
+density_surf = ax3D_density.plot_surface(X, Y, p, cmap='viridis', rcount=N//3, ccount=N//3, linewidth=1, color='k', antialiased=True)
+fig_density.colorbar(density_surf, ax=ax3D_density, shrink=0.6, pad=0.08)
+ax3D_density.set_xlabel('X-Position [nm]')
+ax3D_density.set_ylabel('Y-Position [nm]')
+ax3D_density.set_zlabel('Charge Density (rho)')
+ax3D_density.set_title('3D Charge Density Surface')
+fig_density.suptitle('Charge Density Distribution')
+plt.show()
 
-# fig3D_potential = plt.figure(figsize=(8, 6))
-# ax3D = fig3D_potential.add_subplot(111, projection='3d')
-# surf = ax3D.plot_surface(X, Y, V, cmap='jet') #, rcount=N, ccount=N, linewidth=0, antialiased=False)
-# fig3D_potential.colorbar(surf, ax=ax3D, shrink=0.5, pad=0.1)
-# ax3D.set_xlabel('X-axis')
-# ax3D.set_ylabel('Y-axis')
-# ax3D.set_zlabel('Potential (V)')
-# ax3D.set_title('3D Potential Surface')
-# plt.show()
+fig_potential = plt.figure(figsize=(14, 6), constrained_layout=True)
+gs_potential = fig_potential.add_gridspec(1, 2, width_ratios=[1, 1.05])
 
-# # 1D line curves along one side of the grid (bottom edge, index 0)
-# fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
+ax2D_potential = fig_potential.add_subplot(gs_potential[0, 0])
+image = ax2D_potential.imshow(
+    V,
+    extent=[x.min(), x.max(), y.min(), y.max()],
+    origin='lower',
+    cmap='jet',
+    interpolation='bicubic',  # 'nearest' for exact grid values, 'bicubic' for smooth visualization
+    vmin=V.min(),
+    vmax=V.max()
+)
+fig_potential.colorbar(image, ax=ax2D_potential, shrink=0.9)
+ax2D_potential.set_xlabel('X-Position [nm]')
+ax2D_potential.set_ylabel('Y-Position [nm]')
+ax2D_potential.set_aspect('equal')
+ax2D_potential.set_xlim(0, L)
+ax2D_potential.set_ylim(0, L)
+ax2D_potential.set_title('2D Potential Distribution')
 
-# ax1.plot(y, p[:, 0], 'b-', linewidth=2)
-# ax1.set_title('Charge Density Profile along 1 side')
-# ax1.set_xlabel('Position (y)')
-# ax1.set_ylabel('Density (p)')
-# ax1.grid(True)
+ax3D_potential = fig_potential.add_subplot(gs_potential[0, 1], projection='3d')
+ax3D_potential.view_init(elev=30, azim=135)  # Adjust the viewing angle for better visualization
+surf = ax3D_potential.plot_surface(X, Y, V, cmap='jet', rcount=N//3, ccount=N//3, linewidth=1, color='k', antialiased=True)
+fig_potential.colorbar(surf, ax=ax3D_potential, shrink=0.6, pad=0.08)
+ax3D_potential.set_xlabel('X-Position [nm]')
+ax3D_potential.set_ylabel('Y-Position [nm]')
+ax3D_potential.set_zlabel('Potential (V)')
+ax3D_potential.set_title('3D Potential Surface')
+fig_potential.suptitle('Potential Distribution')
+plt.show()
 
-# ax2.plot(y, V[:, 0], 'r-', linewidth=2)
-# ax2.set_title('Potential Profile along 1 side')
-# ax2.set_xlabel('Position (y)')
-# ax2.set_ylabel('Potential (V)')
-# ax2.grid(True)
+# 1D line curves along one side of the grid (bottom edge, index 0)
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 
-# plt.tight_layout()
-# plt.show()
+ax1.plot(y, p[:, 0], 'b-', linewidth=2)
+ax1.set_title('Charge Density Profile along 1 side')
+ax1.set_xlabel('Position (y) [nm]')
+ax1.set_ylabel('Density (p)')
+
+ax2.plot(y, V[:, 0], 'r-', linewidth=2)
+ax2.set_title('Potential Profile along 1 side')
+ax2.set_xlabel('Position (y) [nm]')
+ax2.set_ylabel('Potential (V)')
+
+plt.tight_layout()
+plt.show()
 
