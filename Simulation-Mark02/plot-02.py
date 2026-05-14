@@ -1,9 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-File_index_1 = "01"
-File_index_2 = "02"
-File_index_3 = "03"
+File_index_1 = "04"
+File_index_2 = "05"
+File_index_3 = "06"
 
 data_Poti_1 = np.loadtxt(f"./Data/Data_Poti_{File_index_1}.dat")
 data_Poti_2 = np.loadtxt(f"./Data/Data_Poti_{File_index_2}.dat")
@@ -178,7 +178,7 @@ ax2.plot(y, V_3[:, 0], 'r-', linewidth=2)
 ax2.set_title('Potential Profile along 1 side')
 ax2.set_xlabel('Position (y) [nm]')
 ax2.set_ylabel('Potential (V)')
-plt.savefig(f"./Figures/Plot_1D_normal.eps", format='eps', bbox_inches='tight')  # Save the figure with high resolution
+plt.savefig(f"./Figures/Plot_1D_vdP.eps", format='eps', bbox_inches='tight')  # Save the figure with high resolution
 plt.tight_layout()
 plt.show()
 
