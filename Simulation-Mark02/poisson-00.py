@@ -17,28 +17,11 @@ plt.rcParams['figure.dpi'] = 100
 # Test
 start_time = time.time()
 
-
-kB = 1  # Boltzmann constant in J/K
-T = 1
-beta = 1 / (kB * T)
-beta = 1e3
-e = 1
-NA_fixed = 1.0
-ND_fixed = 0.5
-ni = 1e-3
-
-# equilibrium carrier densities at V = 0
-# charge neutrality: p0 - n0 + ND_fixed - NA_fixed = 0
-# mass action: p0 * n0 = ni^2
-A = NA_fixed - ND_fixed
-p0 = 0.5 * (A + np.sqrt(A**2 + 4 * ni**2))
-n0 = ni**2 / p0
-
 epsilon = 1
 
 
 N = 101
-iter = 200000
+iter = 1000000
 
 x = np.linspace(0, 1, N)
 y = np.linspace(0, 1, N)
@@ -47,22 +30,15 @@ X, Y = np.meshgrid(x, y)
 
 V = np.zeros((N, N))
 rho = np.zeros((N, N))
-p = np.zeros((N, N))
-n = np.zeros((N, N))
+
 contact_mask = np.zeros((N, N), dtype=bool)
 
 
 
-contact_size = 0.05
+contact_size = 0.1
 contact_width = int(contact_size * N)
-V[:contact_width, :contact_width] = 0.0
-V[-contact_width:, :contact_width] = 0.0
-# rho[:contact_width, :contact_width] = 0.0
-# rho[-contact_width:, :contact_width] = 0.0
-# p[:contact_width, :contact_width] = 0.0
-# p[-contact_width:, :contact_width] = 0.0
-# n[:contact_width, :contact_width] = 0.0
-# n[-contact_width:, :contact_width] = 0.0
+V[:contact_width, :contact_width] = 5.0
+V[-contact_width:, :contact_width] = -5.0
 contact_mask[:contact_width, :contact_width] = True
 contact_mask[-contact_width:, :contact_width] = True
 
@@ -70,7 +46,7 @@ contact_mask[-contact_width:, :contact_width] = True
 
 
 def solve():
-    global V, rho, p
+    global V, rho
 
     dx = x[1] - x[0]
 
@@ -79,21 +55,6 @@ def solve():
     alpha = 0.05
 
     for i in range(iter):
-
-        # Hole density from Fermi-Dirac
-        p = p0* np.exp(-beta*e*V)
-        n = n0* np.exp(beta*e*V)
-
-
-
-        # Neutral-background charge density
-        rho = e * ((p - NA_fixed) - (n - ND_fixed))
-        # No semiconductor carriers inside the metal contacts.
-        p[contact_mask] = 0.0
-        n[contact_mask] = 0.0
-        # No semiconductor charge inside metal contacts
-        rho[contact_mask] = 0.0
-
         # Poisson update
         V_new = V.copy()
 
@@ -121,43 +82,14 @@ def solve():
         if (i + 1) % 5000 == 0:
             print(f"Step {i + 1}/{iter}, Error: {error:.6e}")
 
-    return V, rho, p
+    return V, rho
 
-V, rho, p = solve()
+V, rho = solve()
 
 
 end_time = time.time()
 print(f"Execution time: {end_time - start_time:.2f} seconds.")
 
-fig2D_density = plt.figure(figsize=(8, 6))
-ax2D = fig2D_density.add_subplot(111)
-density_image = ax2D.imshow(
-    p,
-    extent=[x.min(), x.max(), y.min(), y.max()],
-    origin='lower',
-    cmap='viridis',
-    interpolation='bicubic', # 'nearest' for exact grid values, 'bicubic' for smooth visualization
-    vmin=p.min(),
-    vmax=p.max()
-)
-fig2D_density.colorbar(density_image, ax=ax2D)
-ax2D.set_xlabel('X-axis')
-ax2D.set_ylabel('Y-axis')
-ax2D.set_aspect('equal')
-ax2D.set_xlim(0, 1)
-ax2D.set_ylim(0, 1)
-ax2D.set_title('2D Charge Density Distribution')
-plt.show()
-
-fig3D_density = plt.figure(figsize=(8, 6))
-ax3D = fig3D_density.add_subplot(111, projection='3d')
-density_surf = ax3D.plot_surface(X, Y, p, cmap='viridis') #, rcount=N, ccount=N, linewidth=0, antialiased=False)
-fig3D_density.colorbar(density_surf, ax=ax3D, shrink=0.5, pad=0.1)
-ax3D.set_xlabel('X-axis')
-ax3D.set_ylabel('Y-axis')
-ax3D.set_zlabel('Charge Density (rho)')
-ax3D.set_title('3D Charge Density Surface')
-plt.show()
 
 fig2D_potential = plt.figure(figsize=(8, 6))
 ax2D = fig2D_potential.add_subplot(111)
@@ -192,14 +124,14 @@ plt.show()
 # 1D line curves along one side of the grid (bottom edge, index 0)
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 
-ax1.plot(y, p[:, 0], 'b-', linewidth=2)
-ax1.set_title('Charge Density Profile along 1 side')
+ax1.plot(y, V[:, -1], 'b-', linewidth=2)
+ax1.set_title('Potential Profile (V12)')
 ax1.set_xlabel('Position (y)')
-ax1.set_ylabel('Density (p)')
+ax1.set_ylabel('Potential (V)')
 ax1.grid(True)
 
 ax2.plot(y, V[:, 0], 'r-', linewidth=2)
-ax2.set_title('Potential Profile along 1 side')
+ax2.set_title('Potential Profile (V34)')
 ax2.set_xlabel('Position (y)')
 ax2.set_ylabel('Potential (V)')
 ax2.grid(True)
