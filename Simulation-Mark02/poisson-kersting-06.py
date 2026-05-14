@@ -22,16 +22,15 @@ kB = 1  # Boltzmann constant in J/K
 T = 1
 beta = 1 / (kB * T)
 e = 1
-Nv = 1.0  # Scaled down to prevent divergence
-E_F = 1.0
-Ev0 = 0.0
+
+V_bi = 0.5   # Built-in potential in volts (Ohmic contact)
+
 
 epsilon = 1
 
 
 N = 101
-iter = 100000
-
+iter = 2000000 # Kerting's original code uses 1000 iterations, but you can increase this for better convergence at the cost of longer runtime. (Best: 2000000)
 x = np.linspace(0, 1, N)
 y = np.linspace(0, 1, N)
 X, Y = np.meshgrid(x, y)
@@ -44,14 +43,14 @@ contact_mask = np.zeros((N, N), dtype=bool)
 
 
 
-contact_size = 0.1
+contact_size = 0.05
 contact_width = int(contact_size * N)
-V[:contact_width, :contact_width] = 0.0
-V[-contact_width:, :contact_width] = 0.0
-rho[:contact_width, :contact_width] = 0.0
-rho[-contact_width:, :contact_width] = 0.0
-p[:contact_width, :contact_width] = 0.0
-p[-contact_width:, :contact_width] = 0.0
+V[:contact_width, :contact_width] = V_bi + 0.0
+V[-contact_width:, :contact_width] = V_bi - 1.0
+# rho[:contact_width, :contact_width] = 0.0
+# rho[-contact_width:, :contact_width] = 0.0
+# p[:contact_width, :contact_width] = 0.0
+# p[-contact_width:, :contact_width] = 0.0
 contact_mask[:contact_width, :contact_width] = True
 contact_mask[-contact_width:, :contact_width] = True
 
@@ -65,22 +64,15 @@ def solve():
 
     contact_V = V.copy()
 
-    p0 = Nv / (1 + np.exp(beta * (E_F - Ev0)))
 
 
     alpha = 0.05
 
     for i in range(iter):
-
-        # Valence band / HOMO energy
-        Ev = Ev0 - e * V
-
-        # Hole density from Fermi-Dirac
-        p = Nv / (1 + np.exp(beta * (E_F - Ev)))
-
-
+        p0 = 10.0
+        p = p0 *(np.exp(-beta *e * (V-V_bi)) - 1)
         # Neutral-background charge density
-        rho = e * (p - 2*p0)
+        rho = e * p
 
         # No semiconductor charge inside metal contacts
         p[contact_mask] = 0.0
@@ -116,6 +108,7 @@ def solve():
     return V, rho, p
 
 V, rho, p = solve()
+V = V - V_bi
 
 end_time = time.time()
 print(f"Execution time: {end_time - start_time:.2f} seconds.")
