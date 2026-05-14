@@ -15,7 +15,7 @@ plt.rcParams['font.sans-serif'] = ['Arial']
 plt.rcParams['mathtext.fontset'] = 'cm'
 plt.rcParams['figure.dpi'] = 100
 
-File_index = "04"
+File_index = "06"
 
 # Test
 start_time = time.time()
@@ -38,8 +38,8 @@ epsilon = 3 * 8.854187817e-12  # Permittivity of semiconductor (epsilon_r * epsi
 
 
 N = 101
-iter = 50000 # Kerting's original code uses 1000 iterations, but you can increase this for better convergence at the cost of longer runtime. (Best: 2000000)
-step_iter = 1000
+iter = 5000000 # Kerting's original code uses 1000 iterations, but you can increase this for better convergence at the cost of longer runtime. (Best: 2000000)
+step_iter = 100000
 L = 50e-9  # Physical size of the domain in meters
 x = np.linspace(0, L, N)
 y = np.linspace(0, L, N)
@@ -57,7 +57,7 @@ cross_mask = np.zeros((N, N), dtype=bool)
 contact_size = 0.05
 contact_width = int(contact_size * N)
 V[:contact_width, :contact_width] = V_bi + 0.0
-V[-contact_width:, :contact_width] = V_bi - 0.0
+V[-contact_width:, :contact_width] = V_bi - VT*1e-3
 contact_mask[:contact_width, :contact_width] = True
 contact_mask[-contact_width:, :contact_width] = True
 
@@ -133,15 +133,15 @@ V = V - V_bi
 end_time = time.time()
 print(f"Execution time: {end_time - start_time:.2f} seconds.")
 
-# np.savetxt(f"./Data/Data_Poti_{File_index}.dat", V)
-# np.savetxt(f"./Data/Data_n2D_{File_index}.dat", p)
-# np.savetxt(f"./Data/Data_Error_{File_index}.dat", error[::step_iter])
+np.savetxt(f"./Data/Data_Poti_{File_index}.dat", V)
+np.savetxt(f"./Data/Data_n2D_{File_index}.dat", p)
+np.savetxt(f"./Data/Data_Error_{File_index}.dat", error[::step_iter])
 
 log_filename = f"Log_{File_index}.txt"
 python_filename = os.path.basename(__file__)
 current_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 # Export data to log file (txt)
-log_file = open(log_filename, 'w')
+log_file = open(f"./Data/{log_filename}", 'w')
 with log_file:
     log_file.write(f"Simulation of van der Pauw structure\n")
     log_file.write("-------------------------------------------\n")

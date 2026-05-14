@@ -15,7 +15,7 @@ plt.rcParams['font.sans-serif'] = ['Arial']
 plt.rcParams['mathtext.fontset'] = 'cm'
 plt.rcParams['figure.dpi'] = 100
 
-File_index = "03"
+File_index = "04"
 
 # Test
 start_time = time.time()
@@ -141,7 +141,7 @@ log_filename = f"Log_{File_index}.txt"
 python_filename = os.path.basename(__file__)
 current_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 # Export data to log file (txt)
-log_file = open(log_filename, 'w')
+log_file = open(f"./Data/{log_filename}", 'w')
 with log_file:
     log_file.write(f"Simulation of van der Pauw structure\n")
     log_file.write("-------------------------------------------\n")

@@ -123,9 +123,9 @@ V = V - V_bi
 end_time = time.time()
 print(f"Execution time: {end_time - start_time:.2f} seconds.")
 
-np.savetxt(f"./Data/Data_Poti_{File_index}.dat", V)
-np.savetxt(f"./Data/Data_n2D_{File_index}.dat", p)
-np.savetxt(f"./Data/Data_Error_{File_index}.dat", error[::step_iter])
+# np.savetxt(f"./Data/Data_Poti_{File_index}.dat", V)
+# np.savetxt(f"./Data/Data_n2D_{File_index}.dat", p)
+# np.savetxt(f"./Data/Data_Error_{File_index}.dat", error[::step_iter])
 
 log_filename = f"Log_{File_index}.txt"
 python_filename = os.path.basename(__file__)

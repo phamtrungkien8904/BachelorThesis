@@ -1,0 +1,10 @@
+Simulation of van der Pauw structure
+-------------------------------------------
+Log file for poisson-kersting-06-diff.py
+Date and time: 2026-05-14 23:20:41
+-------------------------------------------
+Execution time: 786.18 seconds.
+Calculated built-in potential (V_bi): 0.0517 V
+Thermal voltage (VT): 0.0259 V
+Number of iterations: 5000000
+Grid size: 101 x 101 (50 nm x 50 nm)
