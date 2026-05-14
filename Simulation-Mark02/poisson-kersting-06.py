@@ -18,21 +18,22 @@ plt.rcParams['figure.dpi'] = 100
 start_time = time.time()
 
 
-kB = 1  # Boltzmann constant in J/K
-T = 1
+kB = 1.380649e-23  # Boltzmann constant in J/K
+T = 300
 beta = 1 / (kB * T)
-e = 1
+e = 1.602176634e-19  # Elementary charge in Coulombs
 
-V_bi = 0.5   # Built-in potential in volts (Ohmic contact)
+V_bi = 1.0   # Built-in potential in volts (Ohmic contact)
 
 
-epsilon = 1
+epsilon = 3 * 8.854187817e-12  # Permittivity of semiconductor (epsilon_r * epsilon_0) in F/m
 
 
 N = 101
-iter = 2000000 # Kerting's original code uses 1000 iterations, but you can increase this for better convergence at the cost of longer runtime. (Best: 2000000)
-x = np.linspace(0, 1, N)
-y = np.linspace(0, 1, N)
+iter = 100000 # Kerting's original code uses 1000 iterations, but you can increase this for better convergence at the cost of longer runtime. (Best: 2000000)
+L = 50e-9  # Physical size of the domain in meters
+x = np.linspace(0, L, N)
+y = np.linspace(0, L, N)
 X, Y = np.meshgrid(x, y)
 
 
@@ -40,19 +41,36 @@ V = np.zeros((N, N))
 rho = np.zeros((N, N))
 p = np.zeros((N, N))
 contact_mask = np.zeros((N, N), dtype=bool)
+cross_mask = np.zeros((N, N), dtype=bool)
 
 
 
 contact_size = 0.05
 contact_width = int(contact_size * N)
 V[:contact_width, :contact_width] = V_bi + 0.0
-V[-contact_width:, :contact_width] = V_bi - 1.0
+V[-contact_width:, :contact_width] = V_bi - 0.0
 # rho[:contact_width, :contact_width] = 0.0
 # rho[-contact_width:, :contact_width] = 0.0
 # p[:contact_width, :contact_width] = 0.0
 # p[-contact_width:, :contact_width] = 0.0
 contact_mask[:contact_width, :contact_width] = True
 contact_mask[-contact_width:, :contact_width] = True
+
+# Cross-shaped neutral region in the center of the domain
+cross_width = 0.05
+cw = int(cross_width * N)
+half_cw = cw // 2
+center = N // 2
+
+# Vertical arm
+cross_mask[:, center - half_cw:center + half_cw + 1] = True
+
+# Horizontal arm
+cross_mask[center - half_cw:center + half_cw + 1, :] = True
+
+
+
+
 
 
 
@@ -69,7 +87,8 @@ def solve():
     alpha = 0.05
 
     for i in range(iter):
-        p0 = 10.0
+
+        p0 = 1e5
         p = p0 *(np.exp(-beta *e * (V-V_bi)) - 1)
         # Neutral-background charge density
         rho = e * p
@@ -77,6 +96,10 @@ def solve():
         # No semiconductor charge inside metal contacts
         p[contact_mask] = 0.0
         rho[contact_mask] = 0.0
+
+        # No semiconductor charge in the cross region
+        p[cross_mask] = 0.0
+        rho[cross_mask] = 0.0
 
         # Poisson update
         V_new = V.copy()
@@ -178,6 +201,7 @@ fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 
 ax1.plot(y, p[:, 0], 'b-', linewidth=2)
 ax1.set_title('Charge Density Profile along 1 side')
+# ax1.set_ylim(0, 0.1)
 ax1.set_xlabel('Position (y)')
 ax1.set_ylabel('Density (p)')
 ax1.grid(True)

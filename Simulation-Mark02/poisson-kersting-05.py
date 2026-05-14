@@ -18,21 +18,22 @@ plt.rcParams['figure.dpi'] = 100
 start_time = time.time()
 
 
-kB = 1  # Boltzmann constant in J/K
-T = 1
+kB = 1.380649e-23  # Boltzmann constant in J/K
+T = 300
 beta = 1 / (kB * T)
-e = 1
+e = 1.602176634e-19  # Elementary charge in Coulombs
+p0 = 1e26
+V_bi = 1.0   # Built-in potential in volts (Ohmic contact)
 
-V_bi = 0.5   # Built-in potential in volts (Ohmic contact)
 
-
-epsilon = 1
+epsilon = 3 * 8.854187817e-12  # Permittivity of semiconductor (epsilon_r * epsilon_0) in F/m
 
 
 N = 101
-iter = 2000000 # Kerting's original code uses 1000 iterations, but you can increase this for better convergence at the cost of longer runtime. (Best: 2000000)
-x = np.linspace(0, 1, N)
-y = np.linspace(0, 1, N)
+iter = 1000000 # Kerting's original code uses 1000 iterations, but you can increase this for better convergence at the cost of longer runtime. (Best: 2000000)
+L = 50e-9  # Physical size of the domain in meters
+x = np.linspace(0, L, N)
+y = np.linspace(0, L, N)
 X, Y = np.meshgrid(x, y)
 
 
@@ -46,7 +47,7 @@ contact_mask = np.zeros((N, N), dtype=bool)
 contact_size = 0.05
 contact_width = int(contact_size * N)
 V[:contact_width, :contact_width] = V_bi + 0.0
-V[-contact_width:, :contact_width] = V_bi - 1.0
+V[-contact_width:, :contact_width] = V_bi - 0.0
 # rho[:contact_width, :contact_width] = 0.0
 # rho[-contact_width:, :contact_width] = 0.0
 # p[:contact_width, :contact_width] = 0.0
@@ -69,7 +70,6 @@ def solve():
     alpha = 0.05
 
     for i in range(iter):
-        p0 = 10.0
         p = p0 *(np.exp(-beta *e * (V-V_bi)) - 1)
         # Neutral-background charge density
         rho = e * p
