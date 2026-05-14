@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 
 File_index_1 = "01"
 File_index_2 = "02"
+File_index_3 = "03"
 
 data_Poti_1 = np.loadtxt(f"./Data/Data_Poti_{File_index_1}.dat")
 data_Poti_2 = np.loadtxt(f"./Data/Data_Poti_{File_index_2}.dat")
@@ -10,6 +11,10 @@ data_n2D_1 = np.loadtxt(f"./Data/Data_n2D_{File_index_1}.dat")
 data_n2D_2 = np.loadtxt(f"./Data/Data_n2D_{File_index_2}.dat")
 data_error_1 = np.loadtxt(f"./Data/Data_Error_{File_index_1}.dat")
 data_error_2 = np.loadtxt(f"./Data/Data_Error_{File_index_2}.dat")
+data_Poti_3 = np.loadtxt(f"./Data/Data_Poti_{File_index_3}.dat")
+data_n2D_3 = np.loadtxt(f"./Data/Data_n2D_{File_index_3}.dat")
+
+
 error_index = np.arange(1, len(data_error_1) + 1)
 
 
@@ -22,8 +27,10 @@ X, Y = np.meshgrid(x, y)
 
 V_1 = data_Poti_1
 V_2 = data_Poti_2
+V_3 = data_Poti_3
 p_1 = data_n2D_1
 p_2 = data_n2D_2
+p_3 = data_n2D_3
 
 fig_density = plt.figure(figsize=(14, 6), constrained_layout=True)
 gs_density = fig_density.add_gridspec(1, 2, width_ratios=[1, 1.05])
@@ -93,13 +100,15 @@ plt.show()
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 
 ax1.plot(y, p_1[:, 0], 'b-', linewidth=2)
-ax1.plot(y, p_2[:, 0], 'b--', linewidth=2)
+ax1.plot(y, p_2[:, 0], 'k-', linewidth=2)
+ax1.plot(y, p_3[:, 0], 'r-', linewidth=2)
 ax1.set_title('Charge Density Profile along 1 side')
 ax1.set_xlabel('Position (y) [nm]')
 ax1.set_ylabel('Density (p)')
 
-ax2.plot(y, V_1[:, 0], 'r-', linewidth=2)
-ax2.plot(y, V_2[:, 0], 'r--', linewidth=2)
+ax2.plot(y, V_1[:, 0], 'b-', linewidth=2)
+ax2.plot(y, V_2[:, 0], 'k-', linewidth=2)
+ax2.plot(y, V_3[:, 0], 'r-', linewidth=2)
 ax2.set_title('Potential Profile along 1 side')
 ax2.set_xlabel('Position (y) [nm]')
 ax2.set_ylabel('Potential (V)')
