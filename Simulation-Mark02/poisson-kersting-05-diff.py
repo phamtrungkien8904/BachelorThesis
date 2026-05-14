@@ -53,7 +53,7 @@ contact_mask = np.zeros((N, N), dtype=bool)
 contact_size = 0.05
 contact_width = int(contact_size * N)
 V[:contact_width, :contact_width] = V_bi + 0.0
-V[-contact_width:, :contact_width] = V_bi - 0.0
+V[-contact_width:, :contact_width] = V_bi - 0.1
 # rho[:contact_width, :contact_width] = 0.0
 # rho[-contact_width:, :contact_width] = 0.0
 # p[:contact_width, :contact_width] = 0.0
@@ -117,9 +117,9 @@ def solve():
 V, rho, p, error = solve()
 V = V - V_bi
 
-np.savetxt("Data_Poti_01.dat", V)
-np.savetxt("Data_n2D_01.dat", p)
-np.savetxt("Data_Error_01.dat", error[::step_iter])
+np.savetxt("Data_Poti_02.dat", V)
+np.savetxt("Data_n2D_02.dat", p)
+np.savetxt("Data_Error_02.dat", error[::step_iter])
 
 end_time = time.time()
 print(f"Execution time: {end_time - start_time:.2f} seconds.")
