@@ -27,9 +27,9 @@ plt.rcParams["font.family"]='sans-serif'
 Z1 = np.loadtxt('Proj031Poti.dat')   # VG4=-5, V34=0
 Z3 = np.loadtxt('Proj033Poti.dat')   # VG4=-5, V34=-2
 Z5 = np.loadtxt('Proj035Poti.dat')   # VG4=-5, V34=-4
-Z2 = np.loadtxt('Proj031Dens.dat')    # same sequence
-Z4 = np.loadtxt('Proj033Dens.dat')   
-Z6 = np.loadtxt('Proj035Dens.dat')  
+Z2 = np.loadtxt('Proj031n2D.dat')    # same sequence
+Z4 = np.loadtxt('Proj033n2D.dat')   
+Z6 = np.loadtxt('Proj035n2D.dat')  
 
 "Data manipulation"
 Z2=Z2/1e16

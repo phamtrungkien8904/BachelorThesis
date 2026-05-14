@@ -19,12 +19,12 @@ plt.rcParams["ytick.direction"] = "in"
 plt.rcParams["font.family"]='sans-serif'
 
 "Load data"
-P1 = np.loadtxt('Proj021Poti.dat')    
-P2 = np.loadtxt('Proj022Poti.dat')    
-P3 = np.loadtxt('Proj023Poti.dat')    
-P4 = np.loadtxt('Proj024Poti.dat')    
-P5 = np.loadtxt('Proj025Poti.dat')    
-P6 = np.loadtxt('Proj026Poti.dat')    
+P1 = np.loadtxt('Proj021Dens.dat')    
+P2 = np.loadtxt('Proj022Dens.dat')    
+P3 = np.loadtxt('Proj023Dens.dat')    
+P4 = np.loadtxt('Proj024Dens.dat')    
+P5 = np.loadtxt('Proj025Dens.dat')    
+P6 = np.loadtxt('Proj026Dens.dat')    
 
 "Data manipulation, line extraction"
 P1Row3= np.take(P1, indices=2, axis=0)
