@@ -16,7 +16,7 @@ plt.rcParams['mathtext.fontset'] = 'cm'
 plt.rcParams['figure.dpi'] = 100
 
 
-File_index = "02"
+File_index = "03"
 # Test
 start_time = time.time()
 
@@ -56,7 +56,7 @@ contact_mask = np.zeros((N, N), dtype=bool)
 contact_size = 0.05
 contact_width = int(contact_size * N)
 V[:contact_width, :contact_width] = V_bi + 0.0
-V[-contact_width:, :contact_width] = V_bi - VT*3e-3
+V[-contact_width:, :contact_width] = V_bi - VT*1e-3
 # rho[:contact_width, :contact_width] = 0.0
 # rho[-contact_width:, :contact_width] = 0.0
 # p[:contact_width, :contact_width] = 0.0
