@@ -80,9 +80,9 @@ def solve():
     error = np.zeros(iter)
 
     for i in range(iter):
-        p = p0 *(np.exp(-beta *e * (V-V_bi)) - 1)
+        p = p0 *np.exp(-beta *e * (V-V_bi)) 
         # Neutral-background charge density
-        rho = e * p
+        rho = e * (p - p0)
 
         # No semiconductor charge inside metal contacts
         p[contact_mask] = 0.0

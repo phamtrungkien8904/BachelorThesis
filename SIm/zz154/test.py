@@ -53,8 +53,8 @@ print(f"Thermal Voltage (n2D): V_th = {-1/a2:.4f} V")
 print(np.exp(b2 - b1))
 
 
-plt.plot(V_1, np.log(n2D_1), '^', label='rho')
-plt.plot(V_1, np.log(rho_1), 'o', label='n2D')
+plt.plot(V_1, np.log(n2D_1), '^', label='n2D')
+plt.plot(V_1, np.log(rho_1), 'o', label='rho')
 plt.plot(V_1, fit_1, 'r--', label='Fit rho')
 plt.plot(V_1, fit_2, 'g--', label='Fit n2D')
 # plt.semilogy(V_1, rho_1 - n2D_1, 's', label='Project 3')
