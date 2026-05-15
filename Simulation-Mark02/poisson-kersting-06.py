@@ -38,8 +38,8 @@ epsilon = 3 * 8.854187817e-12  # Permittivity of semiconductor (epsilon_r * epsi
 
 
 N = 101
-iter = 5000000 # Kerting's original code uses 1000 iterations, but you can increase this for better convergence at the cost of longer runtime. (Best: 2000000)
-step_iter = 100000
+iter = 100000 # Kerting's original code uses 1000 iterations, but you can increase this for better convergence at the cost of longer runtime. (Best: 2000000)
+step_iter = iter//10
 L = 50e-9  # Physical size of the domain in meters
 x = np.linspace(0, L, N)
 y = np.linspace(0, L, N)
@@ -129,6 +129,7 @@ def solve():
 
 V, rho, p, error = solve()
 V = V - V_bi
+p = p + p0
 
 end_time = time.time()
 print(f"Execution time: {end_time - start_time:.2f} seconds.")
@@ -137,22 +138,22 @@ print(f"Execution time: {end_time - start_time:.2f} seconds.")
 # np.savetxt(f"./Data/Data_n2D_{File_index}.dat", p)
 # np.savetxt(f"./Data/Data_Error_{File_index}.dat", error[::step_iter])
 
-log_filename = f"Log_{File_index}.txt"
-python_filename = os.path.basename(__file__)
-current_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-# Export data to log file (txt)
-log_file = open(f"./Data/{log_filename}", 'w')
-with log_file:
-    log_file.write(f"Simulation of van der Pauw structure\n")
-    log_file.write("-------------------------------------------\n")
-    log_file.write(f"Log file for {python_filename}\n")
-    log_file.write(f"Date and time: {current_time}\n")
-    log_file.write("-------------------------------------------\n")
-    log_file.write(f"Execution time: {end_time - start_time:.2f} seconds.\n")
-    log_file.write(f"Calculated built-in potential (V_bi): {V_bi:.4f} V\n")
-    log_file.write(f"Thermal voltage (VT): {VT:.4f} V\n")
-    log_file.write(f"Number of iterations: {iter}\n")
-    log_file.write(f"Grid size: {N} x {N} ({L*1e9:.0f} nm x {L*1e9:.0f} nm)\n")
+# log_filename = f"Log_{File_index}.txt"
+# python_filename = os.path.basename(__file__)
+# current_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+# # Export data to log file (txt)
+# log_file = open(f"./Data/{log_filename}", 'w')
+# with log_file:
+#     log_file.write(f"Simulation of van der Pauw structure\n")
+#     log_file.write("-------------------------------------------\n")
+#     log_file.write(f"Log file for {python_filename}\n")
+#     log_file.write(f"Date and time: {current_time}\n")
+#     log_file.write("-------------------------------------------\n")
+#     log_file.write(f"Execution time: {end_time - start_time:.2f} seconds.\n")
+#     log_file.write(f"Calculated built-in potential (V_bi): {V_bi:.4f} V\n")
+#     log_file.write(f"Thermal voltage (VT): {VT:.4f} V\n")
+#     log_file.write(f"Number of iterations: {iter}\n")
+#     log_file.write(f"Grid size: {N} x {N} ({L*1e9:.0f} nm x {L*1e9:.0f} nm)\n")
 
 
 

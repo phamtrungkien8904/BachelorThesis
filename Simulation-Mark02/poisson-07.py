@@ -39,7 +39,7 @@ epsilon = 1  # Permittivity of semiconductor (epsilon_r * epsilon_0) in F/m
 
 N = 101
 iter = 2000000 # Kerting's original code uses 1000 iterations, but you can increase this for better convergence at the cost of longer runtime. (Best: 2000000)
-step_iter = 100000
+step_iter = iter//10
 L = 50e-9  # Physical size of the domain in meters
 x = np.linspace(0, L, N)
 y = np.linspace(0, L, N)

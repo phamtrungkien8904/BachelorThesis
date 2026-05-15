@@ -15,7 +15,7 @@ plt.rcParams['font.sans-serif'] = ['Arial']
 plt.rcParams['mathtext.fontset'] = 'cm'
 plt.rcParams['figure.dpi'] = 100
 
-File_index = "06"
+File_index = "04"
 
 # Test
 start_time = time.time()
@@ -61,18 +61,18 @@ V[-contact_width:, :contact_width] = V_bi - VT*4
 contact_mask[:contact_width, :contact_width] = True
 contact_mask[-contact_width:, :contact_width] = True
 
-# Cross-shaped neutral region in the center of the domain
-cross_width = 0.05
-cw = int(cross_width * N)
-half_cw = cw // 2
-center = N // 2
+# # Cross-shaped neutral region in the center of the domain
+# cross_width = 0.05
+# cw = int(cross_width * N)
+# half_cw = cw // 2
+# center = N // 2
 
-# Vertical arm
-cross_mask[:, center - half_cw:center + half_cw + 1] = True
+# # Vertical arm
+# cross_mask[:, center - half_cw:center + half_cw + 1] = True
 
 
-# Horizontal arm
-cross_mask[center - half_cw:center + half_cw + 1, :] = True
+# # Horizontal arm
+# cross_mask[center - half_cw:center + half_cw + 1, :] = True
 
 def solve():
     global V, rho, p
@@ -97,9 +97,9 @@ def solve():
         p[contact_mask] = 0.0
         rho[contact_mask] = 0.0
 
-        # No semiconductor charge in the cross region
-        p[cross_mask] = 0.0
-        rho[cross_mask] = 0.0
+        # # No semiconductor charge in the cross region
+        # p[cross_mask] = 0.0
+        # rho[cross_mask] = 0.0
 
         V_new[1:-1, 1:-1] = 0.25 * (
             V[2:, 1:-1]
@@ -129,65 +129,51 @@ def solve():
 
 V, rho, p, error = solve()
 V = V - V_bi
-p = p + p0
 
 end_time = time.time()
 print(f"Execution time: {end_time - start_time:.2f} seconds.")
 
-np.savetxt(f"./Data/Data_Poti_{File_index}.dat", V)
-np.savetxt(f"./Data/Data_n2D_{File_index}.dat", p)
-np.savetxt(f"./Data/Data_Error_{File_index}.dat", error[::step_iter])
+# np.savetxt(f"./Data/Data_Poti_{File_index}.dat", V)
+# np.savetxt(f"./Data/Data_n2D_{File_index}.dat", p)
+# np.savetxt(f"./Data/Data_Error_{File_index}.dat", error[::step_iter])
 
-log_filename = f"Log_{File_index}.txt"
-python_filename = os.path.basename(__file__)
-current_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-# Export data to log file (txt)
-log_file = open(f"./Data/{log_filename}", 'w')
-with log_file:
-    log_file.write(f"Simulation of van der Pauw structure\n")
-    log_file.write("-------------------------------------------\n")
-    log_file.write(f"Log file for {python_filename}\n")
-    log_file.write(f"Date and time: {current_time}\n")
-    log_file.write("-------------------------------------------\n")
-    log_file.write(f"Execution time: {end_time - start_time:.2f} seconds.\n")
-    log_file.write(f"Calculated built-in potential (V_bi): {V_bi:.4f} V\n")
-    log_file.write(f"Thermal voltage (VT): {VT:.4f} V\n")
-    log_file.write(f"Number of iterations: {iter}\n")
-    log_file.write(f"Grid size: {N} x {N} ({L*1e9:.0f} nm x {L*1e9:.0f} nm)\n")
+# log_filename = f"Log_{File_index}.txt"
+# python_filename = os.path.basename(__file__)
+# current_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+# # Export data to log file (txt)
+# log_file = open(f"./Data/{log_filename}", 'w')
+# with log_file:
+#     log_file.write(f"Simulation of van der Pauw structure\n")
+#     log_file.write("-------------------------------------------\n")
+#     log_file.write(f"Log file for {python_filename}\n")
+#     log_file.write(f"Date and time: {current_time}\n")
+#     log_file.write("-------------------------------------------\n")
+#     log_file.write(f"Execution time: {end_time - start_time:.2f} seconds.\n")
+#     log_file.write(f"Calculated built-in potential (V_bi): {V_bi:.4f} V\n")
+#     log_file.write(f"Thermal voltage (VT): {VT:.4f} V\n")
+#     log_file.write(f"Number of iterations: {iter}\n")
+#     log_file.write(f"Grid size: {N} x {N} ({L*1e9:.0f} nm x {L*1e9:.0f} nm)\n")
 
 
 
-fig_density = plt.figure(figsize=(14, 6), constrained_layout=True)
-gs_density = fig_density.add_gridspec(1, 2, width_ratios=[1, 1.05])
+dx = x[1] - x[0]
+dV_dy, dV_dx = np.gradient(V, dx, dx)*(p+p0)
+Ex = -dV_dx
+Ey = -dV_dy
+E_mag = np.sqrt(Ex**2 + Ey**2)
 
-ax2D_density = fig_density.add_subplot(gs_density[0, 0])
-density_image = ax2D_density.imshow(
-    p,
-    extent=[x.min(), x.max(), y.min(), y.max()],
-    origin='lower',
-    cmap='viridis',
-    interpolation='bicubic',  # 'nearest' for exact grid values, 'bicubic' for smooth visualization
-    vmin=p.min(),
-    vmax=p.max()
-)
-fig_density.colorbar(density_image, ax=ax2D_density, shrink=0.9)
-ax2D_density.set_xlabel('X-Position [nm]')
-ax2D_density.set_ylabel('Y-Position [nm]')
-ax2D_density.set_aspect('equal')
-ax2D_density.set_xlim(0, L)
-ax2D_density.set_ylim(0, L)
-ax2D_density.set_title('2D Charge Density Distribution')
+# For quiver plot
+s = 5
+X_q = X[::s, ::s]
+Y_q = Y[::s, ::s]
+Ex_q = Ex[::s, ::s]
+Ey_q = Ey[::s, ::s]
+E_mag_q = np.hypot(Ex_q, Ey_q)
 
-ax3D_density = fig_density.add_subplot(gs_density[0, 1], projection='3d')
-ax3D_density.view_init(elev=30, azim=135)  # Adjust the viewing angle for better visualization
-density_surf = ax3D_density.plot_surface(X, Y, p, cmap='viridis', rcount=N//3, ccount=N//3, linewidth=1, color='k', antialiased=True)
-fig_density.colorbar(density_surf, ax=ax3D_density, shrink=0.6, pad=0.08)
-ax3D_density.set_xlabel('X-Position [nm]')
-ax3D_density.set_ylabel('Y-Position [nm]')
-ax3D_density.set_zlabel('Charge Density (rho)')
-ax3D_density.set_title('3D Charge Density Surface')
-fig_density.suptitle('Charge Density Distribution')
-plt.show()
+
+quiver_scale = np.nanmax(E_mag_q) / (0.4 * dx) if np.nanmax(E_mag_q) > 0 else 1.0
+
+
 
 fig_potential = plt.figure(figsize=(14, 6), constrained_layout=True)
 gs_potential = fig_potential.add_gridspec(1, 2, width_ratios=[1, 1.05])
@@ -202,6 +188,9 @@ image = ax2D_potential.imshow(
     vmin=V.min(),
     vmax=V.max()
 )
+plt.rcParams['contour.negative_linestyle'] = 'solid'
+contour = ax2D_potential.contour(X, Y, V, colors='k', levels=30, linewidths=1)
+
 fig_potential.colorbar(image, ax=ax2D_potential, shrink=0.9)
 ax2D_potential.set_xlabel('X-Position [nm]')
 ax2D_potential.set_ylabel('Y-Position [nm]')
@@ -219,16 +208,69 @@ ax3D_potential.set_ylabel('Y-Position [nm]')
 ax3D_potential.set_zlabel('Potential (V)')
 ax3D_potential.set_title('3D Potential Surface')
 fig_potential.suptitle('Potential Distribution')
+
+plt.show()
+
+
+fig_field = plt.figure(figsize=(14, 6), constrained_layout=True)
+gs_field = fig_field.add_gridspec(1, 2, width_ratios=[1, 1.05])
+
+ax2D_field = fig_field.add_subplot(gs_field[0, 0])
+image = ax2D_field.imshow(
+    E_mag,
+    extent=[x.min(), x.max(), y.min(), y.max()],
+    origin='lower',
+    cmap='jet',
+    interpolation='bicubic',  # 'nearest' for exact grid values, 'bicubic' for smooth visualization
+    vmin=E_mag.min(),
+    vmax=E_mag.max()
+)
+
+fig_field.colorbar(image, ax=ax2D_field, shrink=0.9)
+ax2D_field.set_xlabel('X-Position [nm]')
+ax2D_field.set_ylabel('Y-Position [nm]')
+ax2D_field.set_aspect('equal')
+ax2D_field.set_xlim(0, L)
+ax2D_field.set_ylim(0, L)
+ax2D_field.set_title('2D Electric Field Magnitude Distribution')
+
+ax3D_field = fig_field.add_subplot(gs_field[0, 1], projection='3d')
+ax3D_field.view_init(elev=30, azim=135)  # Adjust the viewing angle for better visualization
+surf = ax3D_field.plot_surface(X, Y, E_mag, cmap='jet', rcount=N//3, ccount=N//3, linewidth=1, color='k', antialiased=True)
+fig_field.colorbar(surf, ax=ax3D_field, shrink=0.6, pad=0.08)
+ax3D_field.set_xlabel('X-Position [nm]')
+ax3D_field.set_ylabel('Y-Position [nm]')
+ax3D_field.set_zlabel('Electric Field Magnitude (V/m)')
+ax3D_field.set_title('3D Electric Field Magnitude Surface')
+fig_field.suptitle('Electric Field Distribution')
+
+plt.show()
+
+
+fig_field, ax_field = plt.subplots(figsize=(7, 6), constrained_layout=True)
+quiver = ax_field.quiver(
+    X_q,
+    Y_q,
+    Ex_q,
+    Ey_q,
+    color='black',
+    angles='xy',
+    scale_units='xy',
+    scale=quiver_scale*0.05,
+    pivot='mid',
+)
+# fig_field.colorbar(quiver, ax=ax_field, label='|E| [V/m]')
+ax_field.set_xlabel('X-Position [nm]')
+ax_field.set_ylabel('Y-Position [nm]')
+ax_field.set_aspect('equal')
+ax_field.set_xlim(0, L)
+ax_field.set_ylim(0, L)
+ax_field.set_title('Electric Field Quiver')
 plt.show()
 
 # 1D line curves along one side of the grid (bottom edge, index 0)
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
-
-ax1.plot(y, p[:, 0], 'b-', linewidth=2)
-ax1.set_title('Charge Density Profile along 1 side')
-ax1.set_xlabel('Position (y) [nm]')
-ax1.set_ylabel('Density (p)')
-
+fig = plt.figure(figsize=(8, 6))
+ax2 = fig.add_subplot(111)
 ax2.plot(y, V[:, 0], 'r-', linewidth=2)
 ax2.set_title('Potential Profile along 1 side')
 ax2.set_xlabel('Position (y) [nm]')
