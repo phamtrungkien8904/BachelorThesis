@@ -14,14 +14,15 @@ plt.rcParams['mathtext.fontset'] = 'cm'
 plt.rcParams['figure.dpi'] = 100
 
 # Constants
-kT = 1.0  # Thermal energy (k_B * T)
-beta = 1/kT  # 1/(k_B * T)
+k_B = 1.0  # Boltzmann constant
+T = 1.0  # Temperature
+beta = 1/(k_B * T)  # 1/(k_B * T)
 E_V = 0  # Valence band edge energy
 E_g = 4  # Band gap energy
 E_L = E_V + E_g  # Conduction band edge energy
 E_F = (E_V + E_L) / 2 + 1 * E_g  # Fermi energy at mid-gap
-# Fermi-Dirac distribution function
 
+# Fermi-Dirac distribution function
 E = np.linspace(-20, 20, 400)  # Energy range
 f_E = 1 / (np.exp(beta * (E - E_F)) + 1)  # Fermi-Dirac distribution
 
