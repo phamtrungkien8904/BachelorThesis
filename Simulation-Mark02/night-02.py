@@ -15,7 +15,7 @@ plt.rcParams['font.sans-serif'] = ['Arial']
 plt.rcParams['mathtext.fontset'] = 'cm'
 plt.rcParams['figure.dpi'] = 100
 
-File_index = "20261605005"
+File_index = "20261605008"
 
 # Test
 start_time = time.time()
@@ -28,7 +28,7 @@ beta = 1 / (kB * T)
 VT = kB * T / e
 
 p0 = 1e18
-V_bi = 2.0 * VT 
+V_bi = 20.0 * VT 
 alpha = 0.005
 
 print(f"Calculated built-in potential (V_bi): {V_bi:.4f} V")
@@ -55,7 +55,7 @@ contact_mask = np.zeros((N, N), dtype=bool)
 contact_size = 0.05
 contact_width = int(contact_size * N)
 V[:contact_width, :contact_width] = V_bi + 0.0
-V[-contact_width:, :contact_width] = V_bi - 0.1
+V[-contact_width:, :contact_width] = V_bi - 1.0
 contact_mask[:contact_width, :contact_width] = True
 contact_mask[-contact_width:, :contact_width] = True
 

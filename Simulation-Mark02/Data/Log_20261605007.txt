@@ -1,0 +1,12 @@
+Simulation of square structure
+-------------------------------------------
+Log file for night-01.py
+Date and time: 2026-05-16 12:01:03
+-------------------------------------------
+Execution time: 1535.31 seconds.
+Calculated built-in potential (V_bi): 0.5170 V
+Thermal voltage (VT): 0.0259 V
+Contact Voltage: 0.0000 V
+Bulk density (p0): 1.00e+18 m^-3
+Number of iterations: 15000000
+Grid size: 101 x 101 (50 nm x 50 nm)
