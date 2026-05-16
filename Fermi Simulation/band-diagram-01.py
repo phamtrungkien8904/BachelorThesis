@@ -22,11 +22,11 @@ beta = 1/(k_B * T)
 E_T = 1/beta  # Thermal energy
 
 E_g = 1.0*E_T  # Band gap energy
-E_F = 0  # Fermi energy at mid-gap
+E_F = 10  # Fermi energy at mid-gap
 
 
 # Fermi-Dirac distribution function
-E = np.linspace(-5, 5, 400)  # Energy range
+E = np.linspace(5, 15, 400)  # Energy range
 X = np.linspace(0, 1, len(E))  # Normalized x range for visualization
 X_grid, E_grid = np.meshgrid(X, E)
 
@@ -35,7 +35,7 @@ material_ranges = [
     (0.4, 0.5),
     (0.7, 0.8),
 ]
-material_E_V_values = [-0.9, -0.5, -0.1]
+material_E_V_values = [9.1, 9.5, 9.9]
 
 f = 1 / (np.exp(beta * (E_grid - E_F)) + 1)  # Fermi-Dirac distribution
 
