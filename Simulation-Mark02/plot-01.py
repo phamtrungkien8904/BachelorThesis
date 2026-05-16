@@ -1,9 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-File_index_1 = "20261605001"
-File_index_2 = "20261605002"
-File_index_3 = "20261605003"
+File_index_1 = "20261605007"
+File_index_2 = "20261605008"
+File_index_3 = "20261605010"
 
 data_Poti_1 = np.loadtxt(f"./Data/Data_Poti_{File_index_1}.dat")
 data_Poti_2 = np.loadtxt(f"./Data/Data_Poti_{File_index_2}.dat")
