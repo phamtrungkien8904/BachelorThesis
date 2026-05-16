@@ -17,13 +17,18 @@ plt.rcParams['figure.dpi'] = 100
 k_B = 1.0  # Boltzmann constant
 T = 1.0  # Temperature
 beta = 1/(k_B * T)  # 1/(k_B * T)
-E_V = -1  # Valence band edge energy
-E_g = 2  # Band gap energy
-E_L = 1  # Conduction band edge energy
-E_F = 0  # Fermi energy at mid-gap
+E_T = 1/beta  # Thermal energy
 
+
+E_V = 1  # Valence band edge energy
+E_g = 10*E_T  # Band gap energy
+E_L = E_V + E_g  # Conduction band edge energy
 m_e = 1.0  # Effective mass of electrons
-m_h = 1.0  # Effective mass of holes
+m_h = 2.0  # Effective mass of holes
+
+E_F = (E_V + E_L) / 2 + 0.75 * E_T * np.log(m_h/m_e)  # Fermi energy at mid-gap
+
+
 
 E = np.linspace(-20, 20, 400)  # Energy range
 
@@ -38,10 +43,13 @@ n_n = D_n * f_n
 n_p = D_p * f_p
 # Plotting
 plt.figure(figsize=(8, 6))
-plt.plot(n_n, E, label='Electron Density', color='blue')
-plt.plot(n_p, E, label='Hole Density', color='red')
+plt.plot(n_n, E, label='Electron Density', color='blue', lw = 2)
+plt.plot(n_p, E, label='Hole Density', color='red', lw = 2)
+plt.axhline(E_V, color='black', linestyle='--', label='Valence Band Edge')
+plt.axhline(E_L, color='black', linestyle='--', label='Conduction Band Edge')
+plt.axhline(E_F, color='black', linestyle='--', label='Fermi Energy')
 plt.title('Electron and Hole Density Distributions')
 plt.xlabel(r'Density of occupied states ($D(E) f(E)$)')
 plt.ylabel(r'Energy ($E$)')
-plt.legend()
+# plt.legend()
 plt.show()
