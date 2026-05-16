@@ -17,9 +17,9 @@ plt.rcParams['figure.dpi'] = 100
 k_B = 1.0  # Boltzmann constant
 T = 1.0  # Temperature
 beta = 1/(k_B * T)  # 1/(k_B * T)
-E_V = 1  # Valence band edge energy
+E_V = -1  # Valence band edge energy
 E_g = 2  # Band gap energy
-E_L = -1  # Conduction band edge energy
+E_L = 1  # Conduction band edge energy
 E_F = 0  # Fermi energy at mid-gap
 
 m_e = 1.0  # Effective mass of electrons
@@ -34,15 +34,14 @@ D_n = (m_e**(3/2) * np.sqrt(np.maximum(E - E_L, 0)))  # Density of states for el
 D_p = (m_h**(3/2) * np.sqrt(np.maximum(E_V - E, 0)))  # Density of states for holes
 D = D_n + D_p  # Total density of states
 
-electron_density = D_n * f_n
-hole_density = D_p * f_p
+n_n = D_n * f_n
+n_p = D_p * f_p
 # Plotting
 plt.figure(figsize=(8, 6))
-plt.plot(E, D_n, label='Electron Density', color='blue')
-plt.plot(E, D_p, label='Hole Density', color='red')
-plt.plot(E, D, label='Total Density of States', color='purple', linestyle='--')
+plt.plot(n_n, E, label='Electron Density', color='blue')
+plt.plot(n_p, E, label='Hole Density', color='red')
 plt.title('Electron and Hole Density Distributions')
-plt.xlabel('Energy (E)')
-plt.ylabel('Density')
+plt.xlabel(r'Density of occupied states ($D(E) f(E)$)')
+plt.ylabel(r'Energy ($E$)')
 plt.legend()
 plt.show()
