@@ -15,7 +15,7 @@ plt.rcParams['font.sans-serif'] = ['Arial']
 plt.rcParams['mathtext.fontset'] = 'cm'
 plt.rcParams['figure.dpi'] = 100
 
-File_index = "20261605001"
+File_index = "20261605004"
 
 # Test
 start_time = time.time()
@@ -28,7 +28,7 @@ beta = 1 / (kB * T)
 VT = kB * T / e
 
 p0 = 1e18
-V_bi = 10.0 * VT 
+V_bi = 2.0 * VT 
 alpha = 0.005
 
 print(f"Calculated built-in potential (V_bi): {V_bi:.4f} V")
@@ -38,8 +38,8 @@ epsilon = 3 * 8.854187817e-12  # Permittivity of semiconductor (epsilon_r * epsi
 
 
 N = 101
-iter = 20000000 # Kerting's original code uses 1000 iterations, but you can increase this for better convergence at the cost of longer runtime. (Best: 2000000)
-step_iter = iter//20
+iter = 15000000 # Kerting's original code uses 1000 iterations, but you can increase this for better convergence at the cost of longer runtime. (Best: 2000000)
+step_iter = iter//15
 L = 50e-9  # Physical size of the domain in meters
 x = np.linspace(0, L, N)
 y = np.linspace(0, L, N)
@@ -120,24 +120,24 @@ np.savetxt(f"./Data/Data_Poti_{File_index}.dat", V)
 np.savetxt(f"./Data/Data_n2D_{File_index}.dat", p)
 np.savetxt(f"./Data/Data_Error_{File_index}.dat", error[::step_iter])
 
-# log_filename = f"Log_{File_index}.txt"
-# python_filename = os.path.basename(__file__)
-# current_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-# # Export data to log file (txt)
-# log_file = open(f"./Data/{log_filename}", 'w')
-# with log_file:
-#     log_file.write(f"Simulation of square structure\n")
-#     log_file.write("-------------------------------------------\n")
-#     log_file.write(f"Log file for {python_filename}\n")
-#     log_file.write(f"Date and time: {current_time}\n")
-#     log_file.write("-------------------------------------------\n")
-#     log_file.write(f"Execution time: {end_time - start_time:.2f} seconds.\n")
-#     log_file.write(f"Calculated built-in potential (V_bi): {V_bi:.4f} V\n")
-#     log_file.write(f"Thermal voltage (VT): {VT:.4f} V\n")
-#     log_file.write(f"Contact Voltage: {V[contact_mask][1]:.4f} V\n")
-#     log_file.write(f"Bulk density (p0): {p0:.2e} m^-3\n")
-#     log_file.write(f"Number of iterations: {iter}\n")
-#     log_file.write(f"Grid size: {N} x {N} ({L*1e9:.0f} nm x {L*1e9:.0f} nm)\n")
+log_filename = f"Log_{File_index}.txt"
+python_filename = os.path.basename(__file__)
+current_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+# Export data to log file (txt)
+log_file = open(f"./Data/{log_filename}", 'w')
+with log_file:
+    log_file.write(f"Simulation of square structure\n")
+    log_file.write("-------------------------------------------\n")
+    log_file.write(f"Log file for {python_filename}\n")
+    log_file.write(f"Date and time: {current_time}\n")
+    log_file.write("-------------------------------------------\n")
+    log_file.write(f"Execution time: {end_time - start_time:.2f} seconds.\n")
+    log_file.write(f"Calculated built-in potential (V_bi): {V_bi:.4f} V\n")
+    log_file.write(f"Thermal voltage (VT): {VT:.4f} V\n")
+    log_file.write(f"Contact Voltage: {V[-contact_width:, :contact_width].mean():.4f} V\n")
+    log_file.write(f"Bulk density (p0): {p0:.2e} m^-3\n")
+    log_file.write(f"Number of iterations: {iter}\n")
+    log_file.write(f"Grid size: {N} x {N} ({L*1e9:.0f} nm x {L*1e9:.0f} nm)\n")
 
 
 
