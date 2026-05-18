@@ -15,7 +15,7 @@ plt.rcParams['font.sans-serif'] = ['Arial']
 plt.rcParams['mathtext.fontset'] = 'cm'
 plt.rcParams['figure.dpi'] = 100
 
-File_index = "12"
+File_index = "20261805001"
 
 # Test
 start_time = time.time()
@@ -38,8 +38,8 @@ epsilon = 3 * 8.854187817e-12  # Permittivity of semiconductor (epsilon_r * epsi
 
 
 N = 101
-iter = 10000000 # Kerting's original code uses 1000 iterations, but you can increase this for better convergence at the cost of longer runtime. (Best: 2000000)
-step_iter = iter//10
+iter = 15000000 # Kerting's original code uses 1000 iterations, but you can increase this for better convergence at the cost of longer runtime. (Best: 2000000)
+step_iter = iter//15
 L = 50e-9  # Physical size of the domain in meters
 x = np.linspace(0, L, N)
 y = np.linspace(0, L, N)
@@ -50,8 +50,6 @@ V = np.zeros((N, N))
 rho = np.zeros((N, N))
 p = np.zeros((N, N))
 contact_mask = np.zeros((N, N), dtype=bool)
-cross_mask = np.zeros((N, N), dtype=bool)
-
 
 
 contact_size = 0.05
@@ -61,18 +59,7 @@ V[-contact_width:, :contact_width] = V_bi - 0.1
 contact_mask[:contact_width, :contact_width] = True
 contact_mask[-contact_width:, :contact_width] = True
 
-# Cross-shaped neutral region in the center of the domain
-cross_width = 0.05
-cw = int(cross_width * N)
-half_cw = cw // 2
-center = N // 2
 
-# Vertical arm
-cross_mask[:, center - half_cw:center + half_cw + 1] = True
-
-
-# Horizontal arm
-cross_mask[center - half_cw:center + half_cw + 1, :] = True
 
 def solve():
     global V, rho, p
@@ -89,17 +76,13 @@ def solve():
     for i in range(iter):
         p = p0 *np.exp(-beta *e * (V-V_bi)) 
         # Neutral-background charge density
-        rho = e * (p - p0)
+        rho = -e * (p-p0)*(1.0 - (V-V_bi))/1.0
 
         V_new = V.copy()
 
         # No semiconductor charge inside metal contacts
         p[contact_mask] = 0.0
         rho[contact_mask] = 0.0
-
-        # No semiconductor charge in the cross region
-        p[cross_mask] = 0.0
-        rho[cross_mask] = 0.0
 
         V_new[1:-1, 1:-1] = 0.25 * (
             V[2:, 1:-1]
@@ -143,7 +126,7 @@ current_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 # Export data to log file (txt)
 log_file = open(f"./Data/{log_filename}", 'w')
 with log_file:
-    log_file.write(f"Simulation of van der Pauw structure\n")
+    log_file.write(f"Simulation of square structure\n")
     log_file.write("-------------------------------------------\n")
     log_file.write(f"Log file for {python_filename}\n")
     log_file.write(f"Date and time: {current_time}\n")
@@ -151,6 +134,8 @@ with log_file:
     log_file.write(f"Execution time: {end_time - start_time:.2f} seconds.\n")
     log_file.write(f"Calculated built-in potential (V_bi): {V_bi:.4f} V\n")
     log_file.write(f"Thermal voltage (VT): {VT:.4f} V\n")
+    log_file.write(f"Contact Voltage: {V[-contact_width:, :contact_width].mean():.4f} V\n")
+    log_file.write(f"Bulk density (p0): {p0:.2e} m^-3\n")
     log_file.write(f"Number of iterations: {iter}\n")
     log_file.write(f"Grid size: {N} x {N} ({L*1e9:.0f} nm x {L*1e9:.0f} nm)\n")
 
