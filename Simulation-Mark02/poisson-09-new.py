@@ -15,7 +15,7 @@ plt.rcParams['font.sans-serif'] = ['Arial']
 plt.rcParams['mathtext.fontset'] = 'cm'
 plt.rcParams['figure.dpi'] = 100
 
-File_index = "20261805001"
+File_index = "20261805003"
 
 # Test
 start_time = time.time()
@@ -28,7 +28,7 @@ beta = 1 / (kB * T)
 VT = kB * T / e
 
 p0 = 1e18
-V_bi = 1.0 * VT 
+V_bi = -10.0 * VT 
 alpha = 0.005
 
 print(f"Calculated built-in potential (V_bi): {V_bi:.4f} V")
@@ -38,8 +38,8 @@ epsilon = 3 * 8.854187817e-12  # Permittivity of semiconductor (epsilon_r * epsi
 
 
 N = 101
-iter = 15000000 # Kerting's original code uses 1000 iterations, but you can increase this for better convergence at the cost of longer runtime. (Best: 2000000)
-step_iter = iter//15
+iter = 20000000 # Kerting's original code uses 1000 iterations, but you can increase this for better convergence at the cost of longer runtime. (Best: 2000000)
+step_iter = iter//20
 L = 50e-9  # Physical size of the domain in meters
 x = np.linspace(0, L, N)
 y = np.linspace(0, L, N)
@@ -55,7 +55,7 @@ contact_mask = np.zeros((N, N), dtype=bool)
 contact_size = 0.05
 contact_width = int(contact_size * N)
 V[:contact_width, :contact_width] = V_bi + 0.0
-V[-contact_width:, :contact_width] = V_bi - 0.1
+V[-contact_width:, :contact_width] = V_bi - 0.01
 contact_mask[:contact_width, :contact_width] = True
 contact_mask[-contact_width:, :contact_width] = True
 
@@ -69,14 +69,12 @@ def solve():
     contact_V = V.copy()
 
 
-
-    alpha = 0.05
     error = np.zeros(iter)
 
     for i in range(iter):
         p = p0 *np.exp(-beta *e * (V-V_bi)) 
         # Neutral-background charge density
-        rho = -e * (p-p0)*(1.0 - (V-V_bi))/1.0
+        rho = e * (p-p0)
 
         V_new = V.copy()
 

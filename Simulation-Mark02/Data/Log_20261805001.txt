@@ -1,0 +1,12 @@
+Simulation of square structure
+-------------------------------------------
+Log file for poisson-09-new.py
+Date and time: 2026-05-18 21:47:07
+-------------------------------------------
+Execution time: 2220.04 seconds.
+Calculated built-in potential (V_bi): -0.5170 V
+Thermal voltage (VT): 0.0259 V
+Contact Voltage: -0.1000 V
+Bulk density (p0): 1.00e+18 m^-3
+Number of iterations: 20000000
+Grid size: 101 x 101 (50 nm x 50 nm)
