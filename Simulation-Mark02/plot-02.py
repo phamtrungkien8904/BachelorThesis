@@ -1,18 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-File_index_1 = "04"
-File_index_2 = "05"
-File_index_3 = "06"
+File_index_1 = "20261905001"
 
 data_Poti_1 = np.loadtxt(f"./Data/Data_Poti_{File_index_1}.dat")
-data_Poti_2 = np.loadtxt(f"./Data/Data_Poti_{File_index_2}.dat")
 data_n2D_1 = np.loadtxt(f"./Data/Data_n2D_{File_index_1}.dat")
-data_n2D_2 = np.loadtxt(f"./Data/Data_n2D_{File_index_2}.dat")
 data_error_1 = np.loadtxt(f"./Data/Data_Error_{File_index_1}.dat")
-data_error_2 = np.loadtxt(f"./Data/Data_Error_{File_index_2}.dat")
-data_Poti_3 = np.loadtxt(f"./Data/Data_Poti_{File_index_3}.dat")
-data_n2D_3 = np.loadtxt(f"./Data/Data_n2D_{File_index_3}.dat")
+
 
 
 error_index = np.arange(1, len(data_error_1) + 1)
@@ -25,170 +19,86 @@ x = np.linspace(0, L, N)
 y = np.linspace(0, L, N)
 X, Y = np.meshgrid(x, y)
 
-V_1 = data_Poti_1
-V_2 = data_Poti_2
-V_3 = data_Poti_3
-p_1 = data_n2D_1
-p_2 = data_n2D_2
-p_3 = data_n2D_3
+V = data_Poti_1
+p = data_n2D_1
 
-# File 1
-fig1 = plt.figure(figsize=(14, 6), constrained_layout=True)
-gs1 = fig1.add_gridspec(1, 2, width_ratios=[1, 1.05])
 
-ax_n2d_1 = fig1.add_subplot(gs1[0, 1])
-image_n2d_1 = ax_n2d_1.imshow(
-    p_1,
+fig_density = plt.figure(figsize=(14, 6), constrained_layout=True)
+gs_density = fig_density.add_gridspec(1, 2, width_ratios=[1, 1.05])
+
+ax2D_density = fig_density.add_subplot(gs_density[0, 0])
+density_image = ax2D_density.imshow(
+    p,
     extent=[x.min(), x.max(), y.min(), y.max()],
     origin='lower',
     cmap='viridis',
-    interpolation='bicubic',
-    vmin=0,
-    vmax=p_3.max()
+    interpolation='bicubic',  # 'nearest' for exact grid values, 'bicubic' for smooth visualization
+    vmin=p.min(),
+    vmax=p.max()
 )
-fig1.colorbar(image_n2d_1, ax=ax_n2d_1, shrink=0.9)
-ax_n2d_1.set_xlabel('X-Position [nm]')
-ax_n2d_1.set_ylabel('Y-Position [nm]')
-ax_n2d_1.set_aspect('equal')
-ax_n2d_1.set_xlim(0, L)
-ax_n2d_1.set_ylim(0, L)
-ax_n2d_1.set_title('2D Charge Density Distribution')
+fig_density.colorbar(density_image, ax=ax2D_density, shrink=0.9)
+ax2D_density.set_xlabel('X-Position [nm]')
+ax2D_density.set_ylabel('Y-Position [nm]')
+ax2D_density.set_aspect('equal')
+ax2D_density.set_xlim(0, L)
+ax2D_density.set_ylim(0, L)
+ax2D_density.set_title('2D Charge Density Distribution')
 
-ax_pot_1 = fig1.add_subplot(gs1[0, 0])
-image_pot_1 = ax_pot_1.imshow(
-    V_1,
-    extent=[x.min(), x.max(), y.min(), y.max()],
-    origin='lower',
-    cmap='jet',
-    interpolation='bicubic',
-        vmin=V_3.min(),
-        vmax=0
-)
-fig1.colorbar(image_pot_1, ax=ax_pot_1, shrink=0.9)
-ax_pot_1.set_xlabel('X-Position [nm]')
-ax_pot_1.set_ylabel('Y-Position [nm]')
-ax_pot_1.set_aspect('equal')
-ax_pot_1.set_xlim(0, L)
-ax_pot_1.set_ylim(0, L)
-ax_pot_1.set_title('2D Potential Distribution')
-fig1.suptitle('File 01: Charge Density and Potential Distribution (V34 = 0 V)')
-plt.savefig(f"./Figures/Plot_{File_index_1}.eps", format='eps', bbox_inches='tight')  # Save the figure with high resolution
+ax3D_density = fig_density.add_subplot(gs_density[0, 1], projection='3d')
+ax3D_density.view_init(elev=30, azim=135)  # Adjust the viewing angle for better visualization
+density_surf = ax3D_density.plot_surface(X, Y, p, cmap='viridis', rcount=N//3, ccount=N//3, linewidth=1, color='k', antialiased=True)
+fig_density.colorbar(density_surf, ax=ax3D_density, shrink=0.6, pad=0.08)
+ax3D_density.set_xlabel('X-Position [nm]')
+ax3D_density.set_ylabel('Y-Position [nm]')
+ax3D_density.set_zlabel('Charge Density (rho)')
+ax3D_density.set_title('3D Charge Density Surface')
+fig_density.suptitle('Charge Density Distribution')
 plt.show()
 
-# File 2
-fig2 = plt.figure(figsize=(14, 6), constrained_layout=True)
-gs2 = fig2.add_gridspec(1, 2, width_ratios=[1, 1.05])
+fig_potential = plt.figure(figsize=(14, 6), constrained_layout=True)
+gs_potential = fig_potential.add_gridspec(1, 2, width_ratios=[1, 1.05])
 
-ax_n2d_2 = fig2.add_subplot(gs2[0, 1])
-image_n2d_2 = ax_n2d_2.imshow(
-    p_2,
-    extent=[x.min(), x.max(), y.min(), y.max()],
-    origin='lower',
-    cmap='viridis',
-    interpolation='bicubic',
-    vmin=0,
-    vmax=p_3.max()
-)
-fig2.colorbar(image_n2d_2, ax=ax_n2d_2, shrink=0.9)
-ax_n2d_2.set_xlabel('X-Position [nm]')
-ax_n2d_2.set_ylabel('Y-Position [nm]')
-ax_n2d_2.set_aspect('equal')
-ax_n2d_2.set_xlim(0, L)
-ax_n2d_2.set_ylim(0, L)
-ax_n2d_2.set_title('2D Charge Density Distribution')
-
-ax_pot_2 = fig2.add_subplot(gs2[0, 0])
-image_pot_2 = ax_pot_2.imshow(
-    V_2,
+ax2D_potential = fig_potential.add_subplot(gs_potential[0, 0])
+image = ax2D_potential.imshow(
+    V,
     extent=[x.min(), x.max(), y.min(), y.max()],
     origin='lower',
     cmap='jet',
-    interpolation='bicubic',
-    vmin=V_3.min(),
-    vmax=0
+    interpolation='bicubic',  # 'nearest' for exact grid values, 'bicubic' for smooth visualization
+    vmin=V.min(),
+    vmax=V.max()
 )
-fig2.colorbar(image_pot_2, ax=ax_pot_2, shrink=0.9)
-ax_pot_2.set_xlabel('X-Position [nm]')
-ax_pot_2.set_ylabel('Y-Position [nm]')
-ax_pot_2.set_aspect('equal')
-ax_pot_2.set_xlim(0, L)
-ax_pot_2.set_ylim(0, L)
-ax_pot_2.set_title('2D Potential Distribution')
-fig2.suptitle('File 02: Charge Density and Potential Distribution (V34 = -3 V)')
+fig_potential.colorbar(image, ax=ax2D_potential, shrink=0.9)
+ax2D_potential.set_xlabel('X-Position [nm]')
+ax2D_potential.set_ylabel('Y-Position [nm]')
+ax2D_potential.set_aspect('equal')
+ax2D_potential.set_xlim(0, L)
+ax2D_potential.set_ylim(0, L)
+ax2D_potential.set_title('2D Potential Distribution')
 
-plt.savefig(f"./Figures/Plot_{File_index_2}.eps", format='eps', bbox_inches='tight')  # Save the figure with high resolution
-plt.show()
-
-# File 3
-fig3 = plt.figure(figsize=(14, 6), constrained_layout=True)
-gs3 = fig3.add_gridspec(1, 2, width_ratios=[1, 1.05])
-
-ax_n2d_3 = fig3.add_subplot(gs3[0, 1])
-image_n2d_3 = ax_n2d_3.imshow(
-    p_3,
-    extent=[x.min(), x.max(), y.min(), y.max()],
-    origin='lower',
-    cmap='viridis',
-    interpolation='bicubic',
-    vmin=0,
-    vmax=p_3.max()
-)
-fig3.colorbar(image_n2d_3, ax=ax_n2d_3, shrink=0.9)
-ax_n2d_3.set_xlabel('X-Position [nm]')
-ax_n2d_3.set_ylabel('Y-Position [nm]')
-ax_n2d_3.set_aspect('equal')
-ax_n2d_3.set_xlim(0, L)
-ax_n2d_3.set_ylim(0, L)
-ax_n2d_3.set_title('2D Charge Density Distribution')
-
-ax_pot_3 = fig3.add_subplot(gs3[0, 0])
-image_pot_3 = ax_pot_3.imshow(
-    V_3,
-    extent=[x.min(), x.max(), y.min(), y.max()],
-    origin='lower',
-    cmap='jet',
-    interpolation='bicubic',
-    vmin=V_3.min(),
-    vmax=0
-)
-fig3.colorbar(image_pot_3, ax=ax_pot_3, shrink=0.9)
-ax_pot_3.set_xlabel('X-Position [nm]')
-ax_pot_3.set_ylabel('Y-Position [nm]')
-ax_pot_3.set_aspect('equal')
-ax_pot_3.set_xlim(0, L)
-ax_pot_3.set_ylim(0, L)
-ax_pot_3.set_title('2D Potential Distribution')
-fig3.suptitle('File 03: Charge Density and Potential Distribution (V34 = -1 V)')
-plt.savefig(f"./Figures/Plot_{File_index_3}.eps", format='eps', bbox_inches='tight')  # Save the figure with high resolution
+ax3D_potential = fig_potential.add_subplot(gs_potential[0, 1], projection='3d')
+ax3D_potential.view_init(elev=30, azim=135)  # Adjust the viewing angle for better visualization
+surf = ax3D_potential.plot_surface(X, Y, V, cmap='jet', rcount=N//3, ccount=N//3, linewidth=1, color='k', antialiased=True)
+fig_potential.colorbar(surf, ax=ax3D_potential, shrink=0.6, pad=0.08)
+ax3D_potential.set_xlabel('X-Position [nm]')
+ax3D_potential.set_ylabel('Y-Position [nm]')
+ax3D_potential.set_zlabel('Potential (V)')
+ax3D_potential.set_title('3D Potential Surface')
+fig_potential.suptitle('Potential Distribution')
 plt.show()
 
 # 1D line curves along one side of the grid (bottom edge, index 0)
-fig, (ax2, ax1) = plt.subplots(1, 2, figsize=(12, 5))
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 
-ax1.plot(y, p_1[:, 0], 'b-', linewidth=2, label='V34 = 0 V')
-ax1.plot(y, p_3[:, 0], 'r-', linewidth=2, label='V34 = -1 V')
-ax1.plot(y, p_2[:, 0], 'k-', linewidth=2, label='V34 = -3 V')
+ax1.plot(y, p[:, 0], 'b-', linewidth=2)
 ax1.set_title('Charge Density Profile along 1 side')
 ax1.set_xlabel('Position (y) [nm]')
 ax1.set_ylabel('Density (p)')
-ax1.legend()
 
-ax2.plot(y, V_1[:, 0], 'b-', linewidth=2, label='V34 = 0 V')
-ax2.plot(y, V_3[:, 0], 'r-', linewidth=2, label='V34 = -1 V')
-ax2.plot(y, V_2[:, 0], 'k-', linewidth=2, label='V34 = -3 V')
+ax2.plot(y, V[:, 0], 'r-', linewidth=2)
 ax2.set_title('Potential Profile along 1 side')
 ax2.set_xlabel('Position (y) [nm]')
 ax2.set_ylabel('Potential (V)')
-ax2.legend()
-plt.savefig(f"./Figures/Plot_1D_vdP.eps", format='eps', bbox_inches='tight')  # Save the figure with high resolution
+
 plt.tight_layout()
-plt.show()
-
-
-plt.plot(error_index, data_error_1)
-plt.yscale("log")
-plt.xlabel("Iteration")
-plt.ylabel("Error (log scale)")
-plt.title("Convergence of Poisson Solver")
-plt.grid()
 plt.show()
