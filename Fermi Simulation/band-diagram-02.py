@@ -30,7 +30,7 @@ X_grid, E_grid = np.meshgrid(X, E)
 f = 1 / (np.exp(beta * (E_grid - E_F)) + 1)
 
 cmap = plt.cm.binary.copy()
-cmap.set_bad(alpha=0.0)
+# cmap.set_bad(alpha=0.0)
 
 material_ranges = [
     (-0.4, X.max()),
@@ -102,7 +102,7 @@ for material_index, ((x_start, x_end), material_E_V, material_E_g) in enumerate(
         extent=[X[x_mask].min(), X[x_mask].max(), E.min(), E.max()],
         origin='lower',
         cmap=cmap,
-        alpha=0.9,
+        # alpha=0.9,
         interpolation='bicubic',
         aspect='auto',
         vmin=0,
