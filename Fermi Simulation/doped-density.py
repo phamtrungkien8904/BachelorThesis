@@ -26,7 +26,7 @@ E_L = E_V + E_g  # Conduction band edge energy
 m_e = 1.0  # Effective mass of electrons
 m_h = 1.0  # Effective mass of holes
 
-E_F = 0  # Fermi energy at mid-gap
+E_F = 0.2*E_T  # Fermi energy at mid-gap
 
 
 
