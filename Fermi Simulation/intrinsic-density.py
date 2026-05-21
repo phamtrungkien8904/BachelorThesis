@@ -44,9 +44,11 @@ n_p = D_p * f_p
 # Plotting
 plt.figure(figsize=(6, 8))
 plt.plot(n_n, E, label='Electron Density', color='blue', lw = 2)
-plt.fill_betweenx(E, 0, n_n, color='blue', alpha=0.25)
+plt.fill_betweenx(E, 0, n_n, color='#8fbce6')
 plt.plot(n_p, E, label='Hole Density', color='red', lw = 2)
-plt.fill_betweenx(E, 0, n_p, color='red', alpha=0.25)
+plt.fill_betweenx(E, 0, n_p, color='#f2a6a6')
+plt.text(0.01, E_F + 3, r'$n_i$', color='black', fontsize=16, ha='center', va='center')
+plt.text(0.01, E_F - 3, r'$n_i$', color='black', fontsize=16, ha='center', va='center')
 # plt.plot(f_n, E, label='Electron Probability', color='blue', lw = 1.5, linestyle='--')
 # plt.plot(f_p, E, label='Hole Probability', color='red', lw = 1.5, linestyle='--')
 # plt.plot(D_n, E, label='Electron DOS', color='cyan', lw = 1, linestyle='--')
@@ -62,5 +64,5 @@ plt.ylabel(r'Energy ($E$)', fontsize=15)
 plt.xticks([])  # Remove x-axis ticks
 plt.yticks([E_V, E_F, E_L], [r'$E_V$', r'$E_F$', r'$E_L$'])  # Custom y-axis ticks
 plt.legend()
-plt.savefig('intrinsic_density.eps', format='eps', bbox_inches='tight')
+plt.savefig('intrinsic_density.eps', format='eps', bbox_inches='tight', facecolor='white', edgecolor='white', transparent=False)
 plt.show()
