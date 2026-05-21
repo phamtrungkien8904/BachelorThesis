@@ -30,7 +30,7 @@ X_grid, E_grid = np.meshgrid(X, E)
 f = 1 / (np.exp(beta * (E_grid - E_F)) + 1)
 
 cmap = plt.cm.binary.copy()
-# cmap.set_bad(alpha=0.0)
+cmap.set_bad(color='white')
 
 material_ranges = [
     (-0.4, X.max()),
@@ -169,6 +169,13 @@ ax_fd.tick_params(axis='y', left=False, labelleft=False)
 
 cbar = fig.colorbar(image, ax=ax, pad=0.01)
 cbar.set_label('Electron probability')
-plt.savefig('1.eps', format='eps', bbox_inches='tight')
+plt.savefig(
+    '1.eps',
+    format='eps',
+    bbox_inches='tight',
+    facecolor='white',
+    edgecolor='white',
+    transparent=False,
+)
 plt.show()
 
