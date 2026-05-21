@@ -170,12 +170,12 @@ ax_fd.tick_params(axis='y', left=False, labelleft=False)
 cbar = fig.colorbar(image, ax=ax, pad=0.01)
 cbar.set_label('Electron probability')
 plt.savefig(
-    '1.eps',
-    format='eps',
+    '1.pdf',
+    format='pdf',
     bbox_inches='tight',
-    facecolor='white',
-    edgecolor='white',
-    transparent=False,
+    # facecolor='white',
+    # edgecolor='white',
+    # transparent=False,
 )
-plt.show()
+# plt.show()
 
