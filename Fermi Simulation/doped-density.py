@@ -20,17 +20,17 @@ beta = 1/(k_B * T)  # 1/(k_B * T)
 E_T = 1/beta  # Thermal energy
 
 
-E_V = -E_T/2  # Valence band edge energy
-E_g = 1.5*E_T  # Band gap energy
+E_V = -3*E_T  # Valence band edge energy
+E_g = 4*E_T  # Band gap energy
 E_L = E_V + E_g  # Conduction band edge energy
 m_e = 1.0  # Effective mass of electrons
 m_h = 1.0  # Effective mass of holes
 
-E_F = (E_V + E_L) / 2 + 0.5 * E_T   # Fermi energy at mid-gap
+E_F = 0  # Fermi energy at mid-gap
 
 
 
-E = np.linspace(-7, 7, 1000)  # Energy range
+E = np.linspace(-10, 10, 2000)  # Energy range
 
 f_n = 1 / (np.exp(beta * (E - E_F)) + 1)  # Fermi-Dirac distribution
 f_p = 1 - f_n  # Hole distribution function (1 - f_n)
@@ -47,20 +47,20 @@ plt.plot(n_n, E, label='Electron Density', color='blue', lw = 2)
 plt.fill_betweenx(E, 0, n_n, color='blue', alpha=0.25)
 plt.plot(n_p, E, label='Hole Density', color='red', lw = 2)
 plt.fill_betweenx(E, 0, n_p, color='red', alpha=0.25)
-plt.plot(f_n, E, label='Electron Probability', color='blue', lw = 1.5, linestyle='--')
-plt.plot(f_p, E, label='Hole Probability', color='red', lw = 1.5, linestyle='--')
+# plt.plot(f_n, E, label='Electron Probability', color='blue', lw = 1.5, linestyle='--')
+# plt.plot(f_p, E, label='Hole Probability', color='red', lw = 1.5, linestyle='--')
 # plt.plot(D_n, E, label='Electron DOS', color='cyan', lw = 1, linestyle='--')
 # plt.plot(D_p, E, label='Hole DOS', color='magenta', lw = 1, linestyle='--')
 plt.axhline(E_V, color='black', linestyle='--')
 plt.axhline(E_L, color='black', linestyle='--')
 plt.axhline(E_F, color='black', linestyle='--')
 plt.title('Electron and Hole Density Distributions', fontsize=18)
-plt.xlim(0, 1)  # Set x-axis limits to focus on the density distributions
+plt.xlim(0, 0.2)  # Set x-axis limits to focus on the density distributions
 plt.ylim(np.min(E), np.max(E))  # Set y-axis limits to the energy range
 plt.xlabel(r'Density of occupied states ($D(E) f(E)$)', fontsize=15)
 plt.ylabel(r'Energy ($E$)', fontsize=15)
 plt.xticks([])  # Remove x-axis ticks
 plt.yticks([E_V, E_F, E_L], [r'$E_V$', r'$E_F$', r'$E_L$'])  # Custom y-axis ticks
 plt.legend()
-plt.savefig('doped_density.pdf', format='pdf', bbox_inches='tight')
+plt.savefig('doped_density.eps', format='eps', bbox_inches='tight')
 plt.show()
