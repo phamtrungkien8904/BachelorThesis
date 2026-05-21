@@ -11,7 +11,7 @@ plt.rcParams['savefig.facecolor'] = 'white'
 plt.rcParams['font.family'] = 'sans-serif'
 plt.rcParams['font.sans-serif'] = ['Arial']
 plt.rcParams['mathtext.fontset'] = 'cm'
-plt.rcParams['figure.dpi'] = 100
+# plt.rcParams['figure.dpi'] = 100
 
 # Constants
 k_B = 1 
@@ -150,9 +150,9 @@ ax.set_xticks([-0.33, -0.02, 0.38, 0.675, 0.97, 1.35])
 ax.set_xticklabels([
     'Metal',
     'Semimetal',
-    'Semiconductor\n(p-type)',
-    'Semiconductor\n(intrinsic)',
-    'Semiconductor\n(n-type)',
+    'p-type',
+    'intrinsic\nSemiconductor',
+    '(n-type)',
     'Insulator',
 ], fontsize=16)
 ax.tick_params(axis='x', length=0, pad=14)
@@ -169,5 +169,6 @@ ax_fd.tick_params(axis='y', left=False, labelleft=False)
 
 cbar = fig.colorbar(image, ax=ax, pad=0.01)
 cbar.set_label('Electron probability')
+plt.savefig('1.eps', format='eps', bbox_inches='tight')
 plt.show()
 
