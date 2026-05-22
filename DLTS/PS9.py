@@ -79,9 +79,9 @@ R2 = 1e5 # 1 MΩ
 
 
 
-t = data4[:, 0]
-V_discharge = data4[:, 2]
-V_charge = data4[:, 1]
+t = data7[:, 0]
+V_discharge = data7[:, 2]
+V_charge = data7[:, 1]
 I_discharge = V_discharge/R2
 I_charge = V_charge/R2
 
@@ -102,6 +102,7 @@ Q_charge = -np.trapezoid(I_charge, t)
 Q_discharge = -np.trapezoid(I_discharge, t)
 print(f"Total charge during charging: {Q_charge*1e9:.3f} nC")
 print(f"Total charge during discharging: {Q_discharge*1e9:.3f} nC")
+print(f"Difference (leakage) charge: {(Q_charge + Q_discharge)*1e9:.3f} nC")
 
 
 # def func(x, a1, b1, c1):
