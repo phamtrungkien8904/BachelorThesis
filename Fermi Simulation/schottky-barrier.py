@@ -11,4 +11,4 @@ plt.rcParams['savefig.facecolor'] = 'white'
 plt.rcParams['font.family'] = 'sans-serif'
 plt.rcParams['font.sans-serif'] = ['Arial']
 plt.rcParams['mathtext.fontset'] = 'cm'
-plt.rcParams['figure.dpi'] = 100
+# plt.rcParams['figure.dpi'] = 100
