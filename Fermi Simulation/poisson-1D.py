@@ -16,9 +16,9 @@ plt.rcParams['figure.dpi'] = 100
 
 start_time = time.time()
 N = 101
-iter = 50000000 # Kerting's original code uses 1000 iterations, but you can increase this for better convergence at the cost of longer runtime. (Best: 2000000)
+iter = 10000000 # Kerting's original code uses 1000 iterations, but you can increase this for better convergence at the cost of longer runtime. (Best: 2000000)
 step_iter = iter//10
-L = 5e-3  # Physical size of the domain in meters
+L = 1e-3  # Physical size of the domain in meters
 x = np.linspace(0, L, N)
 dx = x[1] - x[0]
 
@@ -40,8 +40,8 @@ N_A = np.zeros(N)
 C_A = 3e15  # Acceptor concentration in m^-3
 N_A[:N//2] = C_A  # Acceptor concentration in m^-3
 
-V_ext = -1.0  # External voltage in volts
 V_bi = V_T * np.log(C_A * C_D / n_i**2)  # Built-in potential in volts
+V_ext = 0.3  # External voltage in volts
 print(f"Calculated built-in potential (V_bi): {V_bi:.4f} V")
 d_n = np.sqrt(2 * epsilon * (V_bi - V_ext) / e *C_A/C_D * 1/(C_A + C_D))  # Depletion width in meters
 d_p = np.sqrt(2 * epsilon * (V_bi - V_ext) / e *C_D/C_A * 1/(C_A + C_D))  # Depletion width in meters
@@ -63,7 +63,7 @@ rho = e*(p - n + N_D - N_A)  # Net charge density (C/m^3)
 
 contact_size = 0.1
 contact_width = int(contact_size * N)
-V[:contact_width] = V_bi
+V[:contact_width] = 0.0
 # V[-contact_width:] = 0.0
 contact_mask[:contact_width] = True
 # contact_mask[-contact_width:] = True
