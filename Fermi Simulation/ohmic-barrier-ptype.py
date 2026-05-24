@@ -38,7 +38,7 @@ V_tot = V_bi - V_ext  # Effective built-in potential in volts
 print(f"Calculated built-in potential (V_bi): {V_bi:.4f} V")
 print(f"Total potential (V_tot): {V_tot:.4f} V")
 N_A = 1e18  # Acceptor concentration in m^-3
-p_edge = N_A * np.exp(-V_tot / V_T)  # Hole concentration at the edge of the depletion region in m^-3
+p_edge = N_A * np.exp(V_tot / V_T)  # Hole concentration at the edge of the accumulation region in m^-3
 
 V = np.zeros(N)
 p = np.zeros(N)  # Hole concentration (m^-3)
@@ -53,9 +53,9 @@ V[:contact_width] = 0.0
 contact_mask[:contact_width] = True
 # contact_mask[-contact_width:] = True
 
-# Depletion width estimation for initial guess
-W = np.sqrt(2 * epsilon * V_tot / (e * N_A))  # Depletion width in meters
-print(f"Estimated depletion width (W): {W*1e6:.2f} um")
+# Accumulation width estimation for initial guess
+W = np.sqrt(2 * epsilon * V_tot / (e * N_A))  # Accumulation width in meters
+print(f"Estimated accumulation width (W): {W*1e6:.2f} um")
 def solve():
     global V, rho, p
 
@@ -64,9 +64,8 @@ def solve():
     error = np.zeros(iter)
 
     for i in range(iter):
-        p = N_A * np.exp((-V - V_tot) / V_T)  # Hole concentration using Boltzmann approximation
-        p[:contact_width-1] = 0  # Zero only the contact region; other entries stay unchanged
-        p[contact_width-1] = p_edge  # Set the hole concentration at the edge of the depletion region
+        p = N_A * np.exp((-V + V_tot) / V_T)  # Hole concentration using Boltzmann approximation
+        p[contact_mask] = p_edge 
         rho = e * (p - N_A)  # Net charge density (C/m^3)
         rho[contact_mask] = 0  # Net charge density at the contact (C/m^3)
 
@@ -90,8 +89,8 @@ def solve():
     return V, rho, error
 
 V, rho, error = solve()
-np.savetxt("./Data-Export/schottky_Poti.dat", V)
-np.savetxt("./Data-Export/schottky_pDens.dat", p)
+np.savetxt("./Data-Export/ohmic_Poti.dat", V)
+np.savetxt("./Data-Export/ohmic_pDens.dat", p)
 
 stop_time = time.time()
 print(f"Runtime: {stop_time - start_time:.2f} seconds.")
@@ -101,9 +100,9 @@ fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(8, 8), sharex=True)
 ax1.plot(x * 1e6, V, color='blue', lw=2)
 ax1.axvline((contact_width-1) * dx * 1e6, color='black', linestyle='--')
 ax1.set_ylabel('Potential (V)')
-ax1.set_title('Schottky Barrier (p-type) Simulation', fontsize=18)
+ax1.set_title('Ohmic Barrier (p-type) Simulation', fontsize=18)
 ax1.set_xlim(0, L * 1e6)
-ax1.set_ylim(np.min(V) * 1.5, -np.min(V) * 1.5)
+ax1.set_ylim(-np.max(V) * 1.5, np.max(V) * 1.5)
 
 ax2.plot(x * 1e6, p, color='red', lw=2)
 ax2.axvline((contact_width-1) * dx * 1e6, color='black', linestyle='--')
