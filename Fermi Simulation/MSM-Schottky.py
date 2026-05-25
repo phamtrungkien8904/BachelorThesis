@@ -25,7 +25,7 @@ start_time = time.time()
 N = 201
 iter = 10000000 # Kerting's original code uses 1000 iterations, but you can increase this for better convergence at the cost of longer runtime. (Best: 2000000)
 step_iter = 100
-L = 20e-6  # Physical size of the domain in meters
+L = 5e-6  # Physical size of the domain in meters
 x = np.linspace(0, L, N)
 dx = x[1] - x[0]
 
@@ -37,13 +37,16 @@ epsilon = 3 * 8.854187817e-12  # Permittivity of semiconductor (epsilon_r * epsi
 
 V_T = k_B * T / e
 print(f"Thermal voltage (V_T): {V_T:.4f} V")
-V_bi = V_T * 5  # Built-in potential in volts
-V_ext = 3*V_T  # External voltage in volts (Reverse: V_ext < 0, Forward: V_ext > 0)
-V_tot = V_bi - V_ext  # Effective built-in potential in volts
+V_bi = V_T * 2  # Built-in potential in volts
+V_G = -1*V_T  # External voltage in volts (Reverse: V_ext < 0, Forward: V_ext > 0)
+V_tot = V_bi + V_G  # Effective built-in potential in volts
+V_D = -V_T*0.5 # Drain Voltage
+
 print(f"Built-in potential (V_bi): {V_bi:.4f} V")
 print(f"Total potential (V_tot): {V_tot:.4f} V")
+print(f"Drain voltage (V_D): {V_D:.4f} V")
 N_A = 1e18  # Acceptor concentration in m^-3
-p_edge = N_A * np.exp(-V_tot / V_T)  # Hole concentration at the edge of the depletion region in m^-3
+p_edge = N_A * np.exp(V_tot / V_T)  # Hole concentration at the edge of the depletion region in m^-3
 
 V = np.zeros(N)
 p = np.zeros(N)  # Hole concentration (m^-3)
@@ -54,7 +57,7 @@ contact_mask = np.zeros(N, dtype=bool)
 contact_size = 0.1
 contact_width = int(contact_size * N) + 1
 V[:contact_width] = 0.0
-V[-contact_width:] = -2*V_T
+V[-contact_width:] = V_D
 contact_mask[:contact_width] = True
 contact_mask[-contact_width:] = True
 
@@ -91,9 +94,9 @@ def solve():
     print("Press Enter in the terminal to stop the iteration early.")
 
     for i in range(iter):
-        p = N_A * np.exp((-V - V_tot) / V_T)  # Hole concentration using Boltzmann approximation
+        p = N_A * np.exp(-(V - V_tot - V_D*(x - (contact_width-1)*dx)/((N-2*contact_width+1)*dx)) / V_T)  # Hole concentration using Boltzmann approximation
         p[:contact_width-1] = 0  # Zero only the contact region; other entries stay unchanged
-        p[contact_width-1] = p_edge  # Set the hole concentration at the edge of the depletion region
+        # p[contact_width-1] = p_edge  # Set the hole concentration at the edge of the depletion region
         rho[:contact_width-1] = 0  # Ensure the contact region has zero net charge
         p[-contact_width+1:] = 0  # Ensure the other contact region has zero hole
         rho[-contact_width+1:] = 0  # Ensure the other contact region has zero net charge
@@ -145,7 +148,9 @@ fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(8, 8), sharex=True)
 
 ax1.plot(x * 1e6, V, color='blue', lw=2)
 ax1.axhline(0, color='black', linestyle='--')
-ax1.axhline(-V_tot, color='black', linestyle='--')
+ax1.axhline(V_tot, color='black', linestyle='--')
+ax1.axhline(V_D, color='black', linestyle='--')
+ax1.plot([(contact_width-1) * dx * 1e6, (N - contact_width) * dx * 1e6], [V_G, V_D+V_G], color='black', linestyle='--', label='0 V')
 ax1.axvline((contact_width-1) * dx * 1e6, color='black', linestyle='--')
 ax1.axvline((N - contact_width) * dx * 1e6, color='black', linestyle='--')
 ax1.set_ylabel('Potential (V)')
