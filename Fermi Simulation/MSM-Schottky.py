@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import time
-
+File_index = "01"
 try:
     import msvcrt
 except ImportError:
@@ -22,10 +22,10 @@ plt.rcParams['figure.dpi'] = 100
 start_time = time.time()
 
 # Simulation parameters
-N = 501
+N = 201
 iter = 10000000 # Kerting's original code uses 1000 iterations, but you can increase this for better convergence at the cost of longer runtime. (Best: 2000000)
 step_iter = 100
-L = 5e-6  # Physical size of the domain in meters
+L = 20e-6  # Physical size of the domain in meters
 x = np.linspace(0, L, N)
 dx = x[1] - x[0]
 
@@ -38,7 +38,7 @@ epsilon = 3 * 8.854187817e-12  # Permittivity of semiconductor (epsilon_r * epsi
 V_T = k_B * T / e
 print(f"Thermal voltage (V_T): {V_T:.4f} V")
 V_bi = V_T * 5  # Built-in potential in volts
-V_ext = 6*V_T  # External voltage in volts (Reverse: V_ext < 0, Forward: V_ext > 0)
+V_ext = 3*V_T  # External voltage in volts (Reverse: V_ext < 0, Forward: V_ext > 0)
 V_tot = V_bi - V_ext  # Effective built-in potential in volts
 print(f"Built-in potential (V_bi): {V_bi:.4f} V")
 print(f"Total potential (V_tot): {V_tot:.4f} V")
@@ -54,7 +54,7 @@ contact_mask = np.zeros(N, dtype=bool)
 contact_size = 0.1
 contact_width = int(contact_size * N) + 1
 V[:contact_width] = 0.0
-V[-contact_width:] = -0.5*V_T
+V[-contact_width:] = -2*V_T
 contact_mask[:contact_width] = True
 contact_mask[-contact_width:] = True
 
@@ -114,7 +114,7 @@ def solve():
         error[i] = 100.0 * np.max(np.abs(V_new - V)) / max(np.max(np.abs(V)), 1e-30)
         V = (1 - alpha) * V + alpha * V_new
 
-        if error[i] <= 1e-15:
+        if error[i] <= 5e-13:
             elapsed_time = time.time() - start_time
             print(f"Converged at iteration: {i + 1}/{iter}, Error: {error[i]:.2e} %, Runtime: {time_format(elapsed_time)}")
             error = error[:i + 1]
@@ -133,8 +133,8 @@ def solve():
     return V, rho
 
 V, rho = solve()
-np.savetxt("./Data-Export/schottky_Poti.dat", V)
-np.savetxt("./Data-Export/schottky_Dens.dat", rho)
+np.savetxt("./Data-Export/schottky_Poti_" + File_index + ".dat", V)
+np.savetxt("./Data-Export/schottky_Dens_" + File_index + ".dat", rho)
 
 E = -np.gradient(V, dx)
 dp_dx = np.gradient(p, dx)
@@ -151,7 +151,7 @@ ax1.axvline((N - contact_width) * dx * 1e6, color='black', linestyle='--')
 ax1.set_ylabel('Potential (V)')
 ax1.set_title('Schottky Barrier (p-type) Simulation', fontsize=18)
 ax1.set_xlim(0, L * 1e6)
-ax1.set_ylim(-0.05, 0.05)
+ax1.set_ylim(-0.2, 0.2)
 
 ax2.plot(x * 1e6, p, color='red', lw=2)
 ax2.axhline(N_A, color='black', linestyle='--')
@@ -162,20 +162,20 @@ ax2.set_ylabel('Hole Concentration (m^-3)')
 ax2.set_xlim(0, L * 1e6)
 ax2.set_ylim(0, np.max(p) * 1.5)
 
-fig, (ax3, ax4) = plt.subplots(2, 1, figsize=(8, 8), sharex=True)
+# fig, (ax3, ax4) = plt.subplots(2, 1, figsize=(8, 8), sharex=True)
 
-ax3.plot(x * 1e6, E, color='green', lw=2)
-ax3.axhline(0, color='black', linestyle='--')
-ax3.axvline((contact_width-1) * dx * 1e6, color='black', linestyle='--')
-ax3.axvline((N - contact_width) * dx * 1e6, color='black', linestyle='--')
-ax3.set_ylabel('Electric Field (V/m)')
+# ax3.plot(x * 1e6, E, color='green', lw=2)
+# ax3.axhline(0, color='black', linestyle='--')
+# ax3.axvline((contact_width-1) * dx * 1e6, color='black', linestyle='--')
+# ax3.axvline((N - contact_width) * dx * 1e6, color='black', linestyle='--')
+# ax3.set_ylabel('Electric Field (V/m)')
 
-ax4.plot(x * 1e6, dp_dx, color='purple', lw=2)
-ax4.axhline(0, color='black', linestyle='--')
-ax4.axvline((contact_width-1) * dx * 1e6, color='black', linestyle='--')
-ax4.axvline((N - contact_width) * dx * 1e6, color='black', linestyle='--')
-ax4.set_xlabel('Position (um)')
-ax4.set_ylabel('dp/dx (m$^{-4}$)')
-ax4.set_xlim(0, L * 1e6)
+# ax4.plot(x * 1e6, dp_dx, color='purple', lw=2)
+# ax4.axhline(0, color='black', linestyle='--')
+# ax4.axvline((contact_width-1) * dx * 1e6, color='black', linestyle='--')
+# ax4.axvline((N - contact_width) * dx * 1e6, color='black', linestyle='--')
+# ax4.set_xlabel('Position (um)')
+# ax4.set_ylabel('dp/dx (m$^{-4}$)')
+# ax4.set_xlim(0, L * 1e6)
 fig.tight_layout()
 plt.show()

@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 L = 5e-6  # Physical size of the domain in meters
-N = 501
+N = 201
 x = np.linspace(0, L, N)
 dx = x[1] - x[0]
 contact_size = 0.1
@@ -20,8 +20,8 @@ V_ext = 6*V_T  # External voltage in volts (Reverse: V_ext < 0, Forward: V_ext >
 V_tot = V_bi - V_ext  # Effective built-in potential in volts
 N_A = 1e18  # Acceptor concentration in m^-3
 
-V = np.loadtxt("./Data-Export/schottky_Poti.dat")
-p = np.loadtxt("./Data-Export/schottky_Dens.dat")/e + N_A
+V = np.loadtxt("./Data-Export/schottky_Poti_01.dat")
+p = np.loadtxt("./Data-Export/schottky_Dens_01.dat")/e + N_A
 
 E = -np.gradient(V, dx)
 dp_dx = np.gradient(p, dx)
