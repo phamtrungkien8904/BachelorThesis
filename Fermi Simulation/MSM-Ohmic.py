@@ -138,7 +138,7 @@ def solve():
 
         if (i + 1) % step_iter == 0:
             elapsed_time = time.time() - start_time
-            print(f"Iteration: {i + 1}/{iter}, Error: {error[i]:.2e} %, Runtime: {time_format(elapsed_time)}\r", end="")
+            print(f"Iteration: {i + 1}/{iter}, Error: {error[i]:.2e} %, Runtime: {time_format(elapsed_time)}", end="\r", flush=True)
         
     return V, rho, F
 
