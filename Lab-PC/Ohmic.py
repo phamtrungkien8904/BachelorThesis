@@ -1,9 +1,11 @@
-import numpy as np
-import matplotlib.pyplot as plt
-import time
 import os
+import time
+
+import matplotlib.pyplot as plt
+import numpy as np
 
 File_index = "01"
+
 try:
     import msvcrt
 except ImportError:
@@ -27,9 +29,9 @@ start_time = time.time()
 # Simulation parameters
 # ----------------------------------------------------------------------
 N = 201
-max_iter = 2_000_000          # increase if needed
-step_iter = 1000
-L = 50e-6
+max_iter = 2000000          # increase if needed
+step_iter = 10
+L = 5e-6
 x = np.linspace(0, L, N)
 dx = x[1] - x[0]
 
@@ -45,12 +47,13 @@ print(f"Thermal voltage kBT/e: {Vth:.4f} V")
 
 # Voltages
 V_bi = 2 * Vth               # built-in potential [V]
-V_G = 0.0                   # optional external/gate offset if you want later
-V_D = -0.05                   # drain/contact voltage [V]
+V_G = -0.2
+                   # optional external/gate offset if you want later
+V_D = -0.1                   # drain/contact voltage [V]
 
 print(f"Built-in potential V_bi: {V_bi:.4f} V")
 print(f"Drain voltage V_D: {V_D:.4f} V")
-
+print(f"Gate voltage V_G: {V_G:.4f} V")
 # Semiconductor parameters
 N_A = 1e18                   # acceptor density [m^-3]
 N_v = 1e19                   # effective DOS [m^-3]
@@ -93,14 +96,7 @@ V[-contact_width:] = V_right
 F[:contact_width] = F_left
 F[-contact_width:] = F_right
 
-# Initial guess for F: linear interpolation only as initial guess, not imposed later
-x0 = x[contact_width - 1]
-x1 = x[N - contact_width]
-for i in range(contact_width, N - contact_width):
-    s = (x[i] - x0) / (x1 - x0)
-    F[i] = (1 - s) * F_left + s * F_right
-
-
+# Enter key press detection for early stopping
 def enter_pressed():
     if msvcrt is None:
         return False
@@ -111,7 +107,7 @@ def enter_pressed():
             return True
     return False
 
-
+# Time formatting for runtime display
 def time_format(seconds):
     hours = int(seconds // 3600)
     minutes = int((seconds % 3600) // 60)
@@ -119,17 +115,7 @@ def time_format(seconds):
     return f"{hours:02d}:{minutes:02d}:{seconds:02d}"
 
 
-def compute_p(V, F):
-    """
-    Boltzmann relation requested by user:
-        p(x) = Nv * exp(-(F(x) + e*phi(x)) / kBT)
-    F is in Joule, phi=V is in Volt.
-    """
-    exponent = -(F + e * V) / (k_B * T)
-    exponent = np.clip(exponent, -100, 100)  # avoids numerical overflow
-    return N_v * np.exp(exponent)
-
-
+# Continuity update in conservative form: d/dx(p dF/dx) = 0
 def update_F_conservative(F, V, p, alpha_F):
     """
     Solve continuity in conservative form:
@@ -146,8 +132,7 @@ def update_F_conservative(F, V, p, alpha_F):
     p_e = 2 * p[1:-1] * p[2:] / (p[1:-1] + p[2:] + tiny)
     p_w = 2 * p[1:-1] * p[:-2] / (p[1:-1] + p[:-2] + tiny)
 
-    candidate = (p_e * F[2:] + p_w * F[:-2]) / (p_e + p_w + tiny)
-    F_new[1:-1] = candidate
+    F_new[1:-1] = (p_e * F[2:] + p_w * F[:-2]) / (p_e + p_w + tiny)
 
     # Dirichlet quasi-Fermi level at ohmic contacts
     F_new[:contact_width] = F_left
@@ -168,9 +153,12 @@ def solve():
     for it in range(max_iter):
         V_old = V.copy()
         F_old = F.copy()
+        
+        p[:contact_width-1] =0
+        p[-contact_width:]=0    
 
         # 1) carrier density from quasi-Fermi level and electrostatic potential
-        p = compute_p(V, F)
+        p = N_v * np.exp(-(F + e * V - e *V_G) / (k_B * T))
 
         # 2) space charge only in semiconductor region; contacts are fixed reservoirs
         rho[:] = 0.0
@@ -195,7 +183,7 @@ def solve():
         # 4) Continuity update for quasi-Fermi level:
         #    d/dx(p dF/dx)=0
         #    Use updated V but p from previous step; recompute p before F update.
-        p = compute_p(V, F)
+        p = N_v * np.exp(-(F + e * V) / (k_B * T))
         F = update_F_conservative(F, V, p, alpha_F)
 
         # 5) combined relative error
@@ -203,30 +191,32 @@ def solve():
         err_F = np.max(np.abs(F - F_old)) / max(np.max(np.abs(F_old)), 1e-30)
         error[it] = 100.0 * max(err_V, err_F)
 
-        if error[it] <= 5e-10:
+        if error[it] <= 5e-13:
             elapsed_time = time.time() - start_time
-            print(f"Converged at iteration: {it + 1}/{max_iter}, Error: {error[it]:.2e} %, Runtime: {time_format(elapsed_time)}")
+            print(f"\nConverged at iteration: {it + 1}/{max_iter}, Error: {error[it]:.2e} %, Runtime: {time_format(elapsed_time)}")
             error = error[:it + 1]
             break
 
         if enter_pressed():
             elapsed_time = time.time() - start_time
-            print(f"Stopped by user at iteration: {it + 1}/{max_iter}, Error: {error[it]:.2e} %, Runtime: {time_format(elapsed_time)}")
+            print(f"\nStopped by user at iteration: {it + 1}/{max_iter}, Error: {error[it]:.2e} %, Runtime: {time_format(elapsed_time)}")
             error = error[:it + 1]
             break
 
+
         if (it + 1) % step_iter == 0:
             elapsed_time = time.time() - start_time
-            print(f"Iteration: {it + 1}/{max_iter}, Error: {error[it]:.2e} %, Runtime: {time_format(elapsed_time)}\r", end="")
+            print(f"\rIteration: {it + 1}/{max_iter}, Error: {error[it]:.2e} %, Runtime: {time_format(elapsed_time)}", end="", flush=True)
+
 
     # final quantities
-    p = compute_p(V, F)
+    p = N_v * np.exp(-(F + e * V) / (k_B * T))
     rho[:] = 0.0
     rho[active_mask] = e * (p[active_mask] - N_A)
-    return V, rho, F, p, error
+    return V, rho, F, p
 
 
-V, rho, F, p, error = solve()
+V, rho, F, p = solve()
 
 # ----------------------------------------------------------------------
 # Diagnostics: verify expanded equation
@@ -235,12 +225,9 @@ V, rho, F, p, error = solve()
 dV_dx = np.gradient(V, dx)
 y = np.gradient(F, dx)
 dy_dx = np.gradient(y, dx)
-continuity_residual = dy_dx - (1.0 / (k_B * T)) * (y + e * dV_dx) * y
 J = mu * p * y  # from J = mu p dF/dx
 
-print(f"Max |continuity residual| active region: {np.max(np.abs(continuity_residual[active_mask])):.3e}")
 print(f"Mean current density active region: {np.mean(J[active_mask]):.3e} A/m^2")
-print(f"Current density relative variation active region: {np.std(J[active_mask]) / max(abs(np.mean(J[active_mask])), 1e-300):.3e}")
 
 # ----------------------------------------------------------------------
 # Save data
@@ -255,17 +242,15 @@ np.savetxt(f"./Data-Export/ohmic_CurrentDensity_{File_index}.dat", J)
 # ----------------------------------------------------------------------
 # Plotting
 # ----------------------------------------------------------------------
-fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(8, 10), sharex=True)
+fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(10, 8), sharex=True)
 
 ax1.plot(x * 1e6, -V, color='blue', lw=2, label=r'$-\phi$ [V]')
-ax1.plot(x * 1e6, F / e, color='red', lw=2, ls='--', label=r'$F_p$ [eV]')
+ax1.plot(x * 1e6, F / e, color='blue', lw=2, ls='--', label=r'$F_p$ [eV]')
 ax1.axhline(0, color='black', linestyle='--')
-ax1.axhline(V_D, color='black', linestyle='--')
 ax1.axvline((contact_width - 1) * dx * 1e6, color='black', linestyle='--')
 ax1.axvline((N - contact_width) * dx * 1e6, color='black', linestyle='--')
 ax1.set_ylabel('Energy / potential')
 ax1.set_title('Poisson + Continuity: quasi-Fermi level solved numerically', fontsize=16)
-ax1.legend(loc='best')
 ax1.set_xlim(0, L * 1e6)
 
 ax2.plot(x * 1e6, p, color='red', lw=2)
@@ -274,7 +259,6 @@ ax2.axvline((contact_width - 1) * dx * 1e6, color='black', linestyle='--')
 ax2.axvline((N - contact_width) * dx * 1e6, color='black', linestyle='--')
 ax2.set_ylabel(r'$p$ [m$^{-3}$]')
 ax2.set_ylim(0, np.nanmax(p) * 1.2)
-ax2.legend(loc='best')
 
 ax3.plot(x * 1e6, J, color='green', lw=2)
 ax3.axvline((contact_width - 1) * dx * 1e6, color='black', linestyle='--')
