@@ -1,0 +1,15 @@
+Title: Fermi Simulator (Ohmic Contact, Forward Bias)
+Python file: Ohmic-for.py
+Date and time: 2026-05-27 14:57:22
+Grid points: 1001
+Device length: 100.00 nm
+Iterations: 100000000
+Runtime: 00:17:29
+------------------------------------------------------
+Thermal Voltage: 0.025852 V
+Built-in Voltage: 0.051704 V (=2.00 Vth)
+Barrier Height: 0.025742 eV (=1.00 e*Vth)
+boundary hole concentration: 3.694528e+24 m^-3
+drain voltage: 0.103408 V (=4.00 Vth)
+Donator concentration: 5.00e+23 m^-3
+Valence concentration: 1.00e+25 m^-3

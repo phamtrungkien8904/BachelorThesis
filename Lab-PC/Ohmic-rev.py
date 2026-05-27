@@ -4,7 +4,7 @@ import time
 import matplotlib.pyplot as plt
 import numpy as np
 
-File_index = "01"
+File_index = "02"
 
 try:
     import msvcrt
@@ -28,10 +28,10 @@ start_time = time.time()
 # ----------------------------------------------------------------------
 # Simulation parameters
 # ----------------------------------------------------------------------
-N = 201
-max_iter = 2000000          # increase if needed
-step_iter = 10
-L = 5e-6
+N = 1001
+max_iter = 100000000          # increase if needed
+step_iter = 100
+L = 100e-9
 x = np.linspace(0, L, N)
 dx = x[1] - x[0]
 
@@ -43,27 +43,24 @@ epsilon = 3 * 8.854187817e-12
 mu = 1e-4                    # hole mobility [m^2/(V s)] = 1 cm^2/(V s)
 
 Vth = k_B * T / e
-print(f"Thermal voltage kBT/e: {Vth:.4f} V")
+print(f"Thermal voltage Vth: {Vth:.4f} V")
 
 # Voltages
-V_bi = 2 * Vth               # built-in potential [V]
-V_G = -0.2
-                   # optional external/gate offset if you want later
-V_D = -0.1                   # drain/contact voltage [V]
+V_bi = 2.0 * Vth               # built-in potential [V]
+V_D = -4.0 * Vth                  # drain/contact voltage [V]
 
-print(f"Built-in potential V_bi: {V_bi:.4f} V")
-print(f"Drain voltage V_D: {V_D:.4f} V")
-print(f"Gate voltage V_G: {V_G:.4f} V")
+print(f"Built-in potential V_bi: {V_bi:.4f} V (={V_bi/Vth:.2f} Vth)")
+print(f"Drain voltage V_D: {V_D:.4f} V (={V_D/Vth:.2f} Vth)")
 # Semiconductor parameters
-N_A = 1e18                   # acceptor density [m^-3]
-N_v = 1e19                   # effective DOS [m^-3]
+N_A = 5e23                 # acceptor density [m^-3]
+N_v = 1e25                  # effective DOS [m^-3]
 
 # Choose F boundary such that at left contact phi=0:
 # p_left = Nv * exp(-F_left/kBT) = NA * exp(V_bi/Vth)
 E_B = k_B * T * (np.log(N_v / N_A) - V_bi / Vth)  # [J]
 p_left = N_v * np.exp(-E_B / (k_B * T))
-print(f"Left boundary Fermi energy E_B: {E_B/e:.4f} eV")
-print(f"Left boundary hole density: {p_left:.3e} m^-3")
+print(f"Barrier height E_B: {E_B/e:.4f} eV (={E_B/(k_B*T):.2f} e*Vth)")
+print(f"Boundary hole concentration: {p_left:.3e} m^-3")
 
 # ----------------------------------------------------------------------
 # Arrays
@@ -158,7 +155,7 @@ def solve():
         p[-contact_width:]=0    
 
         # 1) carrier density from quasi-Fermi level and electrostatic potential
-        p = N_v * np.exp(-(F + e * V - e *V_G) / (k_B * T))
+        p = N_v * np.exp(-(F + e * V) / (k_B * T))
 
         # 2) space charge only in semiconductor region; contacts are fixed reservoirs
         rho[:] = 0.0
@@ -213,10 +210,10 @@ def solve():
     p = N_v * np.exp(-(F + e * V) / (k_B * T))
     rho[:] = 0.0
     rho[active_mask] = e * (p[active_mask] - N_A)
-    return V, rho, F, p
+    return V, rho, F, p, elapsed_time
 
 
-V, rho, F, p = solve()
+V, rho, F, p, elapsed_time = solve()
 
 # ----------------------------------------------------------------------
 # Diagnostics: verify expanded equation
@@ -232,39 +229,62 @@ print(f"Mean current density active region: {np.mean(J[active_mask]):.3e} A/m^2"
 # ----------------------------------------------------------------------
 # Save data
 # ----------------------------------------------------------------------
-os.makedirs("./Data-Export", exist_ok=True)
-np.savetxt(f"./Data-Export/ohmic_Poti_{File_index}.dat", V)
-np.savetxt(f"./Data-Export/ohmic_Dens_{File_index}.dat", rho)
-np.savetxt(f"./Data-Export/ohmic_QuasiFermi_{File_index}.dat", F / e)  # eV
-np.savetxt(f"./Data-Export/ohmic_Holes_{File_index}.dat", p)
-np.savetxt(f"./Data-Export/ohmic_CurrentDensity_{File_index}.dat", J)
+os.makedirs("./Data-Export/Ohmic", exist_ok=True)
+np.savetxt(f"./Data-Export/Ohmic/ohmic_Poti_{File_index}.dat", V)
+np.savetxt(f"./Data-Export/Ohmic/ohmic_Dens_{File_index}.dat", rho)
+np.savetxt(f"./Data-Export/Ohmic/ohmic_Fermi_{File_index}.dat", F / e)  # eV
+np.savetxt(f"./Data-Export/Ohmic/ohmic_Holes_{File_index}.dat", p)
+# np.savetxt(f"./Data-Export/Ohmic/ohmic_CurrentDensity_{File_index}.dat", J)
 
-# ----------------------------------------------------------------------
-# Plotting
-# ----------------------------------------------------------------------
-fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(10, 8), sharex=True)
+log_lines = [
+    "Title: Fermi Simulator (Ohmic Contact, Reverse Bias)",
+    f"Python file: {os.path.basename(__file__)}",
+    f"Date and time: {time.strftime('%Y-%m-%d %H:%M:%S')}",
+    f"Grid points: {N}",
+    f"Device length: {L*1e9:.2f} nm",
+    f"Iterations: {max_iter}",
+    f"Runtime: {time_format(elapsed_time)}",
+    f"------------------------------------------------------",
+    f"Thermal Voltage: {Vth:.6f} V",
+    f"Built-in Voltage: {V_bi:.6f} V (={V_bi/Vth:.2f} Vth)",
+    f"Barrier Height: {E_B / e:.6f} eV (={E_B/(k_B*T):.2f} e*Vth)",
+    f"boundary hole concentration: {p_left:.6e} m^-3",
+    f"drain voltage: {V_D:.6f} V (={V_D/Vth:.2f} Vth)",
+    f"Donator concentration: {N_A:.2e} m^-3",
+    f"Valence concentration: {N_v:.2e} m^-3",
+]
 
-ax1.plot(x * 1e6, -V, color='blue', lw=2, label=r'$-\phi$ [V]')
-ax1.plot(x * 1e6, F / e, color='blue', lw=2, ls='--', label=r'$F_p$ [eV]')
-ax1.axhline(0, color='black', linestyle='--')
-ax1.axvline((contact_width - 1) * dx * 1e6, color='black', linestyle='--')
-ax1.axvline((N - contact_width) * dx * 1e6, color='black', linestyle='--')
-ax1.set_ylabel('Energy / potential')
-ax1.set_title('Poisson + Continuity: quasi-Fermi level solved numerically', fontsize=16)
-ax1.set_xlim(0, L * 1e6)
+with open(f"./Data-Export/Ohmic/ohmic_log_{File_index}.txt", "w", encoding="utf-8") as log_file:
+    log_file.write("\n".join(log_lines) + "\n")
 
-ax2.plot(x * 1e6, p, color='red', lw=2)
-ax2.axhline(N_A, color='black', linestyle='--', label=r'$N_A$')
-ax2.axvline((contact_width - 1) * dx * 1e6, color='black', linestyle='--')
-ax2.axvline((N - contact_width) * dx * 1e6, color='black', linestyle='--')
-ax2.set_ylabel(r'$p$ [m$^{-3}$]')
-ax2.set_ylim(0, np.nanmax(p) * 1.2)
 
-ax3.plot(x * 1e6, J, color='green', lw=2)
-ax3.axvline((contact_width - 1) * dx * 1e6, color='black', linestyle='--')
-ax3.axvline((N - contact_width) * dx * 1e6, color='black', linestyle='--')
-ax3.set_xlabel('Position [um]')
-ax3.set_ylabel(r'$J$ [A/m$^2$]')
+# # ----------------------------------------------------------------------
+# # Plotting
+# # ----------------------------------------------------------------------
+# fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(10, 8), sharex=True)
 
-fig.tight_layout()
-plt.show()
+# ax1.plot(x * 1e9, -V, color='blue', lw=2, label=r'$-\phi$ [V]')
+# ax1.plot(x * 1e9, F / e, color='blue', lw=2, ls='--', label=r'$F_p$ [eV]')
+# ax1.axhline(0, color='black', linestyle='--')
+# ax1.axhline(-V_bi, color='black', linestyle='--', label=r'$-V_{bi}$')
+# ax1.axvline((contact_width - 1) * dx * 1e9, color='black', linestyle='--')
+# ax1.axvline((N - contact_width) * dx * 1e9, color='black', linestyle='--')
+# ax1.set_ylabel('Energy / potential')
+# ax1.set_title('Fermi Simulator', fontsize=16)
+# ax1.set_xlim(0, L * 1e9)
+
+# ax2.plot(x * 1e9, p, color='red', lw=2)
+# ax2.axhline(N_A, color='black', linestyle='--', label=r'$N_A$')
+# ax2.axvline((contact_width - 1) * dx * 1e9, color='black', linestyle='--')
+# ax2.axvline((N - contact_width) * dx * 1e9, color='black', linestyle='--')
+# ax2.set_ylabel(r'$p$ [m$^{-3}$]')
+# ax2.set_ylim(0, np.nanmax(p) * 1.2)
+
+# ax3.plot(x * 1e9, J, color='green', lw=2)
+# ax3.axvline((contact_width - 1) * dx * 1e9, color='black', linestyle='--')
+# ax3.axvline((N - contact_width) * dx * 1e9, color='black', linestyle='--')
+# ax3.set_xlabel('Position [nm]')
+# ax3.set_ylabel(r'$J$ [A/m$^2$]')
+
+# fig.tight_layout()
+# plt.show()

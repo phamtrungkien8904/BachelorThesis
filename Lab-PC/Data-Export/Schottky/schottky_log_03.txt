@@ -1,0 +1,15 @@
+Title: Fermi Simulator (Schottky Contact, Forward Bias)
+Python file: Schottky.py
+Date and time: 2026-05-27 13:56:19
+Grid points: 1001
+Device length: 100.00 nm
+Iterations: 100000000
+Runtime: 00:00:46
+------------------------------------------------------
+Thermal Voltage: 0.025852 V
+Built-in Voltage: 0.051704 V (=2.00 Vth)
+Barrier Height: 0.129150 eV (=5.00 e*Vth)
+boundary hole concentration: 3.032653e+23 m^-3
+drain voltage: 0.038778 V (=1.50 Vth)
+Donator concentration: 5.00e+23 m^-3
+Valence concentration: 1.00e+25 m^-3
