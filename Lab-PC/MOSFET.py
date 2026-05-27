@@ -46,21 +46,21 @@ Vth = k_B * T / e
 print(f"Thermal voltage Vth: {Vth:.4f} V")
 
 # Voltages
-V_bi = 2.5 * Vth               # built-in potential [V]
-V_D = -10 * Vth              # drain/contact voltage [V]
-V_G = 0.0                   # gate voltage [V]
+V_bi = 4 * Vth               # built-in potential [V]
+V_D = -20 * Vth              # drain/contact voltage [V]
+V_G = 0 * Vth                   # gate voltage [V]
 
 print(f"Built-in potential V_bi: {V_bi:.4f} V (={V_bi/Vth:.2f} Vth)")
 print(f"Drain voltage V_D: {V_D:.4f} V (={V_D/Vth:.2f} Vth)")
 print(f"Gate voltage V_G: {V_G:.4f} V (={V_G/Vth:.2f} Vth)")
 # Semiconductor parameters
-N_A = 5e23                 # acceptor density [m^-3]
+N_A = 1e22                 # acceptor density [m^-3]
 N_v = 1e25                  # effective DOS [m^-3]
 
 # Choose F boundary such that at left contact phi=0:
 # p_left = Nv * exp(-F_left/kBT) = NA * exp(V_bi/Vth)
 E_B = e* Vth * np.log(N_v / N_A)- e * V_bi  # [J]
-p_left = N_v * np.exp(-E_B / (k_B * T))
+p_left = N_v * np.exp(-(E_B-e*V_G) / (k_B * T))
 print(f"Barrier height E_B: {E_B/e:.4f} eV (={E_B/(k_B*T):.2f} e*Vth)")
 print(f"Boundary hole concentration: {p_left:.3e} m^-3")
 
@@ -275,12 +275,12 @@ ax1.set_ylabel('Energy / potential')
 ax1.set_title('Fermi Simulator', fontsize=16)
 ax1.set_xlim(0, L * 1e9)
 
-ax2.plot(x * 1e9, p, color='red', lw=2)
+ax2.semilogy(x * 1e9, p, color='red', lw=2)
 ax2.axhline(N_A, color='black', linestyle='--', label=r'$N_A$')
 ax2.axvline((contact_width - 1) * dx * 1e9, color='black', linestyle='--')
 ax2.axvline((N - contact_width) * dx * 1e9, color='black', linestyle='--')
 ax2.set_ylabel(r'$p$ [m$^{-3}$]')
-ax2.set_ylim(0, np.nanmax(p) * 1.2)
+# ax2.set_ylim(0, np.nanmax(p) * 1.2)
 
 ax3.plot(x * 1e9, J, color='green', lw=2)
 ax3.axvline((contact_width - 1) * dx * 1e9, color='black', linestyle='--')

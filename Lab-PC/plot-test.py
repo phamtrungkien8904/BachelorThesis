@@ -23,11 +23,6 @@ N_A = 1e18  # Acceptor concentration in m^-3
 V = np.loadtxt("./Data-Export/schottky_Poti_01.dat")
 p = np.loadtxt("./Data-Export/schottky_Dens_01.dat")/e + N_A
 
-E = -np.gradient(V, dx)
-dp_dx = np.gradient(p, dx)
-J_drift = e*mu * p * E 
-J_diffusion = -mu * e *V_T * dp_dx
-
 
 
 
@@ -52,34 +47,8 @@ ax2.set_ylabel('Hole Concentration (m^-3)')
 ax2.set_xlim(0, L * 1e6)
 ax2.set_ylim(0, np.max(p) * 1.5)
 
-fig, (ax3, ax4) = plt.subplots(2, 1, figsize=(8, 8), sharex=True)
-
-ax3.plot(x * 1e6, E, color='green', lw=2)
-ax3.axhline(0, color='black', linestyle='--')
-ax3.axvline((contact_width-1) * dx * 1e6, color='black', linestyle='--')
-ax3.axvline((N - contact_width) * dx * 1e6, color='black', linestyle='--')
-ax3.set_ylabel('Electric Field (V/m)')
-
-ax4.plot(x * 1e6, dp_dx, color='purple', lw=2)
-ax4.axhline(0, color='black', linestyle='--')
-ax4.axvline((contact_width-1) * dx * 1e6, color='black', linestyle='--')
-ax4.axvline((N - contact_width) * dx * 1e6, color='black', linestyle='--')
-ax4.set_xlabel('Position (um)')
-ax4.set_ylabel('dp/dx (m$^{-4}$)')
-ax4.set_xlim(0, L * 1e6)
 
 
 
 fig.tight_layout()
-plt.show()
-
-plt.plot(x * 1e6, J_drift, color='orange', lw=2)
-plt.plot(x * 1e6, J_diffusion, color='purple', lw=2)
-plt.plot(x * 1e6, J_drift + J_diffusion, color='brown', lw=2)
-plt.ylabel('Current Density (A/m$^2$)')
-plt.xlabel('Position (um)')
-plt.xlim(0, L * 1e6)
-plt.ylim(-1,1)
-plt.legend(['Drift Current Density', 'Diffusion Current Density', 'Total Current Density'])
-plt.title('Total Current Density Profile')
 plt.show()
