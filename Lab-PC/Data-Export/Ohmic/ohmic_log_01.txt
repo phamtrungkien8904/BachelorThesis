@@ -1,15 +1,15 @@
-Title: Fermi Simulator (Ohmic Contact, Zero Bias)
-Python file: Ohmic-0.py
-Date and time: 2026-05-27 14:21:30
-Grid points: 1001
+Title: Fermi Simulator (MOSFET, Ohmic Contacts)
+Python file: MOSFET.py
+Date and time: 2026-05-27 17:41:15
+Grid points: 201
 Device length: 100.00 nm
-Iterations: 100000000
-Runtime: 00:18:35
+Iterations: 10000000
+Runtime: 00:00:34
 ------------------------------------------------------
 Thermal Voltage: 0.025852 V
-Built-in Voltage: 0.051704 V (=2.00 Vth)
-Barrier Height: 0.025742 eV (=1.00 e*Vth)
-boundary hole concentration: 3.694528e+24 m^-3
-drain voltage: 0.000000 V (=0.00 Vth)
+Built-in Voltage: 0.064630 V (=2.50 Vth)
+Barrier Height: 0.012816 eV (=0.50 e*Vth)
+boundary hole concentration: 6.091247e+24 m^-3
+drain voltage: -0.258520 V (=-10.00 Vth)
 Donator concentration: 5.00e+23 m^-3
 Valence concentration: 1.00e+25 m^-3
