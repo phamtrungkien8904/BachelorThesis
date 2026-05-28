@@ -1,0 +1,25 @@
+1	KP, VP	Str	User Initials:
+2	ALD1106 (Temp)	Str	Sample Name:
+3	GVDP 2026	Str	Meas. type:
+4	I34:1000uA	Str	Comment 1:
+5	VDS: Max 10V	Str	Comment 2:
+6	VGS: 0V to 10V	Str	Comment 3:
+7	void	Str	Comment 4:
+8	void	Str	Comment 5:
+9	0	Lng	Simulation (0: NO, 1: YES):
+10	0	Dbl	Initial G4 voltage V_G4 (V):
+11	10	Dbl	Final G4 voltage V_G4 (V):
+12	101	Lng	Bins for G4 voltage ():
+13	3	Lng	Scans to do ():
+14	-666	Dbl	void:
+15	1E-03	Dbl	Source current I_34 (A):
+16	10	Dbl	Voltage Limit V_34 (V):
+17	1E-02	Dbl	Current Limit I_G4 (A):
+18	-666	Dbl	void:
+19	-666	Dbl	void:
+20	300	Dbl	Basic wait time (ms):
+21	1	Lng	MM2000 NPLC (fast: 0.1, med: 1, slow: 10):
+22	0	Lng	Adjust I34 (0: NO, 1: YES):
+23	-1	Lng	Sign for V12 (-1, 1):
+24	2.178e-9	Dbl	Capacitance (F):
+25	33e-6	Dbl	Device area (m2):
