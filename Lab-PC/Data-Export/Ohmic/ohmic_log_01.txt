@@ -1,15 +1,15 @@
 Title: Fermi Simulator (MOSFET, Ohmic Contacts)
 Python file: MOSFET.py
-Date and time: 2026-05-28 00:20:58
+Date and time: 2026-05-28 10:53:58
 Grid points: 201
-Device length: 100.00 nm
+Device length: 200.00 nm
 Iterations: 10000000
-Runtime: 00:01:13
+Runtime: 00:00:22
 ------------------------------------------------------
 Thermal Voltage: 0.025852 V
-Built-in Voltage: 0.103408 V (=4.00 Vth)
-Barrier Height: 0.075171 eV (=2.91 e*Vth)
-boundary hole concentration: 5.459815e+23 m^-3
+Built-in Voltage: 0.258520 V (=10.00 Vth)
+Barrier Height: -0.079941 eV (=-3.09 e*Vth)
+boundary hole concentration: 2.202647e+26 m^-3
 drain voltage: -0.517040 V (=-20.00 Vth)
 Donator concentration: 1.00e+22 m^-3
 Valence concentration: 1.00e+25 m^-3

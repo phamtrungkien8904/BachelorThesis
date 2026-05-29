@@ -46,7 +46,7 @@ Vth = k_B * T / e
 print(f"Thermal voltage Vth: {Vth:.4f} V")
 
 # Voltages
-V_bi = 4 * Vth               # built-in potential [V]
+V_bi = 10 * Vth               # built-in potential [V]
 V_D = -20 * Vth              # drain/contact voltage [V]
 V_G = 0 * Vth                   # gate voltage [V]
 
