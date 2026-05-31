@@ -38,11 +38,11 @@ plt.rcParams.update({
 
 # Parameters
 lamb = 500e-9  # Wavelength (m)
-a = 1e-3       # Slit separation (m)
+a = 2e-3       # Slit separation (m)
 b = 0.1e-3     # Slit width (m)
 L = 1          # Distance to screen (m)
 # Calculate positions of interference fringes
-x = np.linspace(-0.005, 0.005, 2000)  # Screen positions (m)
+x = np.linspace(-0.003, 0.003, 2001)  # Screen positions (m)
 # Calculate intensity pattern
 beta = (np.pi * a * x) / (lamb * L)
 # Calculate diffraction pattern
@@ -59,7 +59,7 @@ ax_left.plot(I_single_slit, x, color='red', linestyle='--', label='Diffraction E
 ax_left.set_title('Double-Slit Interference Pattern')
 # ax_left.set_xlabel('pi bx / (λL) (dimensionless)')
 # ax_left.set_ylabel('Intensity (arbitrary units)')
-ax_left.set_ylim(-0.005, 0.005)
+ax_left.set_ylim(-0.003, 0.003)
 ax_left.set_xlim(1.1, 0)
 ax_left.set_xlabel('Normalized Intensity')
 ax_left.set_ylabel('Position on Screen (m)')
@@ -71,7 +71,7 @@ image = ax_right.imshow(
     origin='lower',
     cmap='hot',
     interpolation='nearest',
-    extent=[0, 1.1, -0.005, 0.005],
+    extent=[0, 1.1, -0.003, 0.003],
     vmin=0,
     vmax=1,
 )
@@ -79,9 +79,9 @@ ax_right.set_title('Intensity Map')
 ax_right.set_xticks([])
 ax_right.yaxis.tick_right()
 ax_right.yaxis.set_label_position('right')
-ax_right.set_ylim(-0.005, 0.005)
+ax_right.set_ylim(-0.003, 0.003)
 fig.colorbar(image, ax=ax_right, location='right')
 
-plt.savefig('double_slit_interference.eps', format='eps', bbox_inches='tight')
+plt.savefig('slit.eps', format='eps', bbox_inches='tight')
 plt.show()
 
