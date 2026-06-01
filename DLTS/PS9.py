@@ -27,34 +27,59 @@ dataset = [
     ("-35 V", -35, data2, 'orange'),
     ("-30 V", -30, data3, 'green'),
     ("-25 V", -25, data4, 'blue'),
-    # ("-20 V", -20, data5, 'purple'),
-    # ("-15 V", -15, data6, 'brown'),
-    # ("-10 V", -10, data7, 'cyan')
+    ("-20 V", -20, data5, 'purple'),
+    ("-15 V", -15, data6, 'brown'),
+    ("-10 V", -10, data7, 'cyan')
 ]
 
 
 R1 = 1e6  # 1 MΩ
 R2 = 1e5 # 1 MΩ
-# plt.figure(figsize=(8, 8))
-# # plt.plot(t*1e3, I_discharge*1e6, label='Discharge Current', color='red', ls='-', lw = 1.5)
-# # plt.plot(t*1e3, I_charge*1e6, label='Charge Current', color='blue', ls='-', lw = 1.5)
-# for label, voltage, data, color in dataset:
-#     t = data[:, 0]
-#     V_discharge = data[:, 2]
-#     I_discharge = V_discharge/R2
-#     V_charge = data[:, 1]
-#     I_charge = V_charge/R2
-#     plt.plot(t*1e3, -I_charge*1e6, label=label, color=color, ls='-', lw=1.5)
+plt.figure(figsize=(8, 8))
+# plt.plot(t*1e3, I_discharge*1e6, label='Discharge Current', color='red', ls='-', lw = 1.5)
+# plt.plot(t*1e3, I_charge*1e6, label='Charge Current', color='blue', ls='-', lw = 1.5)
+for label, voltage, data, color in dataset:
+    t = data[:, 0]
+    V_discharge = data[:, 2]
+    I_discharge = V_discharge/R2
+    V_charge = data[:, 1]
+    I_charge = V_charge/R2
+    Q_charge = -np.trapezoid(I_charge, t)
+    Q_discharge = -np.trapezoid(I_discharge, t)
+    Q_diff = Q_charge + Q_discharge
+    plt.plot(t*1e3, -I_charge*1e6, label=label, color=color, ls='-', lw=1.5)
+    plt.plot(voltage, Q_diff, 'o', color=color, markersize=8)
 
-# plt.axhline(y=0.0, color='black', ls='--', lw=1)
-# plt.xlabel('Time (ms)', fontsize=19)
-# plt.ylabel(r'Current ($\mu$A)', fontsize=19)
-# plt.title('DLTS Signal vs Time', fontsize=20)
-# plt.xlim(0, 50)
-# plt.ylim(0, 20)
-# plt.legend(frameon=True, numpoints=1, fontsize=15)
-# # plt.savefig('DLTS_pulse-var.eps', format='eps', bbox_inches='tight')
-# plt.show()
+plt.axhline(y=0.0, color='black', ls='--', lw=1)
+plt.xlabel('Time (ms)', fontsize=19)
+plt.ylabel(r'Current ($\mu$A)', fontsize=19)
+plt.title('DLTS Signal vs Time', fontsize=20)
+plt.xlim(0, 50)
+plt.ylim(0, 20)
+plt.legend(frameon=True, numpoints=1, fontsize=15)
+# plt.savefig('DLTS_pulse-var.eps', format='eps', bbox_inches='tight')
+plt.show()
+
+for label, voltage, data, color in dataset:
+    t = data[:, 0]
+    V_discharge = data[:, 2]
+    I_discharge = V_discharge/R2
+    V_charge = data[:, 1]
+    I_charge = V_charge/R2
+    Q_charge = -np.trapezoid(I_charge, t)
+    Q_discharge = -np.trapezoid(I_discharge, t)
+    Q_diff = Q_charge + Q_discharge
+    plt.plot(voltage, Q_diff*1e9, 'o', color=color, markersize=8, label=label)
+
+plt.axhline(y=0.0, color='black', ls='--', lw=1)
+plt.xlabel('Pulse Voltage (V)', fontsize=19)
+plt.ylabel(r'Trapped Charge (nC)', fontsize=19)
+plt.title('DLTS Signal vs Time', fontsize=20)
+plt.xlim(-50, 0)
+plt.ylim(0, 10)
+plt.legend(frameon=True, numpoints=1, fontsize=15)
+# plt.savefig('DLTS_pulse-var.eps', format='eps', bbox_inches='tight')
+plt.show()
 
 
 # plt.figure(figsize=(8, 6))
@@ -79,9 +104,9 @@ R2 = 1e5 # 1 MΩ
 
 
 
-t = data7[:, 0]
-V_discharge = data7[:, 2]
-V_charge = data7[:, 1]
+t = data4[:, 0]
+V_discharge = data4[:, 2]
+V_charge = data4[:, 1]
 I_discharge = V_discharge/R2
 I_charge = V_charge/R2
 
