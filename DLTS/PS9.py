@@ -2,17 +2,38 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 
-# Custom settings
+# # Custom settings
 plt.style.use('classic')
-plt.rcParams['figure.facecolor'] = 'white'
-plt.rcParams['axes.facecolor'] = 'white'
-plt.rcParams['axes.edgecolor'] = 'black'
-plt.rcParams['axes.linewidth'] = 1.2
-plt.rcParams['savefig.facecolor'] = 'white'
-plt.rcParams['font.family'] = 'sans-serif'
-plt.rcParams['font.sans-serif'] = ['Arial']
-plt.rcParams['mathtext.fontset'] = 'cm'
-plt.rcParams['figure.dpi'] = 100
+plt.rcParams.update({
+    'figure.figsize': (6, 6),
+    'figure.facecolor': 'white',
+    'axes.facecolor': 'white',
+    'axes.edgecolor': 'black',
+    'axes.linewidth': 2,
+    'axes.labelsize': 22,
+    'axes.labelcolor': 'black',
+    'savefig.facecolor': 'white',
+    'font.family': 'sans-serif',
+    'font.sans-serif': ['Arial'],
+    'mathtext.fontset': 'cm',
+    'figure.dpi': 100,
+    'savefig.bbox': 'tight',
+        # Ticks
+    "xtick.direction": "in",
+    "ytick.direction": "in",
+    "xtick.top": True,
+    "ytick.right": True,
+    "xtick.major.size": 8,
+    "ytick.major.size": 8,
+    "xtick.major.width": 2,
+    "ytick.major.width": 2,
+    "xtick.minor.visible": True,
+    "ytick.minor.visible": True,
+    "xtick.minor.size": 4,
+    "ytick.minor.size": 4,
+    "xtick.minor.width": 1.5,
+    "ytick.minor.width": 1.5,
+})
 
 data1 = np.loadtxt("./Data_20262904/20262904005.snp") # 40V
 data2 = np.loadtxt("./Data_20262904/20262904004.snp") # 35V
@@ -55,7 +76,7 @@ plt.xlabel('Time (ms)', fontsize=19)
 plt.ylabel(r'Current ($\mu$A)', fontsize=19)
 plt.title('DLTS Signal vs Time', fontsize=20)
 plt.xlim(0, 50)
-plt.ylim(0, 20)
+plt.ylim(0, 10)
 plt.legend(frameon=True, numpoints=1, fontsize=15)
 # plt.savefig('DLTS_pulse-var.eps', format='eps', bbox_inches='tight')
 plt.show()
@@ -82,24 +103,24 @@ plt.legend(frameon=True, numpoints=1, fontsize=15)
 plt.show()
 
 
-# plt.figure(figsize=(8, 6))
-# for label, voltage, data, color in dataset:
-#     t = data[:, 0]
-#     V_discharge = data[:, 2]
-#     I_discharge = V_discharge/R2
-#     V_charge = data[:, 1]
-#     I_charge = V_charge/R2
-#     plt.plot(t*1e3, -(voltage - I_charge*(R1 + R2)), label=label, color=color, ls='-', lw=1.5)
-#     plt.axhline(y=-voltage, color='black', ls='--', lw=1)
+plt.figure(figsize=(8, 6))
+for label, voltage, data, color in dataset:
+    t = data[:, 0]
+    V_discharge = data[:, 2]
+    I_discharge = V_discharge/R2
+    V_charge = data[:, 1]
+    I_charge = V_charge/R2
+    plt.plot(t*1e3, -(voltage - I_charge*(R1 + R2)), label=label, color=color, ls='-', lw=1.5)
+    plt.axhline(y=-voltage, color='black', ls='--', lw=1)
 
-# plt.axhline(y=0.0, color='black', ls='--', lw=1)
-# plt.xlabel('Time (ms)', fontsize=19)
-# plt.ylabel(r'Voltage (V)', fontsize=19)
-# plt.title('DLTS Signal vs Time', fontsize=20)
-# plt.xlim(0, 50)
-# # plt.ylim(-2, 2)
-# plt.legend(frameon=True, numpoints=1, fontsize=15)
-# plt.show()
+plt.axhline(y=0.0, color='black', ls='--', lw=1)
+plt.xlabel('Time (ms)', fontsize=19)
+plt.ylabel(r'Voltage (V)', fontsize=19)
+plt.title('DLTS Signal vs Time', fontsize=20)
+plt.xlim(0, 50)
+# plt.ylim(-2, 2)
+plt.legend(frameon=True, numpoints=1, fontsize=15)
+plt.show()
 
 
 
