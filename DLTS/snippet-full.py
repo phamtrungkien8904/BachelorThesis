@@ -65,7 +65,9 @@ for label, voltage, data, color in dataset:
     I_discharge = V_discharge/R2
     V_charge = data[:, 1]
     I_charge = V_charge/R2
-    plt.plot(t*1e3, -I_charge*1e6, label=label, color=color, ls='-', lw=1.5)
+    Q_charge = np.abs(np.trapezoid(I_charge, t))
+    Q_discharge = np.abs(np.trapezoid(I_discharge, t))
+    plt.plot(t*1e3, -I_charge*1e6, label=label + f": C = {-Q_charge/voltage*1e9:.2f} nF", color=color, ls='-', lw=1.5)
 
 plt.axhline(y=0.0, color='black', ls='--', lw=1)
 plt.xlabel('Time (ms)', fontsize=19)
@@ -77,25 +79,25 @@ plt.legend(frameon=True, numpoints=1, fontsize=15)
 # plt.savefig('DLTS_pulse-var.eps', format='eps', bbox_inches='tight')
 plt.show()
 
-for label, voltage, data, color in dataset:
-    t = data[:, 0]
-    V_discharge = data[:, 2]
-    I_discharge = V_discharge/R2
-    V_charge = data[:, 1]
-    I_charge = V_charge/R2
-    Q_charge = np.abs(np.trapezoid(I_charge, t))
-    Q_discharge = np.abs(np.trapezoid(I_discharge, t))
-    Q_diff = Q_charge - Q_discharge
-    plt.plot(voltage, Q_diff*1e9, 'o', color=color, markersize=8, label=label)
+# for label, voltage, data, color in dataset:
+#     t = data[:, 0]
+#     V_discharge = data[:, 2]
+#     I_discharge = V_discharge/R2
+#     V_charge = data[:, 1]
+#     I_charge = V_charge/R2
+#     Q_charge = np.abs(np.trapezoid(I_charge, t))
+#     Q_discharge = np.abs(np.trapezoid(I_discharge, t))
+#     Q_diff = Q_charge - Q_discharge
+#     plt.plot(voltage, Q_diff*1e9, 'o', color=color, markersize=8, label=label)
 
-plt.axhline(y=0.0, color='black', ls='--', lw=1)
-plt.xlabel('Pulse Voltage (V)', fontsize=19)
-plt.ylabel(r'Diff Charge (nC)', fontsize=19)
-plt.title('DLTS Signal vs Time', fontsize=20)
-plt.xlim(-50, 0)
-plt.ylim(0, 10)
-plt.legend(frameon=True, numpoints=1, fontsize=15)
-# plt.savefig('DLTS_pulse-var.eps', format='eps', bbox_inches='tight')
-plt.show()
+# plt.axhline(y=0.0, color='black', ls='--', lw=1)
+# plt.xlabel('Pulse Voltage (V)', fontsize=19)
+# plt.ylabel(r'Diff Charge (nC)', fontsize=19)
+# plt.title('DLTS Signal vs Time', fontsize=20)
+# plt.xlim(-50, 0)
+# plt.ylim(0, 10)
+# plt.legend(frameon=True, numpoints=1, fontsize=15)
+# # plt.savefig('DLTS_pulse-var.eps', format='eps', bbox_inches='tight')
+# plt.show()
 
 
