@@ -47,16 +47,20 @@ x = np.linspace(-0.003, 0.003, 2001)  # Screen positions (m)
 beta = (np.pi * a * x) / (lamb * L)
 # Calculate diffraction pattern
 gamma = (np.pi * b * x) / (lamb * L)
-# Combine interference and diffraction patterns
-I_single_slit = np.sinc(gamma)**2
-I = np.cos(beta)**2 * I_single_slit
+# Polarization removes the interference term, so each slit contributes
+# its own single-slit diffraction envelope.
+I_slit_1 = np.sinc((np.pi * b * (x - a / 2)) / (lamb * L))**2
+I_slit_2 = np.sinc((np.pi * b * (x + a / 2)) / (lamb * L))**2
+I = I_slit_1 + I_slit_2
+I /= I.max()
 # Plotting
 fig, (ax_left, ax_right) = plt.subplots(1, 2, sharey=True)
-fig.suptitle('Generic Double-Slit', y=0.98, fontsize=16)
+fig.suptitle('Orthogonal Polarized Double-Slit', y=0.98, fontsize=16)
 
 
-ax_left.plot(I, x, color='blue')
-ax_left.plot(I_single_slit, x, color='red', linestyle='--', label='Diffraction Envelope')
+ax_left.plot(I, x, color='blue', label='Total Intensity')
+ax_left.plot(I_slit_1, x, color='red', linestyle='--', label='Single Slit 1')
+ax_left.plot(I_slit_2, x, color='green', linestyle='--', label='Single Slit 2')
 ax_left.set_ylim(-0.003, 0.003)
 ax_left.set_xlim(1.1, 0)
 ax_left.set_yticks([])
@@ -80,6 +84,6 @@ ax_right.yaxis.set_label_position('right')
 ax_right.set_ylim(-0.003, 0.003)
 fig.colorbar(image, ax=ax_right, location='right')
 
-plt.savefig('double-slit.eps', format='eps', bbox_inches='tight')
+plt.savefig('polarized-double-slit.eps', format='eps', bbox_inches='tight')
 plt.show()
 
