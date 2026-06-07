@@ -1,7 +1,7 @@
 1	KP	Str	User Initials:
 2	260K, 950	Str	Sample Name:
 3	GVDP 2026	Str	Meas. type:
-4	I34: -100nA	Str	Comment 1:
+4	I34: -200nA	Str	Comment 1:
 5	V34:50V	Str	Comment 2:
 6	none:	Str	Comment 3:
 7	void	Str	Comment 4:
@@ -12,7 +12,7 @@
 12	101	Lng	Bins for G4 voltage ():
 13	1	Lng	Scans to do ():
 14	-666	Dbl	void:
-15	-100E-09	Dbl	Source current I_34 (A):
+15	-200E-09	Dbl	Source current I_34 (A):
 16	50	Dbl	Voltage Limit V_34 (V):
 17	1E-03	Dbl	Current Limit I_G4 (A):
 18	-666	Dbl	void:
