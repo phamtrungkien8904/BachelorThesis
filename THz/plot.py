@@ -66,7 +66,7 @@ perr_1 = np.sqrt(np.diag(pcov_1))
 a_err = float(perr_1[0])
 
 def func_2(x, b):
-    return a**2 *m/(n2D* e**2) * 2*np.pi*x * b
+    return a**2 *m/(n2D* e**2) * 2*np.pi*x + b
 
 popt_2, pcov_2 = curve_fit(func_2, f, Im)
 Im_fit = func_2(f, *popt_2)
@@ -90,4 +90,6 @@ plt.show()
 
 tau = a*m/(n2D*e**2) *1e15
 tau_err = a_err*m/(n2D*e**2) *1e15
+null = -b/(a**2 *m/(n2D* e**2) * 2*np.pi) *1e-12
 print(f"Relaxation time (tau): ({tau:.2f}  ± {tau_err:.2f}) fs")
+print(f"Null frequency: {null:.2f} THz")
