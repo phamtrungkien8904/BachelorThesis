@@ -38,7 +38,7 @@ plt.rcParams.update({
 
 
 C = 2.1e-9
-n2D = 1.99e12 * 1e4
+# n2D = 1.99e12 * 1e4
 e = 1.602e-19
 m = 0.26 * 9.109e-31
 epsilon = 11.7 
@@ -65,31 +65,32 @@ f_fit = np.linspace(0, f.max(), 500)
 perr_1 = np.sqrt(np.diag(pcov_1))
 a_err = float(perr_1[0])
 
-def func_2(x, b):
-    return a**2 *m/(n2D* e**2) * 2*np.pi*x + b
+def func_2(x, n2D):
+    return a**2 *m/(n2D* e**2) * 2*np.pi*x 
 
 popt_2, pcov_2 = curve_fit(func_2, f, Im)
 Im_fit = func_2(f, *popt_2)
-b = float(popt_2[0])
+n2D = float(popt_2[0])
 
 
 # 1-sigma parameter uncertainties from covariance matrix
 perr_2 = np.sqrt(np.diag(pcov_2))
-b_err = float(perr_2[0])
+n2D_err = float(perr_2[0])
 
-plt.plot(f, Re, 'o-', label='Re')
-plt.plot(f, Im, 's-', label='Im')
+plt.plot(f, Re, 'r-', label='Re', marker='o', lw=2,markeredgecolor="white", markeredgewidth=1, markersize=8)
+plt.plot(f, Im, 'b-', label='Im', marker='o', lw=2,markeredgecolor="white", markeredgewidth=1, markersize=8)
 plt.axhline(y=a, color='r', linestyle='--')
 
 plt.plot(f_fit, func_2(f_fit, *popt_2), color='b', linestyle='--')
 plt.xlabel('Frequency (Hz)')
 plt.ylabel('Conductivity (S)')
 plt.title('Frequency-Dependent Conductivity')
-plt.legend()
+plt.legend(numpoints=1)
 plt.show()
 
 tau = a*m/(n2D*e**2) *1e15
 tau_err = a_err*m/(n2D*e**2) *1e15
-null = -b/(a**2 *m/(n2D* e**2) * 2*np.pi) *1e-12
+n2D = n2D * 1e-4
+
 print(f"Relaxation time (tau): ({tau:.2f}  ± {tau_err:.2f}) fs")
-print(f"Null frequency: {null:.2f} THz")
+print(f"2D Carrier Density (n2D): ({n2D:.2e}  ± {n2D_err:.2e}) cm^-2")
