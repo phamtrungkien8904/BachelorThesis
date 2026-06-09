@@ -1,10 +1,10 @@
 Title: Fermi Simulator (MOSFET, Ohmic Contacts)
 Python file: MOSFET.py
-Date and time: 2026-05-28 10:53:58
+Date and time: 2026-06-09 16:36:48
 Grid points: 201
-Device length: 200.00 nm
+Device length: 100.00 nm
 Iterations: 10000000
-Runtime: 00:00:22
+Runtime: 00:00:04
 ------------------------------------------------------
 Thermal Voltage: 0.025852 V
 Built-in Voltage: 0.258520 V (=10.00 Vth)

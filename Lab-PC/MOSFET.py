@@ -53,6 +53,7 @@ V_G = 0 * Vth                   # gate voltage [V]
 print(f"Built-in potential V_bi: {V_bi:.4f} V (={V_bi/Vth:.2f} Vth)")
 print(f"Drain voltage V_D: {V_D:.4f} V (={V_D/Vth:.2f} Vth)")
 print(f"Gate voltage V_G: {V_G:.4f} V (={V_G/Vth:.2f} Vth)")
+
 # Semiconductor parameters
 N_A = 1e22                 # acceptor density [m^-3]
 N_v = 1e25                  # effective DOS [m^-3]
