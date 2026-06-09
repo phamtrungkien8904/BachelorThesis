@@ -6,7 +6,7 @@ from scipy.optimize import curve_fit
 plt.style.use('classic')
 plt.rcParams.update({
     'figure.dpi': 100,
-    'figure.figsize': (10, 6),
+    'figure.figsize': (8, 6),
     'figure.facecolor': 'white',
     'axes.facecolor': 'white',
     'axes.edgecolor': 'black',
@@ -58,7 +58,7 @@ def func_1(x, a):
 popt_1, pcov_1 = curve_fit(func_1, f, Re)
 Re_fit = func_1(f, *popt_1)
 a = float(popt_1[0])
-f_fit = np.linspace(0, f.max(), 500)
+f_fit = np.linspace(0, 3e12, 500)
 
 
 # 1-sigma parameter uncertainties from covariance matrix
@@ -77,20 +77,27 @@ n2D = float(popt_2[0])
 perr_2 = np.sqrt(np.diag(pcov_2))
 n2D_err = float(perr_2[0])
 
-plt.plot(f, Re, 'r-', label='Re', marker='o', lw=2,markeredgecolor="white", markeredgewidth=1, markersize=8)
-plt.plot(f, Im, 'b-', label='Im', marker='o', lw=2,markeredgecolor="white", markeredgewidth=1, markersize=8)
-plt.axhline(y=a, color='r', linestyle='--')
-
-plt.plot(f_fit, func_2(f_fit, *popt_2), color='b', linestyle='--')
-plt.xlabel('Frequency (Hz)')
-plt.ylabel('Conductivity (S)')
-plt.title('Frequency-Dependent Conductivity')
-plt.legend(numpoints=1)
-plt.show()
 
 tau = a*m/(n2D*e**2) *1e15
 tau_err = a_err*m/(n2D*e**2) *1e15
 n2D = n2D * 1e-4
 
+plt.scatter(f*1e-12, Re*1e6, color='r', label='Re data', marker='o')
+plt.scatter(f*1e-12, Im*1e6, color='b', label='Im data', marker='s')
+plt.axhline(y=a*1e6, color='r', linestyle='-', label=f'Re fit')
+plt.axhline(y=0, color='k', linestyle='--')
+
+plt.plot(f_fit*1e-12, func_2(f_fit, *popt_2)*1e6, color='b', linestyle='-', label=f'Im fit')
+plt.xlabel('Frequency (THz)')
+plt.ylabel(r'$\Delta S / S \times 10^6$')
+plt.title(f'THz Electromodulation Spectroscopy\n$\\tau = {tau:.2f}$ fs, $n_{{2D}} = {n2D:.2e}$ cm$^{{-2}}$')
+plt.xlim(0, 3)
+plt.legend(numpoints=1)
+
+
+
 print(f"Relaxation time (tau): ({tau:.2f}  ± {tau_err:.2f}) fs")
 print(f"2D Carrier Density (n2D): ({n2D:.2e}  ± {n2D_err:.2e}) cm^-2")
+
+plt.savefig('THz_fit.png', dpi=300)
+plt.show()
