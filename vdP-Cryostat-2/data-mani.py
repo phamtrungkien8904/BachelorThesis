@@ -1,21 +1,27 @@
+import os
 import numpy as np
 import matplotlib.pyplot as plt
-# Custom settings
-plt.style.use('classic')
+from decimal import Decimal
+
+# ============================================================
+# Custom plot settings
+# ============================================================
+plt.style.use("classic")
 plt.rcParams.update({
-    'figure.figsize': (8, 6),
-    'figure.facecolor': 'white',
-    'axes.facecolor': 'white',
-    'axes.edgecolor': 'black',
-    'axes.linewidth': 2,
-    'axes.labelsize': 22,
-    'axes.labelcolor': 'black',
-    'savefig.facecolor': 'white',
-    'font.family': 'sans-serif',
-    'font.sans-serif': ['Arial'],
-    'mathtext.fontset': 'cm',
-    'figure.dpi': 100,
-    'savefig.bbox': 'tight',
+    "figure.figsize": (8, 6),
+    "figure.facecolor": "white",
+    "axes.facecolor": "white",
+    "axes.edgecolor": "black",
+    "axes.linewidth": 2,
+    "axes.labelsize": 22,
+    "axes.labelcolor": "black",
+    "savefig.facecolor": "white",
+    "font.family": "sans-serif",
+    "font.sans-serif": ["Arial"],
+    "mathtext.fontset": "cm",
+    "figure.dpi": 100,
+    "savefig.bbox": "tight",
+
     # Ticks
     "xtick.direction": "in",
     "ytick.direction": "in",
@@ -33,89 +39,151 @@ plt.rcParams.update({
     "ytick.minor.width": 1.5,
 })
 
-data0 = np.loadtxt("./Data-20260606/04.dat")
-data1 = np.loadtxt("./Data-20260606/05.dat")
-data2 = np.loadtxt("./Data-20260606/06.dat")
-data4 = np.loadtxt("./Data-20260606/17.dat")
+# ============================================================
+# File paths
+# ============================================================
+input_file = "./Data-20261006/02.dat"
+output_file = "./Data-Mani/02.dat"
 
+os.makedirs(os.path.dirname(output_file), exist_ok=True)
 
+# ============================================================
+# Load data
+# ============================================================
+data1 = np.loadtxt(input_file)
+
+# ============================================================
+# Constants
+# ============================================================
 C = 2.178e-9
 A = 33e-6
-Ci = C/A
+Ci = C / A
 e = 1.60217662e-19
 
+# ============================================================
+# Format for each column
+# Column 8 uses scientific notation, like original data
+# ============================================================
 fmt = [
-    '%g',          # col 1
-    '%.14f',       # col 2
-    '%.8f',        # col 3
-    '%.5f',        # col 4
-    '%.7f',        # col 5
-    '%.8f',        # col 6
-    '%.8f',        # col 7
-    '%.14E',       # col 8
-    '%.2f',        # col 9
-    '%.13f',       # col10
-    '%d'           # col11
+    "%g",          # col 1
+    "%.15f",       # col 2
+    "%.8f",        # col 3
+    "%.5f",        # col 4
+    "%.8f",        # col 5
+    "%.9f",        # col 6
+    "%.10f",       # col 7
+    "%.14E",       # col 8, scientific notation
+    "%.2f",        # col 9
+    "%.14f",       # col10
+    "%d"           # col11
 ]
 
+# ============================================================
+# Modify data
+# ============================================================
+data1[:, 0] += 0
+data1[:, 2] *= 1
+data1[:, 3] *= 1
+data1[:, 4] *= 1
+data1[:, 5] *= 1
+data1[:, 6] *= 1
 
-data4[:,0] += 35
-data4[:,2] *= 3
-data4[:,3] *= 1
-data4[:,6] *= 0.8
-data4[:,4] *= 0.8
-data4[:,5] *= 0.8
-data4[:,7] = np.log(2)/np.pi *data4[:,2]/data4[:,6]
+# Column 8: sheet conductance
+data1[:, 7] = np.log(2) / np.pi * data1[:, 2] / data1[:, 6]
+
+# Column 9: charge density
+data1[:, 8] = Ci * data1[:, 0] / e * 1e-4
+
+# Column 10: mobility
+data1[:, 9] = data1[:, 7] / (e * data1[:, 8])
+
+# ============================================================
+# Formatting functions
+# ============================================================
+def clean_decimal_string(s):
+    """
+    Convert normal numbers to clean decimal notation.
+
+    Examples:
+    0.000000     -> 0
+    0.0013400    -> 0.00134
+    -0.000000    -> 0
+    -5E-08       -> -0.00000005
+    """
+
+    # Convert scientific notation to fixed decimal notation
+    if "E" in s or "e" in s:
+        s = format(Decimal(s), "f")
+
+    # Remove trailing zeros after decimal point
+    if "." in s:
+        s = s.rstrip("0").rstrip(".")
+
+    # Avoid -0, +0
+    if s in ["-0", "+0", ""]:
+        s = "0"
+
+    return s
 
 
-data4[:,8] = Ci*data4[:,0]/e *1e-4
-data4[:,9] = data4[:,7]/(e*data4[:,8])
-np.savetxt("./Data-Mod/17.dat", data4, fmt = fmt, delimiter = '\t')
+def clean_scientific_string(s):
+    """
+    Keep scientific notation, but remove unnecessary trailing zeros.
 
-# datasets = [
-#     (data0, '270 K', 'green'),
-#     (data1, '260 K', 'blue'),
-#     (data2, '250 K', 'red'),
-# ]
+    Example:
+    -8.32323125507490E-09 -> -8.3232312550749E-09
+    0.00000000000000E+00  -> 0
+    """
 
-# for data, label, color in datasets:
-#     V_G4 = data[:, 0]
-#     I_G4 = data[:, 1]
-#     I_34 = data[:, 2]
-#     V_34 = data[:, 3]
-#     V_14 = data[:, 4]
-#     V_24 = data[:, 5]
-#     V_12 = data[:, 6]
-#     sigma = data[:, 7]
-#     n_2D = data[:, 8]
-#     mu = data[:, 9]
+    if "E" in s:
+        mantissa, exponent = s.split("E")
+        e_char = "E"
+    elif "e" in s:
+        mantissa, exponent = s.split("e")
+        e_char = "e"
+    else:
+        return clean_decimal_string(s)
 
-#     V_C = (V_14 + V_24)/2
-#     V_del = V_G4 - V_C
+    mantissa = mantissa.rstrip("0").rstrip(".")
 
-#     plt.plot(V_del, sigma, '^', label=label, color=color, markersize=8, ls='-', lw = 2, markeredgecolor="white", markeredgewidth=0.1)
+    if mantissa in ["-0", "+0", "0", ""]:
+        return "0"
 
-# plt.xlabel('V_{del}')
-# plt.ylabel('Conductivity')
-# plt.legend(numpoints=1)
-# plt.show()
+    return mantissa + e_char + exponent
 
-# for data, label, color in datasets:
-#     V_G4 = data[:, 0]
-#     I_G4 = data[:, 1]
-#     I_34 = data[:, 2]
-#     V_34 = data[:, 3]
-#     V_14 = data[:, 4]
-#     V_24 = data[:, 5]
-#     V_12 = data[:, 6]
-#     sigma = data[:, 7]
-#     n_2D = data[:, 8]
-#     mu = data[:, 9]
 
-#     V_C = (V_14 + V_24)/2
-#     V_del = V_G4 - V_C
+def format_value(x, fmt_i, col_index):
+    """
+    Format one value.
 
-#     plt.plot(V_G4, V_12, '^', label=label, color=color, markersize=8, ls='-', lw = 2, markeredgecolor="white", markeredgewidth=0.1)
+    col_index is Python indexing:
+    col 1 -> 0
+    col 8 -> 7
+    """
 
-# plt.legend(numpoints=1)
-# plt.show()
+    # Integer column
+    if fmt_i == "%d":
+        return str(int(round(x)))
+
+    s = fmt_i % x
+
+    # Column 8: keep scientific notation
+    if col_index == 7:
+        return clean_scientific_string(s)
+
+    # Other columns: fixed decimal notation, no useless zeros
+    return clean_decimal_string(s)
+
+
+# ============================================================
+# Save modified data
+# ============================================================
+with open(output_file, "w") as f:
+    for row in data1:
+        line = "\t".join(
+            format_value(x, fmt_i, i)
+            for i, (x, fmt_i) in enumerate(zip(row, fmt))
+        )
+        f.write(line + "\n")
+
+print(f"Saved modified data to: {output_file}")
