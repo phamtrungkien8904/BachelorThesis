@@ -1,9 +1,9 @@
-1	SB,VP	Str	User Initials:
-2	20260505_2_PaN	Str	Sample Name:
+1	KP	Str	User Initials:
+2	20251030_1	Str	Sample Name:
 3	GVDP 2026	Str	Meas. type:
-4	I34:100nA	Str	Comment 1:
-5	V34:10V	Str	Comment 2:
-6	none:	Str	Comment 3:
+4	I34:-100nA	Str	Comment 1:
+5	V34:80V	Str	Comment 2:
+6	Temp: 285K	Str	Comment 3:
 7	void	Str	Comment 4:
 8	void	Str	Comment 5:
 9	0	Lng	Simulation (0: NO, 1: YES):
