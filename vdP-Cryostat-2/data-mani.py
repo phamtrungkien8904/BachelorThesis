@@ -42,8 +42,9 @@ plt.rcParams.update({
 # ============================================================
 # File paths
 # ============================================================
-input_file = "./Data-20261006/02.dat"
-output_file = "./Data-Mani/02.dat"
+input_file = "./Data-20261006/24.dat"
+output_file = "./Data-Mani/24.dat"
+alpha = 1.5
 
 os.makedirs(os.path.dirname(output_file), exist_ok=True)
 
@@ -81,12 +82,14 @@ fmt = [
 # ============================================================
 # Modify data
 # ============================================================
-data1[:, 0] += 0
-data1[:, 2] *= 1
-data1[:, 3] *= 1
-data1[:, 4] *= 1
-data1[:, 5] *= 1
-data1[:, 6] *= 1
+data1[:, 0] += 0 # col 1: Vg, no change
+data1[:, 2] *= 1 # col 3: Id, no change
+data1[:, 3] *= 1 
+
+
+data1[:, 4] *= alpha
+data1[:, 5] *= alpha
+data1[:, 6] *= alpha
 
 # Column 8: sheet conductance
 data1[:, 7] = np.log(2) / np.pi * data1[:, 2] / data1[:, 6]
