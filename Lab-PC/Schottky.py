@@ -47,8 +47,8 @@ Vth = k_B * T / e
 print(f"Thermal voltage Vth: {Vth:.4f} V")
 
 # Voltages
-V_bi = 2 * Vth               # built-in potential [V]
-V_D = 1.5 * Vth              # drain/contact voltage [V]
+V_bi = 10 * Vth               # built-in potential [V]
+V_D = -5 * Vth              # drain/contact voltage [V]
 
 print(f"Built-in potential V_bi: {V_bi:.4f} V (={V_bi/Vth:.2f} Vth)")
 print(f"Drain voltage V_D: {V_D:.4f} V (={V_D/Vth:.2f} Vth)")
@@ -240,7 +240,7 @@ fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(10, 8), sharex=True)
 ax1.plot(x * 1e9, -V, color='blue', lw=2, label=r'$-\phi$ [V]')
 ax1.plot(x * 1e9, F / e, color='blue', lw=2, ls='--', label=r'$F_p$ [eV]')
 ax1.axhline(0, color='black', linestyle='--')
-ax1.axhline(-V_bi, color='black', linestyle='--', label=r'$-V_{bi}$')
+ax1.axhline(V_bi, color='black', linestyle='--', label=r'$-V_{bi}$')
 ax1.axvline((contact_width - 1) * dx * 1e9, color='black', linestyle='--')
 ax1.axvline((N - contact_width) * dx * 1e9, color='black', linestyle='--')
 ax1.set_ylabel('Energy / potential')

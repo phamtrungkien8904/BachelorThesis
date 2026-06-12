@@ -1,8 +1,41 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-L = 5e-6  # Physical size of the domain in meters
-N = 201
+plt.style.use('classic')
+plt.rcParams.update({
+    'figure.dpi': 100,
+    'figure.figsize': (10, 6),
+    'figure.facecolor': 'white',
+    'axes.facecolor': 'white',
+    'axes.edgecolor': 'black',
+    'axes.linewidth': 2,
+    'axes.labelsize': 15,
+    'axes.labelcolor': 'black',
+    'savefig.facecolor': 'white',
+    'font.family': 'sans-serif',
+    'font.sans-serif': ['Arial'],
+    'mathtext.fontset': 'cm',
+
+    'savefig.bbox': 'tight',
+    # Ticks
+    "xtick.direction": "in",
+    "ytick.direction": "in",
+    "xtick.top": True,
+    "ytick.right": True,
+    "xtick.major.size": 8,
+    "ytick.major.size": 8,
+    "xtick.major.width": 2,
+    "ytick.major.width": 2,
+    "xtick.minor.visible": True,
+    "ytick.minor.visible": True,
+    "xtick.minor.size": 4,
+    "ytick.minor.size": 4,
+    "xtick.minor.width": 1.5,
+    "ytick.minor.width": 1.5,
+})
+
+L = 100e-9 # Physical size of the domain in meters
+N = 1001
 x = np.linspace(0, L, N)
 dx = x[1] - x[0]
 contact_size = 0.1
@@ -20,8 +53,8 @@ V_ext = 6*V_T  # External voltage in volts (Reverse: V_ext < 0, Forward: V_ext >
 V_tot = V_bi - V_ext  # Effective built-in potential in volts
 N_A = 1e18  # Acceptor concentration in m^-3
 
-V = np.loadtxt("./Data-Export/schottky_Poti_01.dat")
-p = np.loadtxt("./Data-Export/schottky_Dens_01.dat")/e + N_A
+V = np.loadtxt("./Data-Export/Schottky/schottky_Poti_01.dat")
+p = np.loadtxt("./Data-Export/Schottky/schottky_Dens_01.dat")/e + N_A
 
 
 
@@ -43,9 +76,9 @@ ax2.axhline(N_A, color='black', linestyle='--')
 ax2.axvline((contact_width-1) * dx * 1e6, color='black', linestyle='--')
 ax2.axvline((N - contact_width) * dx * 1e6, color='black', linestyle='--')
 ax2.set_xlabel('Position (um)')
-ax2.set_ylabel('Hole Concentration (m^-3)')
+ax2.set_ylabel('Net Charge Density (C/m^3)')
 ax2.set_xlim(0, L * 1e6)
-ax2.set_ylim(0, np.max(p) * 1.5)
+ax2.set_ylim(np.min(p) * 1.5, np.max(p) * 1.5)
 
 
 
