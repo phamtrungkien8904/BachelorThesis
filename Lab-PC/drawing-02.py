@@ -52,16 +52,16 @@ mu = 1e-4  # Mobility in m^2/(V*s)
 N_A = 5e23                 # acceptor density [m^-3]
 N_v = 1e25                  # effective DOS [m^-3]
 Vth = k_B * T / e
-V_bi = Vth * 10  # Built-in potential in volts
-V_D = -5*Vth  # External voltage in volts (Reverse: V_ext < 0, Forward: V_ext > 0)
-E_B = k_B * T * (np.log(N_v / N_A) + (V_bi - V_D) / Vth)  # [J]
+V_bi = Vth * 2  # Built-in potential in volts
+V_D = 0*Vth  # External voltage in volts (Reverse: V_ext < 0, Forward: V_ext > 0)
+E_B = k_B * T * (np.log(N_v / N_A) - (V_bi - V_D) / Vth)  # [J]
 p_left = N_v * np.exp(-(E_B - e * V_D) / (k_B * T))
-E_g = 20*Vth*e
+E_g = 10*Vth*e
 
 
-V = np.loadtxt("./Data-Export/Schottky/schottky_Poti_03.dat")
-F = np.loadtxt("./Data-Export/Schottky/schottky_Fermi_03.dat")
-rho = np.loadtxt("./Data-Export/Schottky/schottky_Dens_03.dat")
+V = np.loadtxt("./Data-Export/Ohmic/ohmic_Poti_01.dat")
+F = np.loadtxt("./Data-Export/Ohmic/ohmic_Fermi_01.dat")
+rho = np.loadtxt("./Data-Export/Ohmic/ohmic_Dens_01.dat")
 p = rho/e + N_A
 
 
@@ -79,8 +79,8 @@ ax1.axvline((contact_width-1) * dx * 1e6, color='black', linestyle='-', lw = 2)
 ax1.axvline((N - contact_width) * dx * 1e6, color='black', linestyle='-', lw = 2)
 ax1.set_ylabel('Energy')
 # ax1.set_title('Schottky Barrier (p-type) Simulation', fontsize=18)
-ax1.set_xlim(0, L * 1e6/2)
-ax1.set_ylim(-0.2, 1.0)
+ax1.set_xlim(0, L * 1e6*0.5)
+ax1.set_ylim(-0.2, 0.4)
 ax1.set_xticks([])
 ax1.set_yticks([])
 
@@ -91,38 +91,38 @@ y_EFS = np.interp(x_label, x * 1e6, F)
 y_EV = np.interp(x_label, x * 1e6, -V)
 y_EC = np.interp(x_label, x * 1e6, -V + E_g / e)
 y_E0 = np.interp(x_label, x * 1e6, F - E_B / e)
-ax1.text(x_label, y_EFS + 0.03, r'$E_{FS}$', color='black', fontsize=14, ha='right', va='bottom')
-ax1.text(x_label, y_EV - 0.12, r'$E_V$', color='red', fontsize=14, ha='right', va='bottom')
+ax1.text(x_label, y_EFS + 0.01, r'$E_{FS}$', color='black', fontsize=14, ha='right', va='bottom')
+ax1.text(x_label, y_EV + 0.01, r'$E_V$', color='red', fontsize=14, ha='right', va='bottom')
 ax1.text(x_label, y_EC + 0.01, r'$E_C$', color='blue', fontsize=14, ha='right', va='bottom')
-ax1.plot(x[contact_width:contact_width + 300] * 1e6, F[contact_width:contact_width + 300] - E_B / e, color='black', ls='--')
+# ax1.plot(x[contact_width:contact_width + 300] * 1e6, F[contact_width:contact_width + 300] - E_B / e, color='black', ls='--')
 # annotate metal Fermi level explanation near left contact
 metal_x = (contact_width - 1) * dx * 1e6 - 0.13 * (xlim[1] - xlim[0])
 metal_y = np.interp(metal_x, x * 1e6, F)
-ax1.text(metal_x, metal_y - 0.12, r'$E_{FM}$',
+ax1.text(metal_x, metal_y + 0.01, r'$E_{FM}$',
          color='black', fontsize=14, ha='left', va='bottom')
 
 
-x_arrow_1 = x_label - 0.3 * (xlim[1] - xlim[0])
-x_arrow_2 = x_label - 0.8 * (xlim[1] - xlim[0])
-ax1.annotate('', xy=(x_arrow_1, y_EV), xytext=(x_arrow_1, y_E0),
-             arrowprops=dict(arrowstyle='<->', color='black', lw=1.5))
-ax1.text(x_arrow_1 + 0.09 * (xlim[1] - xlim[0]), (y_EV + y_E0) / 2, r'$e(V_\text{bi} - V_\text{ext})$', color='black', fontsize=14, ha='center', va='center')
+# x_arrow_1 = x_label - 0.3 * (xlim[1] - xlim[0])
+# x_arrow_2 = x_label - 0.8 * (xlim[1] - xlim[0])
+# ax1.annotate('', xy=(x_arrow_1, y_EV), xytext=(x_arrow_1, y_E0),
+#              arrowprops=dict(arrowstyle='<->', color='black', lw=1.5))
+# ax1.text(x_arrow_1 + 0.04 * (xlim[1] - xlim[0]), (y_EV + y_E0) / 2, r'$eV_\text{bi}$', color='black', fontsize=14, ha='center', va='center')
 
-ax1.annotate('', xy=(x_arrow_2, metal_y), xytext=(x_arrow_2, y_EFS),
-             arrowprops=dict(arrowstyle='<->', color='black', lw=1.5))
-ax1.text(x_arrow_2 - 0.07 * (xlim[1] - xlim[0]), (metal_y + y_EFS) / 2, r'$eV_\text{ext} < 0$', color='black', fontsize=14, ha='center', va='center')
+# ax1.annotate('', xy=(x_arrow_2, metal_y), xytext=(x_arrow_2, y_EFS),
+#              arrowprops=dict(arrowstyle='<->', color='black', lw=1.5))
+# ax1.text(x_arrow_2 - 0.07 * (xlim[1] - xlim[0]), (metal_y + y_EFS) / 2, r'$eV_\text{ext} < 0$', color='black', fontsize=14, ha='center', va='center')
 
 
-ax2.fill_between(x[contact_width:-contact_width] * 1e6, rho[contact_width:-contact_width], 0, color='#9ecae1', zorder=1)
-ax2.plot(x[contact_width:-contact_width] * 1e6, rho[contact_width:-contact_width], color='b', lw=2, zorder=2)
+ax2.fill_between(x[contact_width:-contact_width] * 1e6, rho[contact_width:-contact_width], 0, color='#f2a6a6', zorder=1)
+ax2.plot(x[contact_width:-contact_width] * 1e6, rho[contact_width:-contact_width], color='r', lw=2, zorder=2)
 ax2.axhline(0, color='black',  linestyle='--')
 ax2.axvline((contact_width-1) * dx * 1e6, color='black', linestyle='-', lw = 2)
 ax2.axvline((N - contact_width) * dx * 1e6, color='black', linestyle='-', lw = 2)
 zero_label_y = 0.02 * (np.max(rho) - np.min(rho))
 ax2.text(x_label, zero_label_y, r'$0$', color='blue', fontsize=14, va='bottom')
 ax2.set_ylabel('Net Charge Density')
-ax2.set_xlim(0, L * 1e6/2)
-ax2.set_ylim(np.min(rho) * 1.5, -np.min(rho) * 1.5)
+ax2.set_xlim(0, L * 1e6*0.5)
+ax2.set_ylim(-np.max(rho) * 1.5, np.max(rho) * 1.5)
 ax2.set_xticks([])
 ax2.set_yticks([])
 
@@ -130,5 +130,5 @@ ax2.set_yticks([])
 
 
 fig.tight_layout()
-plt.savefig("schottky-02.eps", format='eps') 
+plt.savefig("ohmic-00.eps", format='eps') 
 plt.show()

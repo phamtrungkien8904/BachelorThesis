@@ -258,33 +258,33 @@ with open(f"./Data-Export/Ohmic/ohmic_log_{File_index}.txt", "w", encoding="utf-
     log_file.write("\n".join(log_lines) + "\n")
 
 
-# # ----------------------------------------------------------------------
-# # Plotting
-# # ----------------------------------------------------------------------
-# fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(10, 8), sharex=True)
+# ----------------------------------------------------------------------
+# Plotting
+# ----------------------------------------------------------------------
+fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(10, 8), sharex=True)
 
-# ax1.plot(x * 1e9, -V, color='blue', lw=2, label=r'$-\phi$ [V]')
-# ax1.plot(x * 1e9, F / e, color='blue', lw=2, ls='--', label=r'$F_p$ [eV]')
-# ax1.axhline(0, color='black', linestyle='--')
-# ax1.axhline(-V_bi, color='black', linestyle='--', label=r'$-V_{bi}$')
-# ax1.axvline((contact_width - 1) * dx * 1e9, color='black', linestyle='--')
-# ax1.axvline((N - contact_width) * dx * 1e9, color='black', linestyle='--')
-# ax1.set_ylabel('Energy / potential')
-# ax1.set_title('Fermi Simulator', fontsize=16)
-# ax1.set_xlim(0, L * 1e9)
+ax1.plot(x * 1e9, -V, color='blue', lw=2, label=r'$-\phi$ [V]')
+ax1.plot(x * 1e9, F / e, color='blue', lw=2, ls='--', label=r'$F_p$ [eV]')
+ax1.axhline(0, color='black', linestyle='--')
+ax1.axhline(-V_bi, color='black', linestyle='--', label=r'$-V_{bi}$')
+ax1.axvline((contact_width - 1) * dx * 1e9, color='black', linestyle='--')
+ax1.axvline((N - contact_width) * dx * 1e9, color='black', linestyle='--')
+ax1.set_ylabel('Energy / potential')
+ax1.set_title('Fermi Simulator', fontsize=16)
+ax1.set_xlim(0, L * 1e9)
 
-# ax2.plot(x * 1e9, p, color='red', lw=2)
-# ax2.axhline(N_A, color='black', linestyle='--', label=r'$N_A$')
-# ax2.axvline((contact_width - 1) * dx * 1e9, color='black', linestyle='--')
-# ax2.axvline((N - contact_width) * dx * 1e9, color='black', linestyle='--')
-# ax2.set_ylabel(r'$p$ [m$^{-3}$]')
-# ax2.set_ylim(0, np.nanmax(p) * 1.2)
+ax2.plot(x * 1e9, p, color='red', lw=2)
+ax2.axhline(N_A, color='black', linestyle='--', label=r'$N_A$')
+ax2.axvline((contact_width - 1) * dx * 1e9, color='black', linestyle='--')
+ax2.axvline((N - contact_width) * dx * 1e9, color='black', linestyle='--')
+ax2.set_ylabel(r'$p$ [m$^{-3}$]')
+ax2.set_ylim(0, np.nanmax(p) * 1.2)
 
-# ax3.plot(x * 1e9, J, color='green', lw=2)
-# ax3.axvline((contact_width - 1) * dx * 1e9, color='black', linestyle='--')
-# ax3.axvline((N - contact_width) * dx * 1e9, color='black', linestyle='--')
-# ax3.set_xlabel('Position [nm]')
-# ax3.set_ylabel(r'$J$ [A/m$^2$]')
+ax3.plot(x * 1e9, J, color='green', lw=2)
+ax3.axvline((contact_width - 1) * dx * 1e9, color='black', linestyle='--')
+ax3.axvline((N - contact_width) * dx * 1e9, color='black', linestyle='--')
+ax3.set_xlabel('Position [nm]')
+ax3.set_ylabel(r'$J$ [A/m$^2$]')
 
-# fig.tight_layout()
-# plt.show()
+fig.tight_layout()
+plt.show()

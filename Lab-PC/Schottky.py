@@ -5,7 +5,7 @@ import time
 import matplotlib.pyplot as plt
 import numpy as np
 
-File_index = "03"
+File_index = "02"
 
 try:
     import msvcrt
@@ -48,7 +48,7 @@ print(f"Thermal voltage Vth: {Vth:.4f} V")
 
 # Voltages
 V_bi = 10 * Vth               # built-in potential [V]
-V_D = -5 * Vth              # drain/contact voltage [V]
+V_D = 5 * Vth              # drain/contact voltage [V]
 
 print(f"Built-in potential V_bi: {V_bi:.4f} V (={V_bi/Vth:.2f} Vth)")
 print(f"Drain voltage V_D: {V_D:.4f} V (={V_D/Vth:.2f} Vth)")
@@ -223,7 +223,7 @@ log_lines = [
     f"Built-in Voltage: {V_bi:.6f} V (={V_bi/Vth:.2f} Vth)",
     f"Barrier Height: {E_B / e:.6f} eV (={E_B/(k_B*T):.2f} e*Vth)",
     f"boundary hole concentration: {p_left:.6e} m^-3",
-    f"drain voltage: {V_D:.6f} V (={V_D/Vth:.2f} Vth)",
+    f"Drain voltage: {V_D:.6f} V (={V_D/Vth:.2f} Vth)",
     f"Donator concentration: {N_A:.2e} m^-3",
     f"Valence concentration: {N_v:.2e} m^-3",
 ]
