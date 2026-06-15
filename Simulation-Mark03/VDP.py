@@ -56,8 +56,8 @@ File_index = "01"
 
 N = 101                      # grid points in x and y direction
 L = 100e-9                   # square side length [m]
-max_iter = 200000            # increase for stricter convergence
-step_iter = 1000             # print interval
+max_iter = 100000000        # increase for stricter convergence
+step_iter = 10           # print interval
 tolerance_percent = 5e-10    # stopping threshold for relative update error [%]
 
 SAVE_RESULTS = True
