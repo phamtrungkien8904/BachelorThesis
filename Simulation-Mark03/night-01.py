@@ -52,7 +52,7 @@ plt.rcParams["figure.dpi"] = 100
 # ----------------------------------------------------------------------
 # User parameters
 # ----------------------------------------------------------------------
-File_index = "01"
+File_index = "02"
 
 N = 201                      # grid points in x and y direction
 L = 1000e-9                   # square side length [m]
@@ -87,7 +87,7 @@ Vth = k_B * T / e
 
 # Voltages
 V_bi = 5.0 * Vth            # built-in potential [V]
-V_D = -10.0 * Vth            # contact-2 voltage relative to contact 1 [V]
+V_D = -20.0 * Vth            # contact-2 voltage relative to contact 1 [V]
 V_G = 0.0 * Vth              # uniform gate voltage [V]
 
 # Semiconductor parameters
@@ -435,122 +435,122 @@ if SAVE_RESULTS:
     with open(f"{OUTPUT_DIR}/VDP_log_{File_index}.txt", "w", encoding="utf-8") as log_file:
         log_file.write("\n".join(log_lines) + "\n")
 
-# ----------------------------------------------------------------------
-# Plotting
-# ----------------------------------------------------------------------
-if PLOT_RESULTS:
-    x_nm = x * 1e9
-    y_nm = y * 1e9
-    extent_nm = [x_nm.min(), x_nm.max(), y_nm.min(), y_nm.max()]
+# # ----------------------------------------------------------------------
+# # Plotting
+# # ----------------------------------------------------------------------
+# if PLOT_RESULTS:
+#     x_nm = x * 1e9
+#     y_nm = y * 1e9
+#     extent_nm = [x_nm.min(), x_nm.max(), y_nm.min(), y_nm.max()]
 
-    # Potential map
-    fig_pot= plt.figure(figsize=(10, 8), constrained_layout=True)
-    gs_pot = fig_pot.add_gridspec(1, 2, width_ratios=[1, 1.05])
+#     # Potential map
+#     fig_pot= plt.figure(figsize=(10, 8), constrained_layout=True)
+#     gs_pot = fig_pot.add_gridspec(1, 2, width_ratios=[1, 1.05])
 
-    ax2D_pot = fig_pot.add_subplot(gs_pot[0, 0])
-    im_pot = ax2D_pot.imshow(
-        V,
-        extent=extent_nm,
-        origin="lower",
-        interpolation="bicubic",
-        aspect="equal",
-    )
-    fig_pot.colorbar(im_pot, ax=ax2D_pot, label=r"$\phi$ [V]", shrink=0.4)
-    # ax2D_pot.contour(X * 1e9, Y * 1e9, V, levels=12, colors="k", linewidths=0.5)
-    ax2D_pot.set_xlabel("x-position [nm]")
-    ax2D_pot.set_ylabel("y-position [nm]")
-    ax2D_pot.set_title("2D electrostatic potential")
+#     ax2D_pot = fig_pot.add_subplot(gs_pot[0, 0])
+#     im_pot = ax2D_pot.imshow(
+#         V,
+#         extent=extent_nm,
+#         origin="lower",
+#         interpolation="bicubic",
+#         aspect="equal",
+#     )
+#     fig_pot.colorbar(im_pot, ax=ax2D_pot, label=r"$\phi$ [V]", shrink=0.4)
+#     # ax2D_pot.contour(X * 1e9, Y * 1e9, V, levels=12, colors="k", linewidths=0.5)
+#     ax2D_pot.set_xlabel("x-position [nm]")
+#     ax2D_pot.set_ylabel("y-position [nm]")
+#     ax2D_pot.set_title("2D electrostatic potential")
 
-    ax3D_pot = fig_pot.add_subplot(gs_pot[0, 1], projection="3d")
-    surf_pot = ax3D_pot.plot_surface(
-        X * 1e9,
-        Y * 1e9,
-        V,
-        cmap="jet",
-        rcount=N // 3,
-        ccount=N // 3,
-        linewidth=1,
-        color="k",
-        antialiased=True,
-    )
-    fig_pot.colorbar(surf_pot, ax=ax3D_pot, label=r"$\phi$ [V]", shrink=0.4, pad=0.08)  
-    ax3D_pot.set_xlabel("x-position [nm]")
-    ax3D_pot.set_ylabel("y-position [nm]")
-    ax3D_pot.set_zlabel(r"$\phi$ [V]")
-    ax3D_pot.set_title("3D electrostatic potential")
+#     ax3D_pot = fig_pot.add_subplot(gs_pot[0, 1], projection="3d")
+#     surf_pot = ax3D_pot.plot_surface(
+#         X * 1e9,
+#         Y * 1e9,
+#         V,
+#         cmap="jet",
+#         rcount=N // 3,
+#         ccount=N // 3,
+#         linewidth=1,
+#         color="k",
+#         antialiased=True,
+#     )
+#     fig_pot.colorbar(surf_pot, ax=ax3D_pot, label=r"$\phi$ [V]", shrink=0.4, pad=0.08)  
+#     ax3D_pot.set_xlabel("x-position [nm]")
+#     ax3D_pot.set_ylabel("y-position [nm]")
+#     ax3D_pot.set_zlabel(r"$\phi$ [V]")
+#     ax3D_pot.set_title("3D electrostatic potential")
     
-    fig_pot.suptitle("Electrostatic Potential Distribution")
+#     fig_pot.suptitle("Electrostatic Potential Distribution")
 
-    # Hole density map
-    fig_hole = plt.figure(figsize=(10, 8), constrained_layout=True)
-    gs_hole = fig_hole.add_gridspec(1, 2, width_ratios=[1, 1.05])
+#     # Hole density map
+#     fig_hole = plt.figure(figsize=(10, 8), constrained_layout=True)
+#     gs_hole = fig_hole.add_gridspec(1, 2, width_ratios=[1, 1.05])
     
-    ax2D_hole = fig_hole.add_subplot(gs_hole[0, 0])
-    im_hole = ax2D_hole.imshow(
-        np.log10(np.maximum(p, 1.0)),
-        extent=extent_nm,
-        origin="lower",
-        interpolation="bicubic",
-        aspect="equal",
-    )
-    fig_hole.colorbar(im_hole, ax=ax2D_hole, label=r"$\log_{10}(p/\mathrm{m}^{-3})$", shrink=0.4)
-    ax2D_hole.set_xlabel("x-position [nm]")
-    ax2D_hole.set_ylabel("y-position [nm]")
-    ax2D_hole.set_title("2D hole density")
+#     ax2D_hole = fig_hole.add_subplot(gs_hole[0, 0])
+#     im_hole = ax2D_hole.imshow(
+#         np.log10(np.maximum(p, 1.0)),
+#         extent=extent_nm,
+#         origin="lower",
+#         interpolation="bicubic",
+#         aspect="equal",
+#     )
+#     fig_hole.colorbar(im_hole, ax=ax2D_hole, label=r"$\log_{10}(p/\mathrm{m}^{-3})$", shrink=0.4)
+#     ax2D_hole.set_xlabel("x-position [nm]")
+#     ax2D_hole.set_ylabel("y-position [nm]")
+#     ax2D_hole.set_title("2D hole density")
 
-    ax3D_hole = fig_hole.add_subplot(gs_hole[0, 1], projection="3d")
-    surf_hole = ax3D_hole.plot_surface(
-        X * 1e9,
-        Y * 1e9,    
-        np.log10(np.maximum(p, 1.0)),
-        cmap="jet",
-        rcount=N // 3,
-        ccount=N // 3,
-        linewidth=1,
-        color="k",
-        antialiased=True,
-    )
-    fig_hole.colorbar(surf_hole, ax=ax3D_hole, label=r"$\log_{10}(p/\mathrm{m}^{-3})$", shrink=0.4, pad=0.08)
-    ax3D_hole.set_xlabel("x-position [nm]")
-    ax3D_hole.set_ylabel("y-position [nm]")
-    ax3D_hole.set_zlabel(r"$\log_{10}(p/\mathrm{m}^{-3})$")
-    ax3D_hole.set_title("3D hole density")
-    fig_hole.suptitle("Hole Density Distribution")
+#     ax3D_hole = fig_hole.add_subplot(gs_hole[0, 1], projection="3d")
+#     surf_hole = ax3D_hole.plot_surface(
+#         X * 1e9,
+#         Y * 1e9,    
+#         np.log10(np.maximum(p, 1.0)),
+#         cmap="jet",
+#         rcount=N // 3,
+#         ccount=N // 3,
+#         linewidth=1,
+#         color="k",
+#         antialiased=True,
+#     )
+#     fig_hole.colorbar(surf_hole, ax=ax3D_hole, label=r"$\log_{10}(p/\mathrm{m}^{-3})$", shrink=0.4, pad=0.08)
+#     ax3D_hole.set_xlabel("x-position [nm]")
+#     ax3D_hole.set_ylabel("y-position [nm]")
+#     ax3D_hole.set_zlabel(r"$\log_{10}(p/\mathrm{m}^{-3})$")
+#     ax3D_hole.set_title("3D hole density")
+#     fig_hole.suptitle("Hole Density Distribution")
 
-    # Current streamlines and magnitude
-    fig_J = plt.figure(figsize=(10, 8), constrained_layout=True)
-    gs_J = fig_J.add_gridspec(1, 2, width_ratios=[1, 1.05])
-    ax2D_J = fig_J.add_subplot(gs_J[0, 0])
+#     # Current streamlines and magnitude
+#     fig_J = plt.figure(figsize=(10, 8), constrained_layout=True)
+#     gs_J = fig_J.add_gridspec(1, 2, width_ratios=[1, 1.05])
+#     ax2D_J = fig_J.add_subplot(gs_J[0, 0])
 
-    im_J = ax2D_J.imshow(
-        np.log10(np.maximum(Jabs, 1e-300)),
-        extent=extent_nm,
-        origin="lower",
-        interpolation="bicubic",
-        aspect="equal",
-    )
-    fig_J.colorbar(im_J, ax=ax2D_J, label=r"$\log_{10}|J|$ [A/m$^2$]", shrink=0.4)
-    ax2D_J.set_xlabel("x-position [nm]")
-    ax2D_J.set_ylabel("y-position [nm]")
-    ax2D_J.set_title("Current density magnitude and streamlines")
+#     im_J = ax2D_J.imshow(
+#         np.log10(np.maximum(Jabs, 1e-300)),
+#         extent=extent_nm,
+#         origin="lower",
+#         interpolation="bicubic",
+#         aspect="equal",
+#     )
+#     fig_J.colorbar(im_J, ax=ax2D_J, label=r"$\log_{10}|J|$ [A/m$^2$]", shrink=0.4)
+#     ax2D_J.set_xlabel("x-position [nm]")
+#     ax2D_J.set_ylabel("y-position [nm]")
+#     ax2D_J.set_title("Current density magnitude and streamlines")
 
-    ax3D_J = fig_J.add_subplot(gs_J[0, 1], projection="3d")
-    surf_J = ax3D_J.plot_surface(
-        X * 1e9,
-        Y * 1e9,
-        np.log10(np.maximum(Jabs, 1e-300)),
-        cmap="jet",
-        rcount=N // 3,
-        ccount=N // 3,
-        linewidth=1,
-        color="k",
-        antialiased=True,
-    )
-    fig_J.colorbar(surf_J, ax=ax3D_J, label=r"$\log_{10}|J|$ [A/m$^2$]", shrink=0.4, pad=0.08)
-    ax3D_J.set_xlabel("x-position [nm]")
-    ax3D_J.set_ylabel("y-position [nm]")
-    ax3D_J.set_zlabel(r"$\log_{10}|J|$ [A/m$^2$]")
-    ax3D_J.set_title("3D current density magnitude")
-    fig_J.suptitle("Current Density Distribution")
+#     ax3D_J = fig_J.add_subplot(gs_J[0, 1], projection="3d")
+#     surf_J = ax3D_J.plot_surface(
+#         X * 1e9,
+#         Y * 1e9,
+#         np.log10(np.maximum(Jabs, 1e-300)),
+#         cmap="jet",
+#         rcount=N // 3,
+#         ccount=N // 3,
+#         linewidth=1,
+#         color="k",
+#         antialiased=True,
+#     )
+#     fig_J.colorbar(surf_J, ax=ax3D_J, label=r"$\log_{10}|J|$ [A/m$^2$]", shrink=0.4, pad=0.08)
+#     ax3D_J.set_xlabel("x-position [nm]")
+#     ax3D_J.set_ylabel("y-position [nm]")
+#     ax3D_J.set_zlabel(r"$\log_{10}|J|$ [A/m$^2$]")
+#     ax3D_J.set_title("3D current density magnitude")
+#     fig_J.suptitle("Current Density Distribution")
 
-    plt.show()
+#     plt.show()

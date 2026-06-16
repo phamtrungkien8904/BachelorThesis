@@ -52,7 +52,7 @@ plt.rcParams["figure.dpi"] = 100
 # ----------------------------------------------------------------------
 # User parameters
 # ----------------------------------------------------------------------
-File_index = "01"
+File_index = "03"
 
 N = 201                      # grid points in x and y direction
 L = 1000e-9                   # square side length [m]
@@ -87,7 +87,7 @@ Vth = k_B * T / e
 
 # Voltages
 V_bi = 5.0 * Vth            # built-in potential [V]
-V_D = -10.0 * Vth            # contact-2 voltage relative to contact 1 [V]
+V_D = -40.0 * Vth            # contact-2 voltage relative to contact 1 [V]
 V_G = 0.0 * Vth              # uniform gate voltage [V]
 
 # Semiconductor parameters
