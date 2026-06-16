@@ -56,8 +56,8 @@ File_index = "01"
 
 N = 101                      # grid points in x and y direction
 L = 100e-9                   # square side length [m]
-max_iter = 200000            # increase for stricter convergence
-step_iter = 1000             # print interval
+max_iter = 100000000        # increase for stricter convergence
+step_iter = 10           # print interval
 tolerance_percent = 5e-10    # stopping threshold for relative update error [%]
 
 SAVE_RESULTS = True
@@ -91,7 +91,7 @@ V_D = -20.0 * Vth            # contact-2 voltage relative to contact 1 [V]
 V_G = 0.0 * Vth              # uniform gate voltage [V]
 
 # Semiconductor parameters
-N_A = 1e21                   # acceptor / neutral background density [m^-3]
+N_A = 1e22                   # acceptor / neutral background density [m^-3]
 N_v = 1e25                   # effective valence DOS [m^-3]
 
 # Choose F boundary such that at contact 1 with phi=0:
@@ -361,23 +361,11 @@ def solve() -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray,
 # ----------------------------------------------------------------------
 V, rho, F, p, error, n_iterations, elapsed_time = solve()
 
-
 # Final densities and current density.
 p = carrier_density(F, V)
-# rho[:] = 0.0
-p_metal = 1e-10  # small but nonzero hole density in metal contacts to avoid NaNs
-p[contact_1] = p_metal
-p[contact_2] = p_metal
-p[contact_3] = p_metal
-p[contact_4] = p_metal
-
+rho[:] = 0.0
 rho[active_mask] = e * (p[active_mask] - N_A)
 Jx, Jy, Jabs = compute_current_density(F, p)
-Jabs_metal = 1e-1  # small but nonzero current density in metal contacts for visualization
-Jabs[contact_1] = Jabs_metal  # nonzero current density in metal contacts for visualization
-Jabs[contact_2] = Jabs_metal
-Jabs[contact_3] = Jabs_metal
-Jabs[contact_4] = Jabs_metal
 
 V3 = float(np.mean(V[contact_3]))
 V4 = float(np.mean(V[contact_4]))
@@ -445,113 +433,114 @@ if PLOT_RESULTS:
     extent_nm = [x_nm.min(), x_nm.max(), y_nm.min(), y_nm.max()]
 
     # Potential map
-    fig_pot= plt.figure(figsize=(10, 8), constrained_layout=True)
-    gs_pot = fig_pot.add_gridspec(1, 2, width_ratios=[1, 1.05])
-
-    ax2D_pot = fig_pot.add_subplot(gs_pot[0, 0])
-    im_pot = ax2D_pot.imshow(
+    fig_pot, ax_pot = plt.subplots(figsize=(7, 6))
+    im_pot = ax_pot.imshow(
         V,
         extent=extent_nm,
         origin="lower",
         interpolation="bicubic",
         aspect="equal",
     )
-    fig_pot.colorbar(im_pot, ax=ax2D_pot, label=r"$\phi$ [V]", shrink=0.4)
-    # ax2D_pot.contour(X * 1e9, Y * 1e9, V, levels=12, colors="k", linewidths=0.5)
-    ax2D_pot.set_xlabel("x-position [nm]")
-    ax2D_pot.set_ylabel("y-position [nm]")
-    ax2D_pot.set_title("2D electrostatic potential")
-
-    ax3D_pot = fig_pot.add_subplot(gs_pot[0, 1], projection="3d")
-    surf_pot = ax3D_pot.plot_surface(
-        X * 1e9,
-        Y * 1e9,
-        V,
-        cmap="jet",
-        rcount=N // 3,
-        ccount=N // 3,
-        linewidth=1,
-        color="k",
-        antialiased=True,
-    )
-    fig_pot.colorbar(surf_pot, ax=ax3D_pot, label=r"$\phi$ [V]", shrink=0.4, pad=0.08)  
-    ax3D_pot.set_xlabel("x-position [nm]")
-    ax3D_pot.set_ylabel("y-position [nm]")
-    ax3D_pot.set_zlabel(r"$\phi$ [V]")
-    ax3D_pot.set_title("3D electrostatic potential")
-    
-    fig_pot.suptitle("Electrostatic Potential Distribution")
+    fig_pot.colorbar(im_pot, ax=ax_pot, label=r"$\phi$ [V]")
+    ax_pot.contour(X * 1e9, Y * 1e9, V, levels=12, colors="k", linewidths=0.5)
+    ax_pot.set_xlabel("x-position [nm]")
+    ax_pot.set_ylabel("y-position [nm]")
+    ax_pot.set_title("2D electrostatic potential")
+    fig_pot.tight_layout()
 
     # Hole density map
-    fig_hole = plt.figure(figsize=(10, 8), constrained_layout=True)
-    gs_hole = fig_hole.add_gridspec(1, 2, width_ratios=[1, 1.05])
-    
-    ax2D_hole = fig_hole.add_subplot(gs_hole[0, 0])
-    im_hole = ax2D_hole.imshow(
+    fig_den, ax_den = plt.subplots(figsize=(7, 6))
+    im_den = ax_den.imshow(
         np.log10(np.maximum(p, 1.0)),
         extent=extent_nm,
         origin="lower",
         interpolation="bicubic",
         aspect="equal",
     )
-    fig_hole.colorbar(im_hole, ax=ax2D_hole, label=r"$\log_{10}(p/\mathrm{m}^{-3})$")
-    ax2D_hole.set_xlabel("x-position [nm]")
-    ax2D_hole.set_ylabel("y-position [nm]")
-    ax2D_hole.set_title("2D hole density")
+    fig_den.colorbar(im_den, ax=ax_den, label=r"$\log_{10}(p/\mathrm{m}^{-3})$")
+    ax_den.set_xlabel("x-position [nm]")
+    ax_den.set_ylabel("y-position [nm]")
+    ax_den.set_title("2D hole density")
+    fig_den.tight_layout()
 
-    ax3D_hole = fig_hole.add_subplot(gs_hole[0, 1], projection="3d")
-    surf_hole = ax3D_hole.plot_surface(
-        X * 1e9,
-        Y * 1e9,    
-        np.log10(np.maximum(p, 1.0)),
-        cmap="jet",
-        rcount=N // 3,
-        ccount=N // 3,
-        linewidth=1,
-        color="k",
-        antialiased=True,
+    # Quasi-Fermi level map
+    fig_F, ax_F = plt.subplots(figsize=(7, 6))
+    im_F = ax_F.imshow(
+        F / e,
+        extent=extent_nm,
+        origin="lower",
+        interpolation="bicubic",
+        aspect="equal",
     )
-    fig_hole.colorbar(surf_hole, ax=ax3D_hole, label=r"$\log_{10}(p/\mathrm{m}^{-3})$", shrink=0.4, pad=0.08)
-    ax3D_hole.set_xlabel("x-position [nm]")
-    ax3D_hole.set_ylabel("y-position [nm]")
-    ax3D_hole.set_zlabel(r"$\log_{10}(p/\mathrm{m}^{-3})$")
-    ax3D_hole.set_title("3D hole density")
-    fig_hole.suptitle("Hole Density Distribution")
+    fig_F.colorbar(im_F, ax=ax_F, label=r"$F_p$ [eV]")
+    ax_F.set_xlabel("x-position [nm]")
+    ax_F.set_ylabel("y-position [nm]")
+    ax_F.set_title("2D quasi-Fermi level")
+    fig_F.tight_layout()
 
     # Current streamlines and magnitude
-    fig_J = plt.figure(figsize=(10, 8), constrained_layout=True)
-    gs_J = fig_J.add_gridspec(1, 2, width_ratios=[1, 1.05])
-    ax2D_J = fig_J.add_subplot(gs_J[0, 0])
-
-    im_J = ax2D_J.imshow(
+    fig_J, ax_J = plt.subplots(figsize=(7, 6))
+    im_J = ax_J.imshow(
         np.log10(np.maximum(Jabs, 1e-300)),
         extent=extent_nm,
         origin="lower",
         interpolation="bicubic",
         aspect="equal",
     )
-    fig_J.colorbar(im_J, ax=ax2D_J, label=r"$\log_{10}|J|$ [A/m$^2$]", shrink=0.4)
-    ax2D_J.set_xlabel("x-position [nm]")
-    ax2D_J.set_ylabel("y-position [nm]")
-    ax2D_J.set_title("Current density magnitude and streamlines")
-
-    ax3D_J = fig_J.add_subplot(gs_J[0, 1], projection="3d")
-    surf_J = ax3D_J.plot_surface(
-        X * 1e9,
-        Y * 1e9,
-        np.log10(np.maximum(Jabs, 1e-300)),
-        cmap="jet",
-        rcount=N // 3,
-        ccount=N // 3,
-        linewidth=1,
-        color="k",
-        antialiased=True,
+    fig_J.colorbar(im_J, ax=ax_J, label=r"$\log_{10}|J|$ [A/m$^2$]")
+    stride = max(1, N // 35)
+    ax_J.streamplot(
+        x_nm,
+        y_nm,
+        Jx,
+        Jy,
+        density=1.2,
+        linewidth=0.8,
+        arrowsize=1.0,
     )
-    fig_J.colorbar(surf_J, ax=ax3D_J, label=r"$\log_{10}|J|$ [A/m$^2$]", shrink=0.4, pad=0.08)
-    ax3D_J.set_xlabel("x-position [nm]")
-    ax3D_J.set_ylabel("y-position [nm]")
-    ax3D_J.set_zlabel(r"$\log_{10}|J|$ [A/m$^2$]")
-    ax3D_J.set_title("3D current density magnitude")
-    fig_J.suptitle("Current Density Distribution")
+    ax_J.quiver(
+        X[::stride, ::stride] * 1e9,
+        Y[::stride, ::stride] * 1e9,
+        Jx[::stride, ::stride],
+        Jy[::stride, ::stride],
+        angles="xy",
+        scale_units="xy",
+        scale=None,
+        width=0.0025,
+    )
+    ax_J.set_xlabel("x-position [nm]")
+    ax_J.set_ylabel("y-position [nm]")
+    ax_J.set_title("Current-density streamlines")
+    fig_J.tight_layout()
+
+    # Error curve
+    fig_err, ax_err = plt.subplots(figsize=(7, 4))
+    ax_err.semilogy(np.arange(1, len(error) + 1), error)
+    ax_err.set_xlabel("Iteration")
+    ax_err.set_ylabel("Relative update error [%]")
+    ax_err.set_title("Convergence")
+    fig_err.tight_layout()
+
+    # 1D cuts through the middle of the square.
+    mid = N // 2
+    fig_cut, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(9, 8), sharex=True)
+    ax1.plot(x_nm, V[mid, :], lw=2, label=r"$\phi(x,y=L/2)$")
+    ax1.plot(x_nm, F[mid, :] / e, lw=2, ls="--", label=r"$F_p/e(x,y=L/2)$")
+    ax1.set_ylabel("V or eV")
+    ax1.legend()
+
+    ax2.semilogy(x_nm, p[mid, :], lw=2)
+    ax2.axhline(N_A, color="black", linestyle="--", label=r"$N_A$")
+    ax2.set_ylabel(r"$p$ [m$^{-3}$]")
+    ax2.legend()
+
+    ax3.plot(x_nm, Jx[mid, :], lw=2, label=r"$J_x$")
+    ax3.plot(x_nm, Jy[mid, :], lw=2, ls="--", label=r"$J_y$")
+    ax3.set_xlabel("x-position [nm]")
+    ax3.set_ylabel(r"$J$ [A/m$^2$]")
+    ax3.legend()
+
+    fig_cut.suptitle("Line cuts through center of 2D device")
+    fig_cut.tight_layout()
 
     plt.show()
