@@ -55,9 +55,9 @@ plt.rcParams["figure.dpi"] = 100
 File_index = "01"
 
 N = 101                      # grid points in x and y direction
-L = 100e-9                   # square side length [m]
-max_iter = 200000            # increase for stricter convergence
-step_iter = 1000             # print interval
+L = 1000e-9                   # square side length [m]
+max_iter = 1000000000            # increase for stricter convergence
+step_iter = 10             # print interval
 tolerance_percent = 5e-10    # stopping threshold for relative update error [%]
 
 SAVE_RESULTS = True
@@ -86,8 +86,8 @@ mu = 1e-4                    # hole mobility [m^2/(V s)] = 1 cm^2/(V s)
 Vth = k_B * T / e
 
 # Voltages
-V_bi = 10.0 * Vth            # built-in potential [V]
-V_D = -20.0 * Vth            # contact-2 voltage relative to contact 1 [V]
+V_bi = 5.0 * Vth            # built-in potential [V]
+V_D = -10.0 * Vth            # contact-2 voltage relative to contact 1 [V]
 V_G = 0.0 * Vth              # uniform gate voltage [V]
 
 # Semiconductor parameters
@@ -494,7 +494,7 @@ if PLOT_RESULTS:
         interpolation="bicubic",
         aspect="equal",
     )
-    fig_hole.colorbar(im_hole, ax=ax2D_hole, label=r"$\log_{10}(p/\mathrm{m}^{-3})$")
+    fig_hole.colorbar(im_hole, ax=ax2D_hole, label=r"$\log_{10}(p/\mathrm{m}^{-3})$", shrink=0.4)
     ax2D_hole.set_xlabel("x-position [nm]")
     ax2D_hole.set_ylabel("y-position [nm]")
     ax2D_hole.set_title("2D hole density")
