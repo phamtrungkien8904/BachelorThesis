@@ -26,9 +26,9 @@ plt.rcParams["figure.dpi"] = 100
 # ----------------------------------------------------------------------
 # User parameters
 # ----------------------------------------------------------------------
-File_index = "01"
+File_index = "04"
 
-N = 201                      # grid points in x and y direction
+N = 51                      # grid points in x and y direction
 L = 1000e-9                   # square side length [m]
 # Contact geometry: four small square corner regions.
 # Current is injected/sunk between contacts 1 and 2; contacts 3 and 4 are
@@ -76,7 +76,7 @@ V = np.loadtxt(f"./Data-Export/VDP/VDP_Poti_{File_index}.dat")
 p = np.loadtxt(f"./Data-Export/VDP/VDP_Holes_{File_index}.dat")
 Jx = np.loadtxt(f"./Data-Export/VDP/VDP_CurrentDensity_X_{File_index}.dat")
 Jy = np.loadtxt(f"./Data-Export/VDP/VDP_CurrentDensity_Y_{File_index}.dat")
-Jabs = np.sqrt(Jx**2 + Jy**2)
+Jabs = np.loadtxt(f"./Data-Export/VDP/VDP_CurrentDensity_Abs_{File_index}.dat")
 
 
 
@@ -111,8 +111,8 @@ if PLOT_RESULTS:
         Y * 1e9,
         V,
         cmap="jet",
-        rcount=N // 3,
-        ccount=N // 3,
+        rcount=N // 8,
+        ccount=N // 8,
         linewidth=1,
         color="k",
         antialiased=True,
@@ -131,7 +131,7 @@ if PLOT_RESULTS:
     
     ax2D_hole = fig_hole.add_subplot(gs_hole[0, 0])
     im_hole = ax2D_hole.imshow(
-        np.log10(np.maximum(p, 1.0)),
+        np.maximum(p, 1.0),
         extent=extent_nm,
         origin="lower",
         interpolation="bicubic",
@@ -146,18 +146,18 @@ if PLOT_RESULTS:
     surf_hole = ax3D_hole.plot_surface(
         X * 1e9,
         Y * 1e9,    
-        np.log10(np.maximum(p, 1.0)),
+        np.maximum(p, 1.0),
         cmap="jet",
-        rcount=N // 3,
-        ccount=N // 3,
+        rcount=N // 8,
+        ccount=N // 8,
         linewidth=1,
         color="k",
         antialiased=True,
     )
-    fig_hole.colorbar(surf_hole, ax=ax3D_hole, label=r"$\log_{10}(p/\mathrm{m}^{-3})$", shrink=0.4, pad=0.08)
+    fig_hole.colorbar(surf_hole, ax=ax3D_hole, label=r"$p/\mathrm{m}^{-3}$", shrink=0.4, pad=0.08)
     ax3D_hole.set_xlabel("x-position [nm]")
     ax3D_hole.set_ylabel("y-position [nm]")
-    ax3D_hole.set_zlabel(r"$\log_{10}(p/\mathrm{m}^{-3})$")
+    ax3D_hole.set_zlabel(r"$p/\mathrm{m}^{-3}$")
     ax3D_hole.set_title("3D hole density")
     fig_hole.suptitle("Hole Density Distribution")
 
@@ -167,13 +167,13 @@ if PLOT_RESULTS:
     ax2D_J = fig_J.add_subplot(gs_J[0, 0])
 
     im_J = ax2D_J.imshow(
-        np.log10(np.maximum(Jabs, 1e-300)),
+        np.maximum(Jabs, 1e-300),
         extent=extent_nm,
         origin="lower",
         interpolation="bicubic",
         aspect="equal",
     )
-    fig_J.colorbar(im_J, ax=ax2D_J, label=r"$\log_{10}|J|$ [A/m$^2$]", shrink=0.4)
+    fig_J.colorbar(im_J, ax=ax2D_J, label=r"$|J|$ [A/m$^2$]", shrink=0.4)
     ax2D_J.set_xlabel("x-position [nm]")
     ax2D_J.set_ylabel("y-position [nm]")
     ax2D_J.set_title("Current density magnitude and streamlines")
@@ -182,18 +182,18 @@ if PLOT_RESULTS:
     surf_J = ax3D_J.plot_surface(
         X * 1e9,
         Y * 1e9,
-        np.log10(np.maximum(Jabs, 1e-300)),
+        np.maximum(Jabs, 1e-300),
         cmap="jet",
-        rcount=N // 3,
-        ccount=N // 3,
+        rcount=N // 8,
+        ccount=N // 8,
         linewidth=1,
         color="k",
         antialiased=True,
     )
-    fig_J.colorbar(surf_J, ax=ax3D_J, label=r"$\log_{10}|J|$ [A/m$^2$]", shrink=0.4, pad=0.08)
+    fig_J.colorbar(surf_J, ax=ax3D_J, label=r"$|J|$ [A/m$^2$]", shrink=0.4, pad=0.08)
     ax3D_J.set_xlabel("x-position [nm]")
     ax3D_J.set_ylabel("y-position [nm]")
-    ax3D_J.set_zlabel(r"$\log_{10}|J|$ [A/m$^2$]")
+    ax3D_J.set_zlabel(r"$|J|$ [A/m$^2$]")
     ax3D_J.set_title("3D current density magnitude")
     fig_J.suptitle("Current Density Distribution")
 
