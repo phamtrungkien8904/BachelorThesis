@@ -1,16 +1,16 @@
 Title: 2D gated van-der-Pauw / FET simulator
-Python file: VDP.py
-Date and time: 2026-06-16 23:46:23
+Python file: night-02.py
+Date and time: 2026-06-17 07:47:35
 Grid points: 201 x 201
 Device size: 1000.00 nm x 1000.00 nm
 Contact width: 16 pixels (80.00 nm)
-Iterations performed: 4518820
-Runtime: 03:56:24
+Iterations performed: 4450525
+Runtime: 03:46:48
 ------------------------------------------------------
 Thermal voltage: 0.025852 V
 Built-in voltage: 0.129260 V (=5.00 Vth)
 Gate voltage: 0.000000 V (=0.00 Vth)
-Contact-2 voltage: -0.258520 V (=-10.00 Vth)
+Contact-2 voltage: -1.034080 V (=-40.00 Vth)
 Barrier height: 0.108846 eV (=4.21 kBT)
 Contact-1 hole concentration: 1.484132e+23 m^-3
 Acceptor/background density: 1.00e+21 m^-3
@@ -18,8 +18,8 @@ Valence DOS: 1.00e+25 m^-3
 Mobility: 1.00e-04 m^2/(V s)
 Permittivity: 2.656256e-11 F/m
 ------------------------------------------------------
-Probe V3: -6.603469e-03 V
-Probe V4: 2.579698e-02 V
-Probe V3 - V4: -3.240045e-02 V
-Estimated source current per thickness: 6.394804e-36 A/m
-Mean |J| active region: 2.840263e+03 A/m^2
+Probe V3: -3.337669e-01 V
+Probe V4: -2.102323e-01 V
+Probe V3 - V4: -1.235346e-01 V
+Estimated source current per thickness: 2.484508e-35 A/m
+Mean |J| active region: 1.124056e+04 A/m^2
