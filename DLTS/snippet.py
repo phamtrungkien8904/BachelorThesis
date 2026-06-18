@@ -69,8 +69,8 @@ q_text = (
     f"Difference Q: {Q_diff*1e9:.2f} nC"
 )
 
-plt.plot(t*1e3, I_discharge*1e6, label='Discharge Current', color='red', ls='-', lw = 1.5)
-plt.plot(t*1e3, I_charge*1e6, label='Charge Current', color='blue', ls='-', lw = 1.5)
+plt.plot(t*1e3, I_discharge*1e6, label='Discharge Current', color='red', marker='o', ls='-', lw = 2, markevery=400, markeredgecolor='white', markeredgewidth=1, markersize=7)
+plt.plot(t*1e3, I_charge*1e6, label='Charge Current', color='blue', marker='^', ls='-', lw = 2,markevery=400, markeredgecolor='white', markeredgewidth=1, markersize=7)
 plt.axhline(y=0.0, color='black', ls='--', lw=1)
 plt.xlabel('Time (ms)', fontsize=19)
 plt.ylabel(r'Current ($\mu$A)', fontsize=19)
@@ -85,8 +85,8 @@ plt.text(
     ha='right',
     bbox=dict(facecolor='white', edgecolor='black', alpha=0.85)
 )
-# plt.xlim(0, 50)
-# plt.ylim(0, 10)
+plt.xlim(0, 50)
+plt.ylim(-20, 20)
 plt.legend(frameon=True, numpoints=1, fontsize=15)
 # plt.savefig('snippet.eps', format='eps', bbox_inches='tight')
 plt.show()
