@@ -1,23 +1,24 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# # Custom settings
+# Custom settings
 plt.style.use('classic')
 plt.rcParams.update({
-    'figure.figsize': (6, 6),
+    'figure.dpi': 100,
+    'figure.figsize': (10, 6),
     'figure.facecolor': 'white',
     'axes.facecolor': 'white',
     'axes.edgecolor': 'black',
     'axes.linewidth': 2,
-    'axes.labelsize': 22,
+    'axes.labelsize': 15,
     'axes.labelcolor': 'black',
     'savefig.facecolor': 'white',
     'font.family': 'sans-serif',
     'font.sans-serif': ['Arial'],
     'mathtext.fontset': 'cm',
-    'figure.dpi': 100,
+
     'savefig.bbox': 'tight',
-        # Ticks
+    # Ticks
     "xtick.direction": "in",
     "ytick.direction": "in",
     "xtick.top": True,
@@ -64,7 +65,6 @@ second_trigger = data1[:, 4]
 I = data1[:, 5]
 
 
-plt.figure(figsize=(8, 8))
 plt.plot(t, V_in, label='Input Voltage', lw = 2, color = 'orange')
 plt.plot(t, V_R*10, label='Gate Current', lw = 2, color = 'k')
 # plt.plot(t, main_trigger, label='Main Trigger', lw = 1.5, color = 'red')

@@ -2,23 +2,24 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 
-# # Custom settings
+# Custom settings
 plt.style.use('classic')
 plt.rcParams.update({
-    'figure.figsize': (8, 6),
+    'figure.dpi': 100,
+    'figure.figsize': (10, 6),
     'figure.facecolor': 'white',
     'axes.facecolor': 'white',
     'axes.edgecolor': 'black',
     'axes.linewidth': 2,
-    'axes.labelsize': 22,
+    'axes.labelsize': 15,
     'axes.labelcolor': 'black',
     'savefig.facecolor': 'white',
     'font.family': 'sans-serif',
     'font.sans-serif': ['Arial'],
     'mathtext.fontset': 'cm',
-    'figure.dpi': 100,
+
     'savefig.bbox': 'tight',
-        # Ticks
+    # Ticks
     "xtick.direction": "in",
     "ytick.direction": "in",
     "xtick.top": True,
