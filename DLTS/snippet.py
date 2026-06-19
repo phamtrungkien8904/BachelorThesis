@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 # # Custom settings
 plt.style.use('classic')
 plt.rcParams.update({
-    'figure.figsize': (8, 6),
+    'figure.figsize': (10, 6),
     'figure.facecolor': 'white',
     'axes.facecolor': 'white',
     'axes.edgecolor': 'black',
@@ -69,24 +69,24 @@ q_text = (
     f"Difference Q: {Q_diff*1e9:.2f} nC"
 )
 
-plt.plot(t*1e3, I_discharge*1e6, label='Discharge Current', color='red', marker='o', ls='-', lw = 2, markevery=400, markeredgecolor='white', markeredgewidth=1, markersize=7)
-plt.plot(t*1e3, I_charge*1e6, label='Charge Current', color='blue', marker='^', ls='-', lw = 2,markevery=400, markeredgecolor='white', markeredgewidth=1, markersize=7)
+plt.plot(t*1e3, I_discharge*1e6, label='Discharge', color='red', marker='o', ls='-', lw = 2, markevery=400, markeredgecolor='white', markeredgewidth=1, markersize=7)
+plt.plot(t*1e3, I_charge*1e6, label='Charge', color='blue', marker='^', ls='-', lw = 2,markevery=400, markeredgecolor='white', markeredgewidth=1, markersize=7)
 plt.axhline(y=0.0, color='black', ls='--', lw=1)
-plt.xlabel('Time (ms)', fontsize=19)
-plt.ylabel(r'Current ($\mu$A)', fontsize=19)
+plt.xlabel('Time (ms)', fontsize=18)
+plt.ylabel(r'Current ($\mu$A)', fontsize=18)
 plt.title('DLTS Signal vs Time', fontsize=20)
-plt.text(
-    0.98,
-    0.02,
-    q_text,
-    transform=plt.gca().transAxes,
-    fontsize=12,
-    va='bottom',
-    ha='right',
-    bbox=dict(facecolor='white', edgecolor='black', alpha=0.85)
-)
+# plt.text(
+#     0.98,
+#     0.02,
+#     q_text,
+#     transform=plt.gca().transAxes,
+#     fontsize=12,
+#     va='bottom',
+#     ha='right',
+#     bbox=dict(facecolor='white', edgecolor='black', alpha=0.85)
+# )
 plt.xlim(0, 50)
 plt.ylim(-20, 20)
-plt.legend(frameon=True, numpoints=1, fontsize=15)
+plt.legend(frameon=False, numpoints=1, fontsize=18)
 # plt.savefig('snippet.eps', format='eps', bbox_inches='tight')
 plt.show()
