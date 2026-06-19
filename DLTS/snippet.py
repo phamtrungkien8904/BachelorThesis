@@ -74,7 +74,7 @@ plt.plot(t*1e3, I_charge*1e6, label='Charge', color='blue', marker='^', ls='-', 
 plt.axhline(y=0.0, color='black', ls='--', lw=1)
 plt.xlabel('Time (ms)', fontsize=18)
 plt.ylabel(r'Current ($\mu$A)', fontsize=18)
-plt.title('DLTS Signal vs Time', fontsize=20)
+plt.title('Current vs. Time (Single Pulse)', fontsize=20)
 # plt.text(
 #     0.98,
 #     0.02,
@@ -88,5 +88,5 @@ plt.title('DLTS Signal vs Time', fontsize=20)
 plt.xlim(0, 50)
 plt.ylim(-20, 20)
 plt.legend(frameon=False, numpoints=1, fontsize=18)
-# plt.savefig('snippet.eps', format='eps', bbox_inches='tight')
+plt.savefig('snippet-single.eps', format='eps', bbox_inches='tight')
 plt.show()

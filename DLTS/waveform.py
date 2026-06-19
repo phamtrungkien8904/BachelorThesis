@@ -73,7 +73,7 @@ plt.xlabel('Time (s)', fontsize=18)
 plt.ylabel('Signal (arb. units)', fontsize=18)
 
 
-plt.title('Signals vs Time', fontsize=20)
+plt.title('Signals vs. Time', fontsize=20)
 plt.legend(frameon=False, numpoints=1, fontsize=18)
-# plt.savefig('DLTS.eps', format='eps', bbox_inches='tight')
+plt.savefig('DLTS-waveform.eps', format='eps', bbox_inches='tight')
 plt.show()
