@@ -5,6 +5,8 @@ from scipy.optimize import curve_fit
 # Custom settings
 plt.style.use('classic')
 plt.rcParams.update({
+    'text.usetex': True,
+    'text.latex.preamble': r'\usepackage{amsmath}\usepackage{siunitx}',
     'figure.dpi': 100,
     'figure.figsize': (10, 6),
     'figure.facecolor': 'white',
@@ -17,8 +19,7 @@ plt.rcParams.update({
     'font.family': 'sans-serif',
     'font.sans-serif': ['Arial'],
     'mathtext.fontset': 'cm',
-
-    'savefig.bbox': 'tight',
+    "figure.constrained_layout.use": True,
     # Ticks
     "xtick.direction": "in",
     "ytick.direction": "in",

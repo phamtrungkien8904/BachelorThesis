@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 # Custom settings
 plt.style.use('classic')
 plt.rcParams.update({
+    'text.usetex': True,
+    'text.latex.preamble': r'\usepackage{amsmath}\usepackage{siunitx}',
     'figure.dpi': 100,
     'figure.figsize': (10, 6),
     'figure.facecolor': 'white',
@@ -17,7 +19,6 @@ plt.rcParams.update({
     'font.sans-serif': ['Arial'],
     'mathtext.fontset': 'cm',
 
-    'savefig.bbox': 'tight',
     # Ticks
     "xtick.direction": "in",
     "ytick.direction": "in",
@@ -75,5 +76,5 @@ plt.ylabel('Signal (arb. units)', fontsize=18)
 
 plt.title('Signals vs. Time', fontsize=20)
 plt.legend(frameon=False, numpoints=1, fontsize=18)
-plt.savefig('DLTS-waveform.eps', format='eps', bbox_inches='tight')
+plt.savefig('DLTS-waveform.eps', format='eps')
 plt.show()

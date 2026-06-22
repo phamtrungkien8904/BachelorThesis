@@ -4,20 +4,22 @@ import matplotlib.pyplot as plt
 # # Custom settings
 plt.style.use('classic')
 plt.rcParams.update({
+    'text.usetex': True,
+    'text.latex.preamble': r'\usepackage{amsmath}\usepackage{siunitx}',
+    'figure.dpi': 100,
     'figure.figsize': (10, 6),
     'figure.facecolor': 'white',
     'axes.facecolor': 'white',
     'axes.edgecolor': 'black',
     'axes.linewidth': 2,
-    'axes.labelsize': 22,
+    'axes.labelsize': 15,
     'axes.labelcolor': 'black',
     'savefig.facecolor': 'white',
     'font.family': 'sans-serif',
     'font.sans-serif': ['Arial'],
     'mathtext.fontset': 'cm',
-    'figure.dpi': 100,
-    'savefig.bbox': 'tight',
-        # Ticks
+
+    # Ticks
     "xtick.direction": "in",
     "ytick.direction": "in",
     "xtick.top": True,
@@ -33,6 +35,7 @@ plt.rcParams.update({
     "xtick.minor.width": 1.5,
     "ytick.minor.width": 1.5,
 })
+
 
 data1 = np.loadtxt("./Data_20262904/20262904005.snp") # 40V
 data2 = np.loadtxt("./Data_20262904/20262904004.snp") # 35V
@@ -88,5 +91,5 @@ plt.title('Current vs. Time (Single Pulse)', fontsize=20)
 plt.xlim(0, 50)
 plt.ylim(-20, 20)
 plt.legend(frameon=False, numpoints=1, fontsize=18)
-plt.savefig('snippet-single.eps', format='eps', bbox_inches='tight')
+plt.savefig('snippet-single.eps', format='eps')
 plt.show()

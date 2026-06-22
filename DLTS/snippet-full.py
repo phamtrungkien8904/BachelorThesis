@@ -5,6 +5,8 @@ from scipy.optimize import curve_fit
 # Custom settings
 plt.style.use('classic')
 plt.rcParams.update({
+    'text.usetex': True,
+    'text.latex.preamble': r'\usepackage{amsmath}\usepackage{siunitx}',
     'figure.dpi': 100,
     'figure.figsize': (10, 6),
     'figure.facecolor': 'white',
@@ -18,7 +20,6 @@ plt.rcParams.update({
     'font.sans-serif': ['Arial'],
     'mathtext.fontset': 'cm',
 
-    'savefig.bbox': 'tight',
     # Ticks
     "xtick.direction": "in",
     "ytick.direction": "in",
@@ -35,6 +36,7 @@ plt.rcParams.update({
     "xtick.minor.width": 1.5,
     "ytick.minor.width": 1.5,
 })
+
 
 data1 = np.loadtxt("./Data_20262904/20262904005.snp") # 40V
 data2 = np.loadtxt("./Data_20262904/20262904004.snp") # 35V
@@ -77,7 +79,7 @@ plt.title('Current vs. Time (Charge process)', fontsize=20)
 plt.xlim(0, 50)
 plt.ylim(0, 10)
 plt.legend(frameon=False, numpoints=1, fontsize=18)
-plt.savefig('snippet-full.eps', format='eps', bbox_inches='tight')
+plt.savefig('snippet-full.eps', format='eps')
 plt.show()
 
 # for label, voltage, data, color in dataset:
