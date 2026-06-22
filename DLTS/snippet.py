@@ -18,6 +18,8 @@ plt.rcParams.update({
     'font.family': 'sans-serif',
     'font.sans-serif': ['Arial'],
     'mathtext.fontset': 'cm',
+    "figure.constrained_layout.use": True,
+
 
     # Ticks
     "xtick.direction": "in",
