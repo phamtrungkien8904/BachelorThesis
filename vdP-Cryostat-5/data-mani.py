@@ -8,7 +8,7 @@ from decimal import Decimal
 # ============================================================
 plt.style.use("classic")
 plt.rcParams.update({
-    "figure.figsize": (8, 6),
+    "figure.figsize": (10, 6),
     "figure.facecolor": "white",
     "axes.facecolor": "white",
     "axes.edgecolor": "black",
@@ -42,9 +42,8 @@ plt.rcParams.update({
 # ============================================================
 # File paths
 # ============================================================
-input_file = "./Data-20261006/24.dat"
-output_file = "./Data-Mani/24.dat"
-alpha = 1.5
+input_file = "./Data-20262306/09.dat"
+output_file = "./Data-Mani/09.dat"
 
 os.makedirs(os.path.dirname(output_file), exist_ok=True)
 
@@ -82,11 +81,11 @@ fmt = [
 # ============================================================
 # Modify data
 # ============================================================
-data1[:, 0] += 0 # col 1: Vg, no change
+data1[:, 0] += 30 # col 1: Vg, no change
 data1[:, 2] *= 1 # col 3: Id, no change
 data1[:, 3] *= 1 
 
-
+alpha = 1
 data1[:, 4] *= alpha
 data1[:, 5] *= alpha
 data1[:, 6] *= alpha

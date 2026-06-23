@@ -1,9 +1,9 @@
 1	KP	Str	User Initials:
 2	20251030_1	Str	Sample Name:
 3	GVDP 2026	Str	Meas. type:
-4	I34:-50nA	Str	Comment 1:
-5	V34:100V	Str	Comment 2:
-6	Temp: 280K (1027)	Str	Comment 3:
+4	I34:-10nA	Str	Comment 1:
+5	V34:50V	Str	Comment 2:
+6	Temp: 300K (1027)	Str	Comment 3:
 7	void	Str	Comment 4:
 8	void	Str	Comment 5:
 9	0	Lng	Simulation (0: NO, 1: YES):
@@ -12,8 +12,8 @@
 12	61	Lng	Bins for G4 voltage ():
 13	1	Lng	Scans to do ():
 14	-666	Dbl	void:
-15	-50E-09	Dbl	Source current I_34 (A):
-16	100	Dbl	Voltage Limit V_34 (V):
+15	-10E-09	Dbl	Source current I_34 (A):
+16	50	Dbl	Voltage Limit V_34 (V):
 17	1E-04	Dbl	Current Limit I_G4 (A):
 18	-666	Dbl	void:
 19	-666	Dbl	void:
