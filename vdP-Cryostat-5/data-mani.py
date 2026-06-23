@@ -85,7 +85,7 @@ data1[:, 0] += 30 # col 1: Vg, no change
 data1[:, 2] *= 1 # col 3: Id, no change
 data1[:, 3] *= 1 
 
-alpha = 1
+alpha = 1*1.1
 data1[:, 4] *= alpha
 data1[:, 5] *= alpha
 data1[:, 6] *= alpha
