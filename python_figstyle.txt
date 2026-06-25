@@ -1,0 +1,55 @@
+plt.style.use('classic')
+
+# plt.rcParams.update({
+#     "text.usetex": True,
+#     'text.latex.preamble': r'''
+#     \usepackage[T1]{fontenc}
+#     \usepackage{lmodern}
+#     \usepackage[utf8]{inputenc}
+#     \usepackage{amsmath}
+#     \usepackage{amssymb}
+#     \usepackage{siunitx}
+#     \usepackage{sfmath}
+#     '''
+# })
+plt.rcParams.update({
+    # Figure settings
+    'figure.dpi': 100,
+    'figure.figsize': (10, 6),
+    'figure.facecolor': 'white',
+    'axes.facecolor': 'white',
+    'axes.edgecolor': 'black',
+    'axes.linewidth': 2,
+    'axes.labelsize': 18,
+    'axes.titlesize': 20,
+    'axes.labelcolor': 'black',
+    'savefig.facecolor': 'white',
+    'font.family': 'sans-serif',
+    'font.sans-serif': 'Arial',
+    # 'mathtext.fontset': 'cm',
+    'figure.constrained_layout.use': True,
+
+    # Ticks
+    "xtick.direction": "in",
+    "ytick.direction": "in",
+    "xtick.top": True,
+    "ytick.right": True,
+    "xtick.major.size": 8,
+    "ytick.major.size": 8,
+    "xtick.major.width": 2,
+    "ytick.major.width": 2,
+    "xtick.minor.visible": True,
+    "ytick.minor.visible": True,
+    "xtick.minor.size": 0,
+    "ytick.minor.size": 0,
+    "xtick.minor.width":0,
+    "ytick.minor.width": 0,
+    "xtick.labelsize": 16,
+    "ytick.labelsize": 16,  
+
+    # Legend
+    'legend.frameon': False,
+    'legend.fontsize': 18,
+    'legend.loc': 'best',
+    'legend.numpoints': 1,
+})
