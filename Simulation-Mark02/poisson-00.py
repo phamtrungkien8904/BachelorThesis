@@ -82,7 +82,7 @@ def solve():
         if (i + 1) % 5000 == 0:
             print(f"Step {i + 1}/{iter}, Error: {error:.6e}")
 
-    return V, rho
+    return V, rho 
 
 V, rho = solve()
 
