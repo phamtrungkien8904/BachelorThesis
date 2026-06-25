@@ -2,41 +2,73 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 
-# Custom settings
+# Custom settings for python figures
 plt.style.use('classic')
+
 plt.rcParams.update({
-    'text.usetex': True,
-    'text.latex.preamble': r'\usepackage{amsmath}\usepackage{siunitx}',
-    'figure.dpi': 100,
-    'figure.figsize': (10, 6),
+    "text.usetex": True,
+    'text.latex.preamble': r'''
+    \usepackage[T1]{fontenc}
+    \usepackage{lmodern}
+    \usepackage[utf8]{inputenc}
+    \usepackage{amsmath}
+    \usepackage{amssymb}
+    \usepackage{siunitx}
+    \usepackage{sfmath}
+    '''
+})
+plt.rcParams.update({
+    # Figure settings
+    'figure.dpi': 300,
+    'figure.figsize': (10/2.54, 6/2.54),  # 10x6 cm in inches (1 figure per line)
+    # 'figure.figsize': (8/2.54, 6/2.54),  # 10x6 cm in inches (2 figures per line)
     'figure.facecolor': 'white',
     'axes.facecolor': 'white',
     'axes.edgecolor': 'black',
-    'axes.linewidth': 2,
-    'axes.labelsize': 15,
+    'axes.linewidth': 1,
+    'axes.labelsize': 8,
+    'axes.titlesize': 8,
     'axes.labelcolor': 'black',
     'savefig.facecolor': 'white',
     'font.family': 'sans-serif',
-    'font.sans-serif': ['Arial'],
-    'mathtext.fontset': 'cm',
-    "figure.constrained_layout.use": True,
+    'font.sans-serif': 'Arial',
+    # 'mathtext.fontset': 'cm',
+    'figure.constrained_layout.use': True,
 
     # Ticks
     "xtick.direction": "in",
     "ytick.direction": "in",
     "xtick.top": True,
     "ytick.right": True,
-    "xtick.major.size": 8,
-    "ytick.major.size": 8,
-    "xtick.major.width": 2,
-    "ytick.major.width": 2,
+    "xtick.major.size": 4,
+    "ytick.major.size": 4,
+    "xtick.major.width": 1,
+    "ytick.major.width": 1,
     "xtick.minor.visible": True,
     "ytick.minor.visible": True,
-    "xtick.minor.size": 4,
-    "ytick.minor.size": 4,
-    "xtick.minor.width": 1.5,
-    "ytick.minor.width": 1.5,
+    "xtick.minor.size": 0,
+    "ytick.minor.size": 0,
+    "xtick.minor.width":0,
+    "ytick.minor.width": 0,
+    "xtick.labelsize": 8,
+    "ytick.labelsize": 8,  
+
+    # Legend
+    'legend.frameon': False,
+    'legend.title_fontsize': 8,
+    'legend.fontsize': 8,
+    'legend.handlelength': 2,
+    'legend.loc': 'best',
+    'legend.numpoints': 1,
+
+    # Line style
+    'lines.linestyle': '-',
+    'lines.linewidth': 1,
+    'lines.markersize': 4,
+    'lines.markeredgecolor': 'white',
+    'lines.markeredgewidth': 0.5,
 })
+
 
 
 data1 = np.loadtxt("./Data_20262904/20262904005.snp") # 40V
@@ -71,15 +103,15 @@ for label, voltage, data, color, marker in dataset:
     I_charge = V_charge/R2
     Q_charge = np.abs(np.trapezoid(I_charge, t))
     Q_discharge = np.abs(np.trapezoid(I_discharge, t))
-    plt.plot(t*1e3, -I_charge*1e6, label=label + f": C = {-Q_charge/voltage*1e9:.2f} nF", color=color, ls='-', lw = 2, markevery=400, markeredgecolor='white', markeredgewidth=1, markersize=7, marker=marker)
+    plt.plot(t*1e3, -I_charge*1e6, label=label + f": C = {-Q_charge/voltage*1e9:.2f} nF", color=color,markevery=400, marker=marker)
 
-plt.axhline(y=0.0, color='black', ls='--', lw=1)
-plt.xlabel('Time (ms)', fontsize=18)
-plt.ylabel(r'Current ($\mu$A)', fontsize=18)
-plt.title('Current vs. Time (Charge process)', fontsize=20)
+plt.axhline(y=0.0, color='black', ls='--', lw=0.5)
+plt.xlabel('Time (ms)')
+plt.ylabel(r'Current ($\mu$A)')
+plt.title('Current vs. Time (Charge process)')
 plt.xlim(0, 50)
 plt.ylim(0, 10)
-plt.legend(frameon=False, numpoints=1, fontsize=18)
+plt.legend()
 plt.savefig('snippet-full.eps', format='eps')
 plt.show()
 

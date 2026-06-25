@@ -1,42 +1,73 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Custom settings
+# Custom settings for python figures
 plt.style.use('classic')
+
 plt.rcParams.update({
-    'text.usetex': True,
-    'text.latex.preamble': r'\usepackage{amsmath}\usepackage{siunitx}',
-    'figure.dpi': 100,
-    'figure.figsize': (10, 6),
+    "text.usetex": True,
+    'text.latex.preamble': r'''
+    \usepackage[T1]{fontenc}
+    \usepackage{lmodern}
+    \usepackage[utf8]{inputenc}
+    \usepackage{amsmath}
+    \usepackage{amssymb}
+    \usepackage{siunitx}
+    \usepackage{sfmath}
+    '''
+})
+plt.rcParams.update({
+    # Figure settings
+    'figure.dpi': 300,
+    # 'figure.figsize': (10/2.54, 6/2.54),  # 10x6 cm in inches (1 figure per line)
+    'figure.figsize': (8/2.54, 6/2.54),  # 10x6 cm in inches (2 figures per line)
     'figure.facecolor': 'white',
     'axes.facecolor': 'white',
     'axes.edgecolor': 'black',
-    'axes.linewidth': 2,
-    'axes.labelsize': 15,
+    'axes.linewidth': 1,
+    'axes.labelsize': 8,
+    'axes.titlesize': 8,
     'axes.labelcolor': 'black',
     'savefig.facecolor': 'white',
     'font.family': 'sans-serif',
-    'font.sans-serif': ['Arial'],
-    'mathtext.fontset': 'cm',
-    "figure.constrained_layout.use": True,
-
+    'font.sans-serif': 'Arial',
+    # 'mathtext.fontset': 'cm',
+    'figure.constrained_layout.use': True,
 
     # Ticks
     "xtick.direction": "in",
     "ytick.direction": "in",
     "xtick.top": True,
     "ytick.right": True,
-    "xtick.major.size": 8,
-    "ytick.major.size": 8,
-    "xtick.major.width": 2,
-    "ytick.major.width": 2,
+    "xtick.major.size": 4,
+    "ytick.major.size": 4,
+    "xtick.major.width": 1,
+    "ytick.major.width": 1,
     "xtick.minor.visible": True,
     "ytick.minor.visible": True,
-    "xtick.minor.size": 4,
-    "ytick.minor.size": 4,
-    "xtick.minor.width": 1.5,
-    "ytick.minor.width": 1.5,
+    "xtick.minor.size": 0,
+    "ytick.minor.size": 0,
+    "xtick.minor.width":0,
+    "ytick.minor.width": 0,
+    "xtick.labelsize": 8,
+    "ytick.labelsize": 8,  
+
+    # Legend
+    'legend.frameon': False,
+    'legend.title_fontsize': 8,
+    'legend.fontsize': 8,
+    'legend.handlelength': 2,
+    'legend.loc': 'best',
+    'legend.numpoints': 1,
+
+    # Line style
+    'lines.linestyle': '-',
+    'lines.linewidth': 1,
+    'lines.markersize': 4,
+    'lines.markeredgecolor': 'white',
+    'lines.markeredgewidth': 0.5,
 })
+
 
 data1 = np.loadtxt("./Data_20262904/20262904005.dat") # 40V
 data2 = np.loadtxt("./Data_20262904/20262904004.dat") # 35V
@@ -68,15 +99,15 @@ second_trigger = data1[:, 4]
 I = data1[:, 5]
 
 
-plt.plot(t, V_in, label='Input Voltage', lw = 2, color = 'orange')
-plt.plot(t, V_R*10, label='Current', lw = 2, color = 'k')
+plt.plot(t, V_in, label='Input Voltage', color = 'orange')
+plt.plot(t, V_R*10, label='Current', color = 'k')
 # plt.plot(t, main_trigger, label='Main Trigger', lw = 1.5, color = 'red')
 # plt.plot(t, second_trigger, label='Second Trigger', lw = 1.5, color = 'black')
-plt.xlabel('Time (s)', fontsize=18)
-plt.ylabel('Signal (arb. units)', fontsize=18)
+plt.xlabel('Time (s)')
+plt.ylabel('Signal (arb. units)')
+plt.ylim(-50, 50)
 
-
-plt.title('Signals vs. Time', fontsize=20)
-plt.legend(frameon=False, numpoints=1, fontsize=18)
+plt.title('Signals vs. Time')
+plt.legend()
 plt.savefig('DLTS-waveform.eps', format='eps')
 plt.show()
