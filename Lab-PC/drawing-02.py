@@ -1,37 +1,69 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+# Custom settings for python figures
 plt.style.use('classic')
+
 plt.rcParams.update({
-    'figure.dpi': 100,
-    'figure.figsize': (8, 6),
+    "text.usetex": True,
+    'text.latex.preamble': r'''
+    \usepackage[T1]{fontenc}
+    \usepackage{lmodern}
+    \usepackage[utf8]{inputenc}
+    \usepackage{amsmath}
+    \usepackage{amssymb}
+    \usepackage{siunitx}
+    \usepackage{sfmath}
+    '''
+})
+plt.rcParams.update({
+    # Figure settings
+    'figure.dpi': 300,
+    'figure.figsize': (8/2.54, 6/2.54),  # 10x6 cm in inches (1 figure per line)
     'figure.facecolor': 'white',
     'axes.facecolor': 'white',
     'axes.edgecolor': 'black',
-    'axes.linewidth': 2,
-    'axes.labelsize': 15,
+    'axes.linewidth': 1,
+    'axes.labelsize': 8,
+    'axes.titlesize': 8,
     'axes.labelcolor': 'black',
     'savefig.facecolor': 'white',
     'font.family': 'sans-serif',
-    'font.sans-serif': ['Arial'],
-    'mathtext.fontset': 'cm',
+    'font.sans-serif': 'Arial',
+    'figure.constrained_layout.use': True,
 
-    'savefig.bbox': 'tight',
     # Ticks
     "xtick.direction": "in",
     "ytick.direction": "in",
     "xtick.top": True,
     "ytick.right": True,
-    "xtick.major.size": 8,
-    "ytick.major.size": 8,
-    "xtick.major.width": 2,
-    "ytick.major.width": 2,
+    "xtick.major.size": 4,
+    "ytick.major.size": 4,
+    "xtick.major.width": 1,
+    "ytick.major.width": 1,
     "xtick.minor.visible": True,
     "ytick.minor.visible": True,
-    "xtick.minor.size": 4,
-    "ytick.minor.size": 4,
-    "xtick.minor.width": 1.5,
-    "ytick.minor.width": 1.5,
+    "xtick.minor.size": 0,
+    "ytick.minor.size": 0,
+    "xtick.minor.width":0,
+    "ytick.minor.width": 0,
+    "xtick.labelsize": 8,
+    "ytick.labelsize": 8,  
+
+    # Legend
+    'legend.frameon': False,
+    'legend.title_fontsize': 8,
+    'legend.fontsize': 8,
+    'legend.handlelength': 2,
+    'legend.loc': 'best',
+    'legend.numpoints': 1,
+
+    # Line style
+    'lines.linestyle': '-',
+    'lines.linewidth': 1,
+    'lines.markersize': 4,
+    'lines.markeredgecolor': 'white',
+    'lines.markeredgewidth': 0.5,
 })
 
 L = 100e-9 # Physical size of the domain in meters
@@ -59,30 +91,26 @@ p_left = N_v * np.exp(-(E_B - e * V_D) / (k_B * T))
 E_g = 10*Vth*e
 
 
-V = np.loadtxt("./Data-Export/Ohmic/ohmic_Poti_01.dat")
-F = np.loadtxt("./Data-Export/Ohmic/ohmic_Fermi_01.dat")
-rho = np.loadtxt("./Data-Export/Ohmic/ohmic_Dens_01.dat")
+V = np.loadtxt("./Data-Export/Ohmic/ohmic_Poti_03.dat")
+F = np.loadtxt("./Data-Export/Ohmic/ohmic_Fermi_03.dat")
+rho = np.loadtxt("./Data-Export/Ohmic/ohmic_Dens_03.dat")
 p = rho/e + N_A
 
 
+fig, (ax1, ax2) = plt.subplots(2, 1)
 
-
-
-fig, (ax1, ax2) = plt.subplots(2, 1, sharex=True)
-
-ax1.plot(x[contact_width:-contact_width] * 1e6, -V[contact_width:-contact_width], color='red', lw=2)
+ax1.plot(x[contact_width:-contact_width] * 1e6, -V[contact_width:-contact_width], color='red', lw=1.5)
 ax1.plot(x * 1e6, F, color='k', ls='--')
-ax1.plot(x[contact_width:-contact_width] * 1e6, -V[contact_width:-contact_width] + E_g / e, color='blue', lw=2, ls='-')
+ax1.plot(x[contact_width:-contact_width] * 1e6, -V[contact_width:-contact_width] + E_g / e, color='blue', lw=1.5, ls='-')
 # ax1.axhline(0, color='black', linestyle='--')
 # ax1.axhline(V_bi, color='black', linestyle='--')
-ax1.axvline((contact_width-1) * dx * 1e6, color='black', linestyle='-', lw = 2)
-ax1.axvline((N - contact_width) * dx * 1e6, color='black', linestyle='-', lw = 2)
+ax1.axvline((contact_width-1) * dx * 1e6, color='black', linestyle='-', lw = 1)
+ax1.axvline((N - contact_width) * dx * 1e6, color='black', linestyle='-', lw = 1)
 ax1.set_ylabel('Energy')
 # ax1.set_title('Schottky Barrier (p-type) Simulation', fontsize=18)
 ax1.set_xlim(0, L * 1e6*0.5)
 ax1.set_ylim(-0.2, 0.4)
-ax1.set_xticks([])
-ax1.set_yticks([])
+
 
 # place energy labels on the right, just above each curve
 xlim = ax1.get_xlim()
@@ -91,44 +119,61 @@ y_EFS = np.interp(x_label, x * 1e6, F)
 y_EV = np.interp(x_label, x * 1e6, -V)
 y_EC = np.interp(x_label, x * 1e6, -V + E_g / e)
 y_E0 = np.interp(x_label, x * 1e6, F - E_B / e)
-ax1.text(x_label, y_EFS + 0.01, r'$E_{FS}$', color='black', fontsize=14, ha='right', va='bottom')
-ax1.text(x_label, y_EV + 0.01, r'$E_V$', color='red', fontsize=14, ha='right', va='bottom')
-ax1.text(x_label, y_EC + 0.01, r'$E_C$', color='blue', fontsize=14, ha='right', va='bottom')
+ax1.text(x_label, y_EFS + 0.01, r'$E_{FS}$', color='black', fontsize=8, ha='right', va='bottom')
+ax1.text(x_label, y_EV + 0.01, r'$E_V$', color='red', fontsize=8, ha='right', va='bottom')
+ax1.text(x_label, y_EC + 0.01, r'$E_C$', color='blue', fontsize=8, ha='right', va='bottom')
 # ax1.plot(x[contact_width:contact_width + 300] * 1e6, F[contact_width:contact_width + 300] - E_B / e, color='black', ls='--')
 # annotate metal Fermi level explanation near left contact
 metal_x = (contact_width - 1) * dx * 1e6 - 0.13 * (xlim[1] - xlim[0])
 metal_y = np.interp(metal_x, x * 1e6, F)
 ax1.text(metal_x, metal_y + 0.01, r'$E_{FM}$',
-         color='black', fontsize=14, ha='left', va='bottom')
+         color='black', fontsize=8, ha='left', va='bottom')
 
 
+# # --- Reaktivierte Pfeile mit Anpassungen ---
 # x_arrow_1 = x_label - 0.3 * (xlim[1] - xlim[0])
 # x_arrow_2 = x_label - 0.8 * (xlim[1] - xlim[0])
-# ax1.annotate('', xy=(x_arrow_1, y_EV), xytext=(x_arrow_1, y_E0),
-#              arrowprops=dict(arrowstyle='<->', color='black', lw=1.5))
-# ax1.text(x_arrow_1 + 0.04 * (xlim[1] - xlim[0]), (y_EV + y_E0) / 2, r'$eV_\text{bi}$', color='black', fontsize=14, ha='center', va='center')
 
+# # Erster Pfeil (Berührt exakt y_EV und y_E0 mit kleinen Spitzen)
+# ax1.annotate('', xy=(x_arrow_1, y_EV), xytext=(x_arrow_1, y_E0),
+#              arrowprops=dict(arrowstyle='<->,head_width=0.2,head_length=0.2', 
+#                              color='black', lw=0.7, shrinkA=0, shrinkB=0))
+# ax1.text(x_arrow_1 + 0.04 * (xlim[1] - xlim[0]), (y_EV + y_E0) / 2, r'$eV_\text{bi}$', color='black', fontsize=8, ha='center', va='center')
+
+# # Zweiter Pfeil (Berührt exakt metal_y und y_EFS mit kleinen Spitzen)
 # ax1.annotate('', xy=(x_arrow_2, metal_y), xytext=(x_arrow_2, y_EFS),
-#              arrowprops=dict(arrowstyle='<->', color='black', lw=1.5))
-# ax1.text(x_arrow_2 - 0.07 * (xlim[1] - xlim[0]), (metal_y + y_EFS) / 2, r'$eV_\text{ext} < 0$', color='black', fontsize=14, ha='center', va='center')
+#              arrowprops=dict(arrowstyle='<->,head_width=0.2,head_length=0.2', 
+#                              color='black', lw=0.7, shrinkA=0, shrinkB=0))
+# ax1.text(x_arrow_2 - 0.07 * (xlim[1] - xlim[0]), (metal_y + y_EFS) / 2, r'$eV_\text{ext} < 0$', color='black', fontsize=8, ha='center', va='center')
+# -------------------------------------------
 
 
 ax2.fill_between(x[contact_width:-contact_width] * 1e6, rho[contact_width:-contact_width], 0, color='#f2a6a6', zorder=1)
-ax2.plot(x[contact_width:-contact_width] * 1e6, rho[contact_width:-contact_width], color='r', lw=2, zorder=2)
+ax2.plot(x[contact_width:-contact_width] * 1e6, rho[contact_width:-contact_width], color='r', lw=1, zorder=2)
 ax2.axhline(0, color='black',  linestyle='--')
-ax2.axvline((contact_width-1) * dx * 1e6, color='black', linestyle='-', lw = 2)
-ax2.axvline((N - contact_width) * dx * 1e6, color='black', linestyle='-', lw = 2)
+ax2.axvline((contact_width-1) * dx * 1e6, color='black', linestyle='-', lw = 1)
+ax2.axvline((N - contact_width) * dx * 1e6, color='black', linestyle='-', lw = 1)
 zero_label_y = 0.02 * (np.max(rho) - np.min(rho))
-ax2.text(x_label, zero_label_y, r'$0$', color='blue', fontsize=14, va='bottom')
+ax2.text(x_label, zero_label_y, r'$0$', color='k', fontsize=8, va='bottom')
 ax2.set_ylabel('Net Charge Density')
 ax2.set_xlim(0, L * 1e6*0.5)
 ax2.set_ylim(-np.max(rho) * 1.5, np.max(rho) * 1.5)
-ax2.set_xticks([])
-ax2.set_yticks([])
 
 
+# ----------------- HIDE AXIS BORDERS & TICKS -----------------
+for ax in [ax1, ax2]:
+    # Stop layout text rendering
+    ax.set_xticks([])
+    ax.set_yticks([])
+    ax.set_xticklabels([])
+    ax.set_yticklabels([])
+    ax.tick_params(axis='both', which='both', bottom=False, top=False, left=False, right=False)
+    
+    # Target frame components individually to defeat sharex and rcParams
+    ax.spines['left'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+    ax.spines['top'].set_visible(False)
+    ax.spines['bottom'].set_visible(False)
 
-
-fig.tight_layout()
-plt.savefig("ohmic-00.eps", format='eps') 
+plt.savefig("ohmic-02.eps", format='eps') 
 plt.show()

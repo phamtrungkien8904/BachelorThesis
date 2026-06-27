@@ -1,17 +1,72 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Custom settings
+# Custom settings for python figures
 plt.style.use('classic')
-plt.rcParams['figure.facecolor'] = 'white'
-plt.rcParams['axes.facecolor'] = 'white'
-plt.rcParams['axes.edgecolor'] = 'black'
-plt.rcParams['axes.linewidth'] = 2
-plt.rcParams['savefig.facecolor'] = 'white'
-plt.rcParams['font.family'] = 'sans-serif'
-plt.rcParams['font.sans-serif'] = ['Arial']
-plt.rcParams['mathtext.fontset'] = 'cm'
-# plt.rcParams['figure.dpi'] = 100
+
+plt.rcParams.update({
+    "text.usetex": True,
+    'text.latex.preamble': r'''
+    \usepackage[T1]{fontenc}
+    \usepackage{lmodern}
+    \usepackage[utf8]{inputenc}
+    \usepackage{amsmath}
+    \usepackage{amssymb}
+    \usepackage{siunitx}
+    \usepackage{sfmath}
+    '''
+})
+plt.rcParams.update({
+    # Figure settings
+    'figure.dpi': 100,
+    # 'figure.figsize': (10/2.54, 6/2.54),  # 10x6 cm in inches (1 figure per line)
+    'figure.figsize': (14/2.54, 6/2.54),  # 10x6 cm in inches (2 figures per line)
+    'figure.facecolor': 'white',
+    'axes.facecolor': 'white',
+    'axes.edgecolor': 'black',
+    'axes.linewidth': 1,
+    'axes.labelsize': 8,
+    'axes.titlesize': 8,
+    'axes.labelcolor': 'black',
+    'savefig.facecolor': 'white',
+    'font.family': 'sans-serif',
+    'font.sans-serif': 'Arial',
+    # 'mathtext.fontset': 'cm',
+    'figure.constrained_layout.use': True,
+
+    # Ticks
+    "xtick.direction": "in",
+    "ytick.direction": "in",
+    "xtick.top": True,
+    "ytick.right": True,
+    "xtick.major.size": 4,
+    "ytick.major.size": 4,
+    "xtick.major.width": 1,
+    "ytick.major.width": 1,
+    "xtick.minor.visible": True,
+    "ytick.minor.visible": True,
+    "xtick.minor.size": 0,
+    "ytick.minor.size": 0,
+    "xtick.minor.width":0,
+    "ytick.minor.width": 0,
+    "xtick.labelsize": 8,
+    "ytick.labelsize": 8,  
+
+    # Legend
+    'legend.frameon': False,
+    'legend.title_fontsize': 8,
+    'legend.fontsize': 8,
+    'legend.handlelength': 2,
+    'legend.loc': 'best',
+    'legend.numpoints': 1,
+
+    # Line style
+    'lines.linestyle': '-',
+    'lines.linewidth': 1,
+    'lines.markersize': 4,
+    'lines.markeredgecolor': 'white',
+    'lines.markeredgewidth': 0.5,
+})
 
 # Constants
 k_B = 1 
@@ -51,7 +106,7 @@ m_h = 3.0  # Effective mass of holes
 fig, (ax, ax_fd) = plt.subplots(
     1,
     2,
-    figsize=(20, 6),
+    figsize=(16/2.54, 6/2.54),
     gridspec_kw={'width_ratios': [6, 2], 'wspace': 0.1},
     constrained_layout=True,
     sharey=True,
@@ -137,13 +192,13 @@ for material_index, ((x_start, x_end), material_E_V, material_E_g) in enumerate(
 
 
 ax.axhline(E_F, color='k', linestyle='--', label='Fermi Energy (E_F)')
-ax.axhline(E_F + k_B*T, color='k', linestyle='--')
-ax.axhline(E_F - k_B*T, color='k', linestyle='--')
-ax.set_title('Filling of Electron States in Different Materials', fontsize=18)
+# ax.axhline(E_F + k_B*T, color='k', linestyle='--')
+# ax.axhline(E_F - k_B*T, color='k', linestyle='--')
+ax.set_title('Filling of Electron States in Different Materials')
 # ax.set_xlabel('Density of states')
 ax.set_ylabel(r'Energy ($E$)')
-ax.set_yticks([E_F, E_F + k_B*T, E_F - k_B*T])
-ax.set_yticklabels([r'$E_F$', r'$E_F + k_B T$', r'$E_F - k_B T$'])
+ax.set_yticks([E_F])
+ax.set_yticklabels([r'$E_F$'])
 ax.set_xlim(X.min(), X.max())
 ax.set_ylim(E.min(), E.max())
 ax.set_xticks([-0.33, -0.02, 0.38, 0.675, 0.97, 1.35])
@@ -152,30 +207,23 @@ ax.set_xticklabels([
     'Semimetal',
     'p-type',
     'intrinsic\nSemiconductor',
-    '(n-type)',
+    'n-type',
     'Insulator',
-], fontsize=16)
+])
 ax.tick_params(axis='x', length=0, pad=14)
 
 f_fd = 1 / (np.exp(beta * (E - E_F)) + 1)
 ax_fd.plot(f_fd, E, color='blue', lw=2, label='Fermi-Dirac distribution')
 ax_fd.axhline(E_F, color='k', linestyle='--', linewidth=1)
-ax_fd.axhline(E_F + k_B*T, color='k', linestyle='--', linewidth=1)
-ax_fd.axhline(E_F - k_B*T, color='k', linestyle='--', linewidth=1)
-ax_fd.set_title('Fermi-Dirac Distribution', fontsize=18)
+# ax_fd.axhline(E_F + k_B*T, color='k', linestyle='--', linewidth=1)
+# ax_fd.axhline(E_F - k_B*T, color='k', linestyle='--', linewidth=1)
+ax_fd.set_title('Fermi-Dirac Distribution')
 ax_fd.set_xlabel(r'Probability $f(E)$')
 ax_fd.set_xlim(0, 1)
 ax_fd.tick_params(axis='y', left=False, labelleft=False)
 
 cbar = fig.colorbar(image, ax=ax, pad=0.01)
 cbar.set_label('Electron probability')
-plt.savefig(
-    '1.pdf',
-    format='pdf',
-    bbox_inches='tight',
-    # facecolor='white',
-    # edgecolor='white',
-    # transparent=False,
-)
+plt.savefig('band_diagram.pdf', format='pdf')
 plt.show()
 

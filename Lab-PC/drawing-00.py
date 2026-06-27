@@ -1,39 +1,68 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-plt.style.use('classic')
 plt.rcParams.update({
-    'figure.dpi': 100,
-    'figure.figsize': (8, 6),
+    "text.usetex": True,
+    'text.latex.preamble': r'''
+    \usepackage[T1]{fontenc}
+    \usepackage{lmodern}
+    \usepackage[utf8]{inputenc}
+    \usepackage{amsmath}
+    \usepackage{amssymb}
+    \usepackage{siunitx}
+    \usepackage{sfmath}
+    '''
+})
+plt.rcParams.update({
+    # Figure settings
+    'figure.dpi': 300,
+    'figure.figsize': (8/2.54, 6/2.54),  
     'figure.facecolor': 'white',
     'axes.facecolor': 'white',
     'axes.edgecolor': 'black',
-    'axes.linewidth': 2,
-    'axes.labelsize': 15,
+    'axes.linewidth': 1,
+    'axes.labelsize': 8,
+    'axes.titlesize': 8,
     'axes.labelcolor': 'black',
     'savefig.facecolor': 'white',
     'font.family': 'sans-serif',
-    'font.sans-serif': ['Arial'],
-    'mathtext.fontset': 'cm',
+    'font.sans-serif': 'Arial',
+    # 'mathtext.fontset': 'cm',
+    'figure.constrained_layout.use': True,
 
-    'savefig.bbox': 'tight',
     # Ticks
     "xtick.direction": "in",
     "ytick.direction": "in",
     "xtick.top": True,
     "ytick.right": True,
-    "xtick.major.size": 8,
-    "ytick.major.size": 8,
-    "xtick.major.width": 2,
-    "ytick.major.width": 2,
+    "xtick.major.size": 4,
+    "ytick.major.size": 4,
+    "xtick.major.width": 1,
+    "ytick.major.width": 1,
     "xtick.minor.visible": True,
     "ytick.minor.visible": True,
-    "xtick.minor.size": 4,
-    "ytick.minor.size": 4,
-    "xtick.minor.width": 1.5,
-    "ytick.minor.width": 1.5,
-})
+    "xtick.minor.size": 0,
+    "ytick.minor.size": 0,
+    "xtick.minor.width":0,
+    "ytick.minor.width": 0,
+    "xtick.labelsize": 8,
+    "ytick.labelsize": 8,  
 
+    # Legend
+    'legend.frameon': False,
+    'legend.title_fontsize': 8,
+    'legend.fontsize': 8,
+    'legend.handlelength': 2,
+    'legend.loc': 'best',
+    'legend.numpoints': 1,
+
+    # Line style
+    'lines.linestyle': '-',
+    'lines.linewidth': 1,
+    'lines.markersize': 4,
+    'lines.markeredgecolor': 'white',
+    'lines.markeredgewidth': 0.5,
+})
 L = 100e-9 # Physical size of the domain in meters
 N = 1001
 x = np.linspace(0, L, N)
@@ -69,13 +98,13 @@ p = rho/e + N_A
 
 fig, ax = plt.subplots(1, 1)
 
-ax.plot(x[contact_width:-contact_width] * 1e6, -V[contact_width:-contact_width], color='red', lw=2)
-ax.plot(x * 1e6, F, color='k', lw=2, ls='--')
-ax.plot(x[contact_width:-contact_width] * 1e6, -V[contact_width:-contact_width] + E_g / e, color='blue', lw=2, ls='-')
-ax.axvline((contact_width-1) * dx * 1e6, color='black', linestyle='-', lw = 2)
-ax.axvline((N - contact_width) * dx * 1e6, color='black', linestyle='-', lw = 2)
-ax.text(0.035 * L * 1e6, -0.15 , 'Metal', color='black', fontsize=16, ha='left', va='bottom')
-ax.text(0.3 * L * 1e6, -0.15 , 'Semiconductor', color='black', fontsize=16, ha='left', va='bottom')
+ax.plot(x[contact_width:-contact_width] * 1e6, -V[contact_width:-contact_width], color='red', lw=1.5)
+ax.plot(x * 1e6, F, color='k', lw=1, ls='--')
+ax.plot(x[contact_width:-contact_width] * 1e6, -V[contact_width:-contact_width] + E_g / e, color='blue', lw=1.5, ls='-')
+ax.axvline((contact_width-1) * dx * 1e6, color='black', linestyle='-', lw = 1)
+ax.axvline((N - contact_width) * dx * 1e6, color='black', linestyle='-', lw = 1)
+ax.text(0.028 * L * 1e6, -0.15 , 'Metal', color='black', fontsize=8, ha='left', va='bottom')
+ax.text(0.24 * L * 1e6, -0.15 , 'Semiconductor', color='black', fontsize=8, ha='left', va='bottom')
 ax.set_ylabel('')
 # ax.set_title('Schottky Barrier (p-type) Simulation', fontsize=18)
 ax.set_xlim(0, L * 1e6/2)
@@ -95,44 +124,43 @@ y_EF = np.interp(x_label, x * 1e6, F)
 y_EV = np.interp(x_label, x * 1e6, -V)
 y_EC = np.interp(x_label, x * 1e6, -V + E_g / e)
 y_E0 = np.interp(x_label, x * 1e6, F - E_B / e)
-ax.text(x_label, y_EF + 0.01, r'$E_F$', color='black', fontsize=18, ha='right', va='bottom')
-ax.text(x_label, y_EV - 0.07, r'$E_V$', color='red', fontsize=18, ha='right', va='bottom')
-ax.text(x_label, y_EC + 0.01, r'$E_C$', color='blue', fontsize=18, ha='right', va='bottom')
+ax.text(x_label, y_EF + 0.01, r'$E_F$', color='black', fontsize=8, ha='right', va='bottom')
+ax.text(x_label, y_EV - 0.07, r'$E_V$', color='red', fontsize=8, ha='right', va='bottom')
+ax.text(x_label, y_EC + 0.01, r'$E_C$', color='blue', fontsize=8, ha='right', va='bottom')
 
 # Visualize electrons as blue spheres near the interface inside the semiconductor
-electron_x = np.array([0.0105, 0.0115, 0.0125, 0.0135, 0.0105, 0.0115, 0.0125, 0.0105, 0.0145]) # x-coordinates for electrons (in micrometers)
+electron_x = 1.3*np.array([0.0105, 0.0115, 0.0125, 0.0135, 0.0105, 0.0115, 0.0125, 0.0105, 0.0145]) - 0.003 # x-coordinates for electrons (in micrometers)
 electron_y = np.array([0.74, 0.70, 0.74, 0.70, 0.66, 0.62, 0.66, 0.58, 0.74])  # y-coordinates for electrons (fixed)
-ax.scatter(electron_x, electron_y, s=180, c='blue', edgecolors='navy', linewidths=1.2, zorder=5)
+ax.scatter(electron_x, electron_y, s=40, c='blue', edgecolors='navy', linewidths=1, zorder=2)
 # draw a minus sign in the middle of each sphere
-minus_half = 0.0001
+minus_half = 0.0002
 for xi, yi in zip(electron_x, electron_y):
-    ax.plot([xi - minus_half, xi + minus_half], [yi, yi], color='white', lw=2.5, zorder=6, solid_capstyle='round')
+    ax.plot([xi - minus_half, xi + minus_half], [yi, yi], color='white', lw=1, zorder=2, solid_capstyle='round')
 
 
 
 # Visualize holes as red spheres near the interface inside the semiconductor
-hole_x = np.array([0.0175, 0.0185, 0.0195, 0.0205, 0.0215]) + 0.02 # x-coordinates for holes (in micrometers)
+hole_x = np.array([0.0175, 0.0195, 0.0215, 0.0235, 0.0255]) + 0.02 # x-coordinates for holes (in micrometers)
 hole_y = np.ones(5) * 0.2  # y-coordinates for holes (fixed)
-ax.scatter(hole_x, hole_y, s=180, c='red', edgecolors='darkred', linewidths=1.2, zorder=5)
+ax.scatter(hole_x, hole_y, s=40, c='red', edgecolors='darkred', linewidths=1, zorder=2)
 
 # draw a plus sign in the middle of each sphere (use a scatter '+' marker for visibility)
-ax.scatter(hole_x, hole_y, marker='+', c='white', s=100, linewidths=2.5, zorder=6)
+ax.scatter(hole_x, hole_y, marker='+', c='white', s=20, linewidths=1, zorder=2)
 
 
 x_arrow_1 = x_label - 0.4 * (xlim[1] - xlim[0])
 x_arrow_2 = x_label - 0.85 * (xlim[1] - xlim[0])
 # x_arrow_2 = x_label - 0.8 * (xlim[1] - xlim[0])
 ax.annotate('', xy=(x_arrow_1, y_EV), xytext=(x_arrow_1, y_E0),
-             arrowprops=dict(arrowstyle='<->', color='black', lw=1.5))
-ax.text(x_arrow_1 + 0.03 * (xlim[1] - xlim[0]), (y_EV + y_E0) / 2, r'$e V_\text{bi} $', color='black', fontsize=18, ha='center', va='center')
+             arrowprops=dict(arrowstyle='<->', color='black', lw=1))
+ax.text(x_arrow_1 + 0.05 * (xlim[1] - xlim[0]), (y_EV + y_E0) / 2, r'$e V_\mathrm{bi} $', color='black', fontsize=8, ha='center', va='center')
 ax.plot(x[contact_width-50:contact_width + 300] * 1e6, F[contact_width-50:contact_width + 300] - E_B / e, color='black', ls='--')
 
 
 ax.annotate('', xy=(x_arrow_2, y_EF), xytext=(x_arrow_2, y_E0),
-             arrowprops=dict(arrowstyle='<->', color='black', lw=1.5))
-ax.text(x_arrow_2 - 0.03 * (xlim[1] - xlim[0]), (y_EF + y_E0) / 2, r'$e \phi_\text{B} $', color='black', fontsize=18, ha='center', va='center')
+             arrowprops=dict(arrowstyle='<->', color='black', lw=1))
+ax.text(x_arrow_2 - 0.05 * (xlim[1] - xlim[0]), (y_EF + y_E0) / 2, r'$e \phi_\mathrm{B} $', color='black', fontsize=8, ha='center', va='center')
 
 
-fig.tight_layout()
 plt.savefig('Schottky-after-contact.eps', format='eps')
 plt.show()
