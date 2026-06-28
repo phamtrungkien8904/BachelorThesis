@@ -19,7 +19,7 @@ plt.rcParams.update({
 })
 plt.rcParams.update({
     # Figure settings
-    'figure.dpi': 100,
+    'figure.dpi': 300,
     # 'figure.figsize': (10/2.54, 8/2.54),  # 10x6 cm in inches (1 figure per line)
     # 'figure.figsize': (8/2.54, 6/2.54),  # 10x6 cm in inches (2 figures per line)
     'figure.facecolor': 'white',
@@ -69,14 +69,14 @@ plt.rcParams.update({
     'lines.markeredgewidth': 0.5,
 })
 
-data1 = np.loadtxt("./gvdP-PS9/01.dat")
-data2 = np.loadtxt("./gvdP-PS9/02.dat")
-data3 = np.loadtxt("./gvdP-PS9/03.dat")
+data1 = np.loadtxt("./Data-gvdP/01.dat")
+data2 = np.loadtxt("./Data-gvdP/02.dat")
+data3 = np.loadtxt("./Data-gvdP/03.dat")
 
 dataset =[
-    data1, "-100", 3.07, -10.05, 'red', 'o',
-    data2, "-200", 3.08, -10.22, 'blue', 's',
-    data3, "-300", 3.09, -10.19, 'green', '^',
+    data1, "-100", 3.11, -10.16, 'red', 'o',
+    data2, "-200", 3.11, -10.31, 'blue', 's',
+    data3, "-300", 3.10, -10.11, 'green', '^',
 ]
 
 e = 1.60217662e-19
@@ -155,7 +155,6 @@ for data, label, mu, V_T, color, marker in zip(dataset[::6], dataset[1::6], data
 
 axs[1, 0].set_xlabel(r"Gate Voltage -$V_\mathrm{G4}$ (V)")
 axs[1, 0].set_ylabel(r"Drain Voltage -$V_\mathrm{34}$ (V)")
-# axs[1, 0].set_title("V34 vs. Gate Voltage")
 axs[1, 0].set_xlim(15, 30)
 axs[1, 0].set_ylim(0, 25)
 axs[1, 0].legend(title=r"$I_\mathrm{34}$ (nA)")
@@ -178,10 +177,13 @@ for data, label, mu, V_T, color, marker in zip(dataset[::6], dataset[1::6], data
 
 axs[1, 1].set_xlabel(r"Gate Voltage -$V_\mathrm{G4}$ (V)")
 axs[1, 1].set_ylabel(r"VDP Voltage -$V_\mathrm{12}$ (V)")
-# axs[1, 1].set_title("V12 vs. Gate Voltage")
 axs[1, 1].legend(title=r"$I_\mathrm{34}$ (nA)")
 axs[1, 1].set_xlim(15, 30)
 axs[1, 1].set_ylim(0, 0.5)
 
-plt.savefig("vdP-full.eps", format='eps')
+# Export figures
+plt.savefig("gvdP.eps", format='eps')
+plt.savefig("gvdP.pdf", format='eps')
+plt.savefig("gvdP.png", format='png')
+
 plt.show()
