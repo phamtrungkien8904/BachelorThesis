@@ -8,7 +8,7 @@ from decimal import Decimal
 # File paths
 # ============================================================
 input_file = "./Data-Mani/01.dat"
-output_file = "./Data-Mani/01.dat"
+output_file = "./Data-Mani/001.dat"
 
 os.makedirs(os.path.dirname(output_file), exist_ok=True)
 
@@ -48,12 +48,12 @@ fmt = [
 # ============================================================
 data1[:, 0] += 0 # col 1: Vg, modify threshold
 
-beta = 1 # to modify mobility (>1 to increase, <1 to decrease)
+beta = 10 # to modify mobility (>1 to increase, <1 to decrease)
 data1[:, 1] *= 1# col 2: IG4, have to modify each data
 data1[:, 2] *= beta # col 3: Id, modify mobility
 data1[:, 3] *= beta # col 4: V34
 
-alpha = 1.01 # to modify mobility (>1 to decrease, <1 to increase)
+alpha = 10 # to modify mobility (>1 to decrease, <1 to increase)
 data1[:, 4] *= alpha # col 5: V14
 data1[:, 5] *= alpha # col 6: V24
 data1[:, 6] *= alpha # col 7: V24
