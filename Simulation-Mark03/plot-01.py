@@ -26,9 +26,9 @@ plt.rcParams["figure.dpi"] = 100
 # ----------------------------------------------------------------------
 # User parameters
 # ----------------------------------------------------------------------
-File_index = "04"
+File_index = "01"
 
-N = 51                      # grid points in x and y direction
+N = 201                      # grid points in x and y direction
 L = 1000e-9                   # square side length [m]
 # Contact geometry: four small square corner regions.
 # Current is injected/sunk between contacts 1 and 2; contacts 3 and 4 are
@@ -137,9 +137,9 @@ if PLOT_RESULTS:
         interpolation="bicubic",
         aspect="equal",
     )
-    fig_hole.colorbar(im_hole, ax=ax2D_hole, label=r"$\log_{10}(p/\mathrm{m}^{-3})$", shrink=0.4)
-    ax2D_hole.set_xlabel("x-position [nm]")
-    ax2D_hole.set_ylabel("y-position [nm]")
+    fig_hole.colorbar(im_hole, ax=ax2D_hole, label=r"$p$[$\mathrm{m}^{-3}$]", shrink=0.4)
+    ax2D_hole.set_xlabel(r"$x$-position [nm]")
+    ax2D_hole.set_ylabel(r"$y$-position [nm]")
     ax2D_hole.set_title("2D hole density")
 
     ax3D_hole = fig_hole.add_subplot(gs_hole[0, 1], projection="3d")
@@ -148,53 +148,54 @@ if PLOT_RESULTS:
         Y * 1e9,    
         np.maximum(p, 1.0),
         cmap="jet",
-        rcount=N // 8,
-        ccount=N // 8,
+        rcount=N // 5,
+        ccount=N // 5,
         linewidth=1,
         color="k",
         antialiased=True,
     )
-    fig_hole.colorbar(surf_hole, ax=ax3D_hole, label=r"$p/\mathrm{m}^{-3}$", shrink=0.4, pad=0.08)
-    ax3D_hole.set_xlabel("x-position [nm]")
-    ax3D_hole.set_ylabel("y-position [nm]")
-    ax3D_hole.set_zlabel(r"$p/\mathrm{m}^{-3}$")
+    # ax3D_hole.view_init(elev=45, azim=30)
+    fig_hole.colorbar(surf_hole, ax=ax3D_hole, label=r"$p$[$\mathrm{m}^{-3}$]", shrink=0.4, pad=0.08)
+    ax3D_hole.set_xlabel(r"$x$-position [nm]")
+    ax3D_hole.set_ylabel(r"$y$-position [nm]")
+    ax3D_hole.set_zlabel(r"$p$[$\mathrm{m}^{-3}$]")
     ax3D_hole.set_title("3D hole density")
     fig_hole.suptitle("Hole Density Distribution")
 
-    # Current streamlines and magnitude
-    fig_J = plt.figure(figsize=(10, 8), constrained_layout=True)
-    gs_J = fig_J.add_gridspec(1, 2, width_ratios=[1, 1.05])
-    ax2D_J = fig_J.add_subplot(gs_J[0, 0])
+    # # Current streamlines and magnitude
+    # fig_J = plt.figure(figsize=(10, 8), constrained_layout=True)
+    # gs_J = fig_J.add_gridspec(1, 2, width_ratios=[1, 1.05])
+    # ax2D_J = fig_J.add_subplot(gs_J[0, 0])
 
-    im_J = ax2D_J.imshow(
-        np.maximum(Jabs, 1e-300),
-        extent=extent_nm,
-        origin="lower",
-        interpolation="bicubic",
-        aspect="equal",
-    )
-    fig_J.colorbar(im_J, ax=ax2D_J, label=r"$|J|$ [A/m$^2$]", shrink=0.4)
-    ax2D_J.set_xlabel("x-position [nm]")
-    ax2D_J.set_ylabel("y-position [nm]")
-    ax2D_J.set_title("Current density magnitude and streamlines")
+    # im_J = ax2D_J.imshow(
+    #     np.maximum(Jabs, 1e-300),
+    #     extent=extent_nm,
+    #     origin="lower",
+    #     interpolation="bicubic",
+    #     aspect="equal",
+    # )
+    # fig_J.colorbar(im_J, ax=ax2D_J, label=r"$|J|$ [A/m$^2$]", shrink=0.4)
+    # ax2D_J.set_xlabel("x-position [nm]")
+    # ax2D_J.set_ylabel("y-position [nm]")
+    # ax2D_J.set_title("Current density magnitude and streamlines")
 
-    ax3D_J = fig_J.add_subplot(gs_J[0, 1], projection="3d")
-    surf_J = ax3D_J.plot_surface(
-        X * 1e9,
-        Y * 1e9,
-        np.maximum(Jabs, 1e-300),
-        cmap="jet",
-        rcount=N // 8,
-        ccount=N // 8,
-        linewidth=1,
-        color="k",
-        antialiased=True,
-    )
-    fig_J.colorbar(surf_J, ax=ax3D_J, label=r"$|J|$ [A/m$^2$]", shrink=0.4, pad=0.08)
-    ax3D_J.set_xlabel("x-position [nm]")
-    ax3D_J.set_ylabel("y-position [nm]")
-    ax3D_J.set_zlabel(r"$|J|$ [A/m$^2$]")
-    ax3D_J.set_title("3D current density magnitude")
-    fig_J.suptitle("Current Density Distribution")
+    # ax3D_J = fig_J.add_subplot(gs_J[0, 1], projection="3d")
+    # surf_J = ax3D_J.plot_surface(
+    #     X * 1e9,
+    #     Y * 1e9,
+    #     np.maximum(Jabs, 1e-300),
+    #     cmap="jet",
+    #     rcount=N // 8,
+    #     ccount=N // 8,
+    #     linewidth=1,
+    #     color="k",
+    #     antialiased=True,
+    # )
+    # fig_J.colorbar(surf_J, ax=ax3D_J, label=r"$|J|$ [A/m$^2$]", shrink=0.4, pad=0.08)
+    # ax3D_J.set_xlabel("x-position [nm]")
+    # ax3D_J.set_ylabel("y-position [nm]")
+    # ax3D_J.set_zlabel(r"$|J|$ [A/m$^2$]")
+    # ax3D_J.set_title("3D current density magnitude")
+    # fig_J.suptitle("Current Density Distribution")
 
     plt.show()

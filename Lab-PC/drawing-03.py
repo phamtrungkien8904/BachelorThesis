@@ -157,9 +157,9 @@ ax.text(x_arrow_3 - 0.05 * (xlim[1] - xlim[0]), (y_vac + y_EF) / 2, r'$e\phi_\ma
 ax.text(x_arrow_3 - 0.05 * (xlim[1] - xlim[0]), y_EF + 0.05, r'$E_\mathrm{Fm}$', color='black', fontsize=8, ha='center', va='center')
 
 
-ax.annotate('', xy=(x_arrow_4, y_vac), xytext=(x_arrow_4, y_E0),
+ax.annotate('', xy=(x_arrow_4, y_vac), xytext=(x_arrow_4, y_EF - 0.25),
              arrowprops=dict(arrowstyle='<->', color='black', lw=1))
-ax.text(x_arrow_4 + 0.03 * (xlim[1] - xlim[0]), (y_vac + y_E0 - 0.05) / 2, r'$e\phi_\mathrm{s}$', color='black', fontsize=8, ha='center', va='center')
+ax.text(x_arrow_4 + 0.03 * (xlim[1] - xlim[0]), (y_vac + y_EF) / 2, r'$e\phi_\mathrm{s}$', color='black', fontsize=8, ha='center', va='center')
 
 # ax.plot(x[contact_width-50:contact_width + 300] * 1e6, F[contact_width-50:contact_width + 300] - E_B / e, color='black', ls='--')
 

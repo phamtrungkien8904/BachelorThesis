@@ -1,0 +1,9 @@
+xxx: 	Description of column values:
+col. 1: 	VG4 with unit V
+col. 2: 	IG4 with unit A
+col. 3: 	V34 with unit V
+col. 4: 	I34 with unit A
+col. 5: 	CondG4 conductance with unit 1/Ohm
+col. 6: 	ResiG4 resistance with unit Ohm
+col. 7: 	void and empty
+col. 8: 	void and empty

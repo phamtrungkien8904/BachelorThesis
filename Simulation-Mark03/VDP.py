@@ -54,7 +54,7 @@ plt.rcParams["figure.dpi"] = 100
 # ----------------------------------------------------------------------
 File_index = "04"
 
-N = 201                      # grid points in x and y direction
+N = 151                      # grid points in x and y direction
 L = 1000e-9                   # square side length [m]
 max_iter = 1000000000            # increase for stricter convergence
 step_iter = 10             # print interval

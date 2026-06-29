@@ -1,0 +1,62 @@
+\section{Device Architecture}
+
+\begin{figure}[htbp]
+    \centering
+    \resizebox{0.55\linewidth}{!}{\input{figures/tikz/oFET-layers.tex}}
+\caption[Device layout for electrical characterization]{Device layout used for electrical characterization. The structure contains a bottom gate, a dielectric stack, a molecular semiconductor layer, four injection contacts, and larger contact pads for external wiring. Adapted from Ref.~\cite{Kersting2026FiguresCollection}.}
+    \label{fig:device_architecture}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}{0.45\linewidth}
+        \centering
+        \resizebox{\linewidth}{!}{\input{figures/tikz/oFET.tex}}
+    \end{minipage}\hfill
+    \begin{minipage}{0.50\linewidth}
+        \centering
+        \resizebox{\linewidth}{!}{\input{figures/tikz/oFET-3D.tex}}
+    \end{minipage}
+    \caption[Layer and contact schematic of the OFET structure]{Schematic representation of the assembled OFET structure. The left panel shows the top-view contact layout, while the right panel shows the corresponding 3D layer structure. The central green region denotes the molecular semiconductor, the red diagonal paths indicate the four injection contacts, the orange pads provide external electrical access, and the side pads marked G connect to the bottom gate. Adapted from Ref.~\cite{Kersting2026FiguresCollection}.}
+    \label{fig:ofet_layer_schematic}
+\end{figure}
+
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{|p{1.8cm}|p{3.2cm}|p{5cm}|}
+        \hline
+        \textbf{Layer} &
+        \textbf{Function} &
+        \textbf{Material and thickness} \\
+        \hline
+        Layer 1 & Gate contact & \SI{8}{\nano\meter} Cr\\
+        Layer 2 & Insulator & \SI{300}{\nano\meter} PaN + \SI{80}{\nano\meter} PS \\
+        Layer 3 & Semiconductor & \SI{40}{\nano\meter} C8-BTBT \\
+        Layer 4 & Injection contact & \SI{3}{\nano\meter} MoO$_x$ \\
+         & Injection contact & \SI{20}{\nano\meter} Au \\
+        Layer 5 & Contact pads & \SI{3}{\nano\meter} Cr  \\
+         & Contact pads & \SI{150}{\nano\meter} Ag  \\
+         & Contact pads & \SI{20}{\nano\meter} Au \\
+        \hline
+    \end{tabular}
+    \caption[Layer sequence of the fabricated device]{Layer sequence of the fabricated device, including material thicknesses and lithography masks. Adapted from Ref.~\cite{Kersting2026FiguresCollection}.}
+    \label{tab:device_layer_sequence}
+\end{table}
+
+The fabricated samples are bottom-gate thin-film devices designed for gated van der Pauw (gVDP) measurements. Their overall contact layout is shown in Figure~\ref{fig:device_architecture}, while Figure~\ref{fig:ofet_layer_schematic} gives a simplified schematic of the assembled layer and contact structure. A chromium layer forms the bottom gate and is covered by the insulating parylene-N (PaN) and polystyrene (PS) layers. The molecular semiconductor is deposited on top of this dielectric stack and forms the active layer in which field-effect-induced charge carriers move. Four metal contacts around the semiconductor serve as current-injection and voltage-probe contacts during the gVDP measurement, while the larger contact pads provide mechanically stable, low-resistance access for external wiring~\cite{Rolin2017GVDP,Lee2024GVDPIGZO}.
+
+A summary of the layer sequence is given in Table~\ref{tab:device_layer_sequence}. The nominal thicknesses are target values; small deviations can occur due to deposition-rate variations, mask positioning, and the surface quality of the underlying layer.
+
+
+The bottom chromium layer is used as the gate electrode. Chromium adheres well to the substrate and can be deposited as a thin, continuous film by physical vapor deposition. Its role is not to inject charge carriers, but to create an electric field across the dielectric stack.
+
+The dielectric stack consists of PaN and PS. PaN provides the main electrical insulation between the gate and the semiconductor, while PS acts as a planarization layer. A smooth dielectric surface supports more reproducible molecular ordering, grain formation, and electrical measurements~\cite{Sirringhaus2005DevicePhysics,Wang2017LowVoltageC8BTBT}.
+
+The molecular semiconductor layer is the active layer of the device and must be continuous between the four contacts. The clover-leaf geometry provides a well-defined four-contact structure while still allowing relatively large metal contacts. The central region is mainly probed during the van der Pauw measurement, and the gate voltage changes the density of accumulated charge carriers close to the dielectric/semiconductor interface.
+
+The injection contacts consist of MoO$_x$ and Au. Au is stable and has a high work function, making it suitable for hole injection into many $p$-type organic semiconductors. The thin MoO$_x$ interlayer improves the energetic alignment between the metal and the semiconductor and can lower the hole-injection barrier~\cite{Greiner2013ThinFilmMetalOxides,Ablat2019OxideMetalBilayerElectrodes,Natali2012ChargeInjection}. The contacts must overlap the semiconductor sufficiently without shorting neighboring contacts.
+
+The final contact pads consist of Cr, Ag, and Au. Cr acts as an adhesion layer, Ag provides a thick and highly conductive pad, and the Au capping layer protects the surface during probing or wiring. These pads are larger than the injection contacts because they are used for external electrical access and do not define the active transport region.
+
+The architecture is well suited for gVDP measurements because voltage is sensed at contacts that ideally carry no current. This reduces the influence of contact resistance on the extracted sheet conductance, unlike in conventional two-terminal or transistor measurements where contact resistance can distort the apparent mobility and threshold voltage~\cite{Rolin2017GVDP,Bittle2016MobilityOverestimation,Natali2012ChargeInjection}.
