@@ -29,22 +29,7 @@ top-contact devices. These geometries affect injection and interface quality, bu
 the underlying field-effect mechanism remains the same
 ~\cite{Sirringhaus2005DevicePhysics,Natali2012ChargeInjection}.
 
-The devices considered in this work are operated as $p$-channel transistors. A
-gate voltage that is negative with respect to the source attracts holes to the
-dielectric interface. A negative drain voltage then drives the accumulated holes
-through the channel. To keep the notation compact, the following discussion uses
-positive magnitudes for the relevant terminal quantities,
-\begin{equation}
-    V_\mathrm{GS}=\left|V_\mathrm{G}-V_\mathrm{S}\right|,
-    \qquad
-    V_\mathrm{DS}=\left|V_\mathrm{D}-V_\mathrm{S}\right|,
-    \qquad
-    I_\mathrm{D}=\left|I_\mathrm{D,phys}\right|.
-    \label{eq:pfet_magnitude_convention}
-\end{equation}
-The threshold voltage $V_\mathrm{T}$ is also written as a positive magnitude.
-With this convention, the mathematical form of the equations is the same as for
-an $n$-channel transistor, although the physical carriers are holes.
+
 
 \begin{figure}[htbp]
     \centering
@@ -84,6 +69,23 @@ an $n$-channel transistor, although the physical carriers are holes.
     pinch-off near the drain.}
     \label{fig:fet_operation_modes}
 \end{figure}
+
+The devices considered in this work are operated as $p$-channel transistors. A
+gate voltage that is negative with respect to the source attracts holes to the
+dielectric interface. A negative drain voltage then drives the accumulated holes
+through the channel. To keep the notation compact, the following discussion uses
+positive magnitudes for the relevant terminal quantities,
+\begin{equation}
+    V_\mathrm{GS}=\left|V_\mathrm{G}-V_\mathrm{S}\right|,
+    \qquad
+    V_\mathrm{DS}=\left|V_\mathrm{D}-V_\mathrm{S}\right|,
+    \qquad
+    I_\mathrm{D}=\left|I_\mathrm{D,phys}\right|.
+    \label{eq:pfet_magnitude_convention}
+\end{equation}
+The threshold voltage $V_\mathrm{T}$ is also written as a positive magnitude.
+With this convention, the mathematical form of the equations is the same as for
+an $n$-channel transistor, although the physical carriers are holes.
 
 In the gradual-channel picture, the local channel potential is denoted by
 $V(x)$, with $V(0)=0$ at the source and $V(L)=V_\mathrm{DS}$ at the drain. Above
@@ -300,10 +302,9 @@ output curve in saturation.
 
 Using the ideal saturation expression, the transconductance becomes
 \begin{equation}
-    g_\mathrm{m}
+    g_\mathrm{m}(V_\mathrm{GS,Q})
     = \mu C_\mathrm{i}\frac{W}{L}
-      \left(V_\mathrm{GS,Q}-V_\mathrm{T}\right)
-    = \frac{2I_\mathrm{D,Q}}{V_\mathrm{ov,Q}}.
+      \left(V_\mathrm{GS,Q}-V_\mathrm{T}\right).
     \label{eq:fet_gm_saturation}
 \end{equation}
 Thus, the small-signal response increases with mobility, gate capacitance,
