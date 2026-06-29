@@ -1,0 +1,14 @@
+I34 = -100 nA:
+Mobility ($\mu$): (3.11 ± 0.02) cm^2/Vs
+Threshold Voltage ($V_T$): (-10.16 ± 0.20) V
+R^2: 0.9981
+
+I34 = -200 nA:
+Mobility ($\mu$): (3.11 ± 0.02) cm^2/Vs
+Threshold Voltage ($V_T$): (-10.31 ± 0.16) V
+R^2: 0.9987
+
+I34 = -300 nA:
+Mobility ($\mu$): (3.10 ± 0.02) cm^2/Vs
+Threshold Voltage ($V_T$): (-10.11 ± 0.13) V
+R^2: 0.9991
