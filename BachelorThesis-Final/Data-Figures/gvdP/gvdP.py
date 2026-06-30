@@ -69,9 +69,11 @@ plt.rcParams.update({
     'lines.markeredgewidth': 0.5,
 })
 
-data1 = np.loadtxt("./Data-gvdP/01.dat")
-data2 = np.loadtxt("./Data-gvdP/02.dat")
-data3 = np.loadtxt("./Data-gvdP/03.dat")
+
+data1 = np.loadtxt("./Data-gvdP/20260509001.dat")
+data2 = np.loadtxt("./Data-gvdP/20260509002.dat")
+data3 = np.loadtxt("./Data-gvdP/20260509003.dat")
+
 
 dataset =[
     data1, "-100", 3.11, -10.16, 'red', 'o',

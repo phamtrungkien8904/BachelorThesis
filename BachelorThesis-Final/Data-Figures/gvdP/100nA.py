@@ -69,7 +69,7 @@ plt.rcParams.update({
     'lines.markeredgewidth': 0.5,
 })
 
-data = np.loadtxt("./Data-gvdP/01.dat")
+data = np.loadtxt("./Data-gvdP/20260509001.dat")
 
 
 V_GS = data[:, 0]
