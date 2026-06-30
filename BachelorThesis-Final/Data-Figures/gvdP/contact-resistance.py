@@ -119,14 +119,15 @@ V_34 = data1[:, 3]
 V_14 = data1[:, 4]
 V_24 = data1[:, 5]
 V_12 = data1[:, 6]
+V_C = 0.5*(V_14 + V_24)
 R_34 = V_34 / I_34
 V_T = -10.2
-V_del = -(V_G4 - V_T)
+V_del = -(V_G4 - V_C)
 
 def func(x, a, b):
-    return a + b/x
+    return a + b/(x + V_T)
 
-mask = (V_del > 13) & (V_del < 100)
+mask = (V_del > 15) & (V_del < 100)
 
 
 popt, pcov = curve_fit(func, V_del[mask], R_34[mask])
@@ -154,15 +155,15 @@ for data, label, mu, V_T, color, marker in zip(dataset[::6], dataset[1::6], data
     V_12 = data[:, 6]
     R_34 = V_34 / I_34
     V_T = -10.2
-    V_del = -(V_G4 - V_T)
+    V_del = -(V_G4 - V_C)
 
-    plt.plot(-V_G4, R_34*1e-6, color=color, label=label, marker=marker, markevery=markevery)
+    plt.plot(V_del, R_34*1e-6, color=color, label=label, marker=marker, markevery=markevery)
 
-plt.plot(-V_G4[mask], R_34_fit*1e-6, color='red', linestyle='--', label=f"Fit {label}")
-plt.xlabel(r"Gate Voltage $-V_{G4}$ (V)")
+plt.plot(V_del[mask], R_34_fit*1e-6, color='red', linestyle='--', label=f"Fit {label}")
+plt.xlabel(r"Effective Gate Voltage $-(V_{G4} - V_{C})$ (V)")
 plt.ylabel(r"Total Resistance $R_{34}$ (M$\Omega$)")
 plt.xlim(15, 30)
 plt.ylim(0,100)
-plt.title(r"Total Resistance $R_{34}$ vs Gate Voltage $V_{G4}$")
+plt.title(r"Total Resistance $R_{34}$ vs Effective Gate Voltage $-(V_{G4} - V_{C})$")
 plt.legend(title=r"$I_{34}$ (nA)")
 plt.show()
