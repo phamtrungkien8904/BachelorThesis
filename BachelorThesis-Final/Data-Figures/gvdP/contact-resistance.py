@@ -88,6 +88,63 @@ markevery = 4
 
 
 
+# for data, label, mu, V_T, color, marker in zip(dataset[::6], dataset[1::6], dataset[2::6], dataset[3::6], dataset[4::6], dataset[5::6]):
+#     V_G4 = data[:, 0]
+#     I_34 = data[:, 2]
+#     V_34 = data[:, 3]
+#     V_14 = data[:, 4]
+#     V_24 = data[:, 5]
+#     V_12 = data[:, 6]
+#     R_34 = V_34 / I_34
+#     V_T = -10.2
+#     V_del = -(V_G4 - V_T)
+
+#     plt.plot(-V_G4, R_34*1e-6, color=color, label=label, marker=marker, markevery=markevery)
+
+
+# plt.xlabel(r"Gate Voltage $-V_{G4}$ (V)")
+# plt.ylabel(r"Total Resistance $R_{34}$ (M$\Omega$)")
+# plt.xlim(15, 30)
+# plt.ylim(0,100)
+# plt.title(r"Total Resistance $R_{34}$ vs Gate Voltage $V_{G4}$")
+# plt.legend(title=r"$I_{34}$ (nA)")
+# plt.savefig("resistance.png", dpi=300)
+# plt.savefig("resistance.pdf", dpi=300)
+# plt.savefig("resistance.eps")
+# plt.show()
+
+V_G4 = data1[:, 0]
+I_34 = data1[:, 2]
+V_34 = data1[:, 3]
+V_14 = data1[:, 4]
+V_24 = data1[:, 5]
+V_12 = data1[:, 6]
+R_34 = V_34 / I_34
+V_T = -10.2
+V_del = -(V_G4 - V_T)
+
+def func(x, a, b):
+    return a + b/x
+
+mask = (V_del > 13) & (V_del < 100)
+
+
+popt, pcov = curve_fit(func, V_del[mask], R_34[mask])
+R_34_fit = func(V_del[mask], *popt)
+a = popt[0]
+b = popt[1]
+
+# 1-sigma parameter uncertainties from covariance matrix
+perr = np.sqrt(np.diag(pcov))
+a_err = perr[0]
+b_err = perr[1]
+r2 = 1 - np.sum((R_34[mask] - R_34_fit)**2) / np.sum((R_34[mask] - np.mean(R_34[mask]))**2)
+
+
+print(rf"Background Resistance: ({a*1e-6:.2f} ± {a_err*1e-6:.2f}) MΩ")
+print(rf"R^2: {r2:.4f}")
+
+
 for data, label, mu, V_T, color, marker in zip(dataset[::6], dataset[1::6], dataset[2::6], dataset[3::6], dataset[4::6], dataset[5::6]):
     V_G4 = data[:, 0]
     I_34 = data[:, 2]
@@ -96,39 +153,16 @@ for data, label, mu, V_T, color, marker in zip(dataset[::6], dataset[1::6], data
     V_24 = data[:, 5]
     V_12 = data[:, 6]
     R_34 = V_34 / I_34
+    V_T = -10.2
+    V_del = -(V_G4 - V_T)
 
     plt.plot(-V_G4, R_34*1e-6, color=color, label=label, marker=marker, markevery=markevery)
 
-
+plt.plot(-V_G4[mask], R_34_fit*1e-6, color='red', linestyle='--', label=f"Fit {label}")
 plt.xlabel(r"Gate Voltage $-V_{G4}$ (V)")
 plt.ylabel(r"Total Resistance $R_{34}$ (M$\Omega$)")
 plt.xlim(15, 30)
 plt.ylim(0,100)
 plt.title(r"Total Resistance $R_{34}$ vs Gate Voltage $V_{G4}$")
 plt.legend(title=r"$I_{34}$ (nA)")
-plt.savefig("resistance.png", dpi=300)
-plt.savefig("resistance.pdf", dpi=300)
-plt.savefig("resistance.eps")
 plt.show()
-
-def func(x, a, b):
-    return a + b/x
-
-mask = (V_G4 < -15) & (V_G4 > -100)
-
-
-popt, pcov = curve_fit(func, -V_G4[mask], R_34[mask])
-R_34_fit = func(-V_G4, *popt)
-a = popt[0]
-b = popt[1]
-
-# 1-sigma parameter uncertainties from covariance matrix
-perr = np.sqrt(np.diag(pcov))
-a_err = perr[0]
-b_err = perr[1]
-r2 = 1 - np.sum((R_34[mask] - R_34_fit[mask])**2) / np.sum((R_34[mask] - np.mean(R_34[mask]))**2)
-
-
-print(rf"Background Resistance: ({a*1e-6:.2f} ± {a_err*1e-6:.2f}) MΩ")
-print(rf"R^2: {r2:.4f}")
-
