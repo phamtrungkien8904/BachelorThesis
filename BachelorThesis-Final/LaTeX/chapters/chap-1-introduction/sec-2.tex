@@ -1,0 +1,65 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Status of Research}
+\label{sec:status_of_research}
+
+The classical van der Pauw method is a four-terminal technique for determining
+the sheet resistance of thin conducting films without using a Hall-bar geometry~\cite{VanDerPauw1958}.
+Its strength lies in the separation of current injection and voltage sensing.
+Ideally, the voltage contacts draw no current, so the voltage losses at the
+current-injecting contacts do not enter directly into the measured sheet
+resistance. This makes the method especially useful for thin films in which the
+contact resistance is large, difficult to determine, or strongly dependent on
+the measurement conditions.
+
+Such contact effects are a central issue in organic field-effect transistors.
+At metal--organic interfaces, charge injection is influenced by energetic
+alignment, interfacial states, local morphology, and gate bias. Conventional
+two-terminal transfer curves can therefore contain both channel and contact
+contributions \cite{Natali2012ChargeInjection}. Bittle et al. showed that
+gate-dependent contact resistance can lead to a strong overestimation of the
+field-effect mobility when standard transistor formulas are applied directly to
+two-terminal data \cite{Bittle2016MobilityOverestimation}. A high apparent
+mobility obtained from a transfer curve is therefore not sufficient evidence for
+fast transport in the semiconductor film.
+
+The gated van der Pauw method extends the same four-terminal idea to a gated
+accumulation layer. Rolin et al. introduced the approach for organic
+semiconductor thin films and showed that the gate dependence of the sheet
+conductance can be used to extract a long-range accumulation-layer mobility
+with reduced influence from the injecting contacts \cite{Rolin2017GVDP}. In
+this geometry, the gate controls the carrier density in the film, the imposed
+current defines the transport path, and the transverse van der Pauw voltage
+gives access to the sheet conductance of the probed region.
+
+Later studies have broadened this idea beyond the original material system.
+Bonafè et al. adapted gated van der Pauw concepts to electrolyte-gated organic
+mixed ionic--electronic conductors \cite{Bonafe2021EgVDP}. Lee et al. applied
+related methods to thin-film transistors for which contact resistance becomes
+more important as device dimensions are reduced \cite{Lee2024GVDPIGZO}. A
+subsequent voltage-driven implementation showed that channel and contact
+contributions can be evaluated separately within one device
+\cite{Lee2025VoltageDrivenGVDP}. Together, these studies underline the same
+point: reliable mobility extraction requires a measurement strategy that can
+distinguish sheet transport from contact-related voltage losses.
+
+For a practical organic thin-film device, this separation is only meaningful if
+the measurement conditions are well controlled. The prototype setup must provide
+stable current injection, reliable voltage sensing, and sufficiently low
+leakage. The applied current has to be large enough to produce a measurable
+transverse voltage, but small enough to keep the conducting sheet close to a
+linear-response regime. Gate leakage must remain small compared with the channel
+current, and the extracted mobility should be reproducible for different current
+levels. In addition, the resistance along the full current-injection path should
+be compared with the four-terminal sheet-conductance result, because a residual
+series contribution can remain even when the accumulated channel becomes more
+conductive. If the conductance curves depend strongly on the selected current,
+the contact configuration, or the sweep history, the assumptions of a simple
+gated van der Pauw extraction are no longer fully satisfied. Transient and
+circuit measurements are also relevant, because slow trap relaxation and large
+external RC time constants can make a nominally static transfer curve depend on
+measurement history. For this reason, the present thesis combines setup
+characterization, device fabrication, conventional current--voltage
+measurements, current-driven gated van der Pauw measurements,
+background-resistance analysis, DLTS-type transients, and a simple amplifier
+test.
+
