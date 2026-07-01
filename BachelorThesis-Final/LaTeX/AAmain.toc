@@ -1,0 +1,55 @@
+\babel@toc {english}{}\relax 
+\thispagestyle {plain}
+\contentsline {chapter}{Abstract}{iv}{section*.3}%
+\contentsline {chapter}{List of Figures}{viii}{section*.6}%
+\contentsline {chapter}{List of Tables}{ix}{section*.8}%
+\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter*.9}%
+\contentsline {section}{\numberline {1.1}Introduction}{1}{section*.10}%
+\contentsline {section}{\numberline {1.2}Status of Research}{2}{section*.11}%
+\contentsline {section}{\numberline {1.3}Scientific Questions}{2}{section*.12}%
+\contentsline {chapter}{\numberline {2}Theoretical and Technical Background}{4}{chapter*.13}%
+\contentsline {section}{\numberline {2.1}Semiconductor Physics in Equilibrium}{4}{section*.14}%
+\contentsline {subsection}{\numberline {2.1.1}Energy Bands and Classification of Materials}{4}{subsection*.15}%
+\contentsline {subsection}{\numberline {2.1.2}Statistics and Transport Phenomena of Charge Carriers}{6}{subsection*.20}%
+\contentsline {subsection}{\numberline {2.1.3}Metal-Semiconductor Contacts}{8}{subsection*.38}%
+\contentsline {subsection}{\numberline {2.1.4}Metal-Insulator-Semiconductor Capacitor}{11}{subsection*.43}%
+\contentsline {section}{\numberline {2.2}Organic Semiconductors}{11}{section*.46}%
+\contentsline {subsection}{\numberline {2.2.1}Molecular Structure and Electronic States}{12}{subsection*.48}%
+\contentsline {subsection}{\numberline {2.2.2}Energetic Disorder and Trap States}{13}{subsection*.51}%
+\contentsline {subsection}{\numberline {2.2.3}Distribution of Charge Carriers}{14}{subsection*.55}%
+\contentsline {subsection}{\numberline {2.2.4}Transport Mechanisms of Charge Carriers}{14}{subsection*.60}%
+\contentsline {section}{\numberline {2.3}Field-Effect Transistors}{16}{section*.65}%
+\contentsline {subsection}{\numberline {2.3.1}Operation of Field-Effect Transistors}{16}{subsection*.66}%
+\contentsline {subsection}{\numberline {2.3.2}Current--Voltage Relationship}{18}{subsection*.70}%
+\contentsline {subsection}{\numberline {2.3.3}Small-Signal Amplification Properties}{20}{subsection*.80}%
+\contentsline {section}{\numberline {2.4}Contact-Independent Gated van der Pauw Method}{23}{section*.92}%
+\contentsline {subsection}{\numberline {2.4.1}Classical van der Pauw Method}{23}{subsection*.93}%
+\contentsline {subsection}{\numberline {2.4.2}Current-Driven Gated Van-der-Pauw Geometry}{24}{subsection*.98}%
+\contentsline {subsection}{\numberline {2.4.3}Gate-Induced Sheet Density and Mobility Extraction}{25}{subsection*.102}%
+\contentsline {subsection}{\numberline {2.4.4}Operating Regimes and Measurement Validity}{26}{subsection*.110}%
+\contentsline {subsection}{\numberline {2.4.5}Meaning and Limitations of Contact Independence}{27}{subsection*.111}%
+\contentsline {chapter}{\numberline {3}Device Architecture}{28}{chapter*.112}%
+\contentsline {section}{\numberline {3.1}Device Architecture}{28}{section*.113}%
+\contentsline {section}{\numberline {3.2}Fabrication Methods}{31}{section*.117}%
+\contentsline {subsection}{\numberline {3.2.1}Physical Vapor Deposition}{31}{subsection*.118}%
+\contentsline {subsection}{\numberline {3.2.2}Chemical Vapor Deposition of Parylene-N}{32}{subsection*.120}%
+\contentsline {subsection}{\numberline {3.2.3}Spin Coating of the PS Planarization Layer}{33}{subsection*.123}%
+\contentsline {section}{\numberline {3.3}Images of Fabricated Devices}{33}{section*.125}%
+\contentsline {chapter}{\numberline {4}Experimental Methods and Results}{35}{chapter*.127}%
+\contentsline {section}{\numberline {4.1}Current-Voltage Characteristics}{35}{section*.128}%
+\contentsline {subsection}{\numberline {4.1.1}Insulator Leakage Current}{36}{subsection*.130}%
+\contentsline {subsection}{\numberline {4.1.2}Transfer Characteristic}{37}{subsection*.132}%
+\contentsline {subsection}{\numberline {4.1.3}Output Characteristic}{38}{subsection*.135}%
+\contentsline {section}{\numberline {4.2}Gated Van-der-Pauw Method}{39}{section*.137}%
+\contentsline {subsection}{\numberline {4.2.1}Extraction of Intrinsic Mobility and Threshold Voltage}{39}{subsection*.139}%
+\contentsline {subsection}{\numberline {4.2.2}Extraction of Background Resistance}{42}{subsection*.143}%
+\contentsline {section}{\numberline {4.3}Additional Electrical Measurements}{43}{section*.147}%
+\contentsline {subsection}{\numberline {4.3.1}Deep-level Transient Spectroscopy}{43}{subsection*.148}%
+\contentsline {subsection}{\numberline {4.3.2}Amplification Properties Analysis}{46}{subsection*.154}%
+\contentsline {chapter}{\numberline {5}Conclusion and Summary}{50}{chapter*.158}%
+\contentsline {chapter}{\numberline {A}Current–Voltage Relationship of FETs--Mathematical Derivation}{52}{chapter*.159}%
+\contentsline {chapter}{\numberline {B}Derivation of the Gated Van-der-Pauw Relation}{54}{chapter*.173}%
+\contentsline {chapter}{\numberline {C}Numerical Simulation of the Van der Pauw Configuration}{56}{chapter*.190}%
+\contentsline {chapter}{Bibliography}{58}{section*.198}%
+\contentsline {chapter}{Acknowledgement}{58}{section*.200}%
+\contentsline {chapter}{Declaration of Authorship}{58}{section*.201}%

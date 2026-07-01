@@ -60,6 +60,7 @@
 \usepackage{array}                                  %   for vertically centered table columns
 \usepackage{enumerate}                              %   for numerating, i.e. sections -- https://www.ctan.org/pkg/enumerate
 \usepackage{footnotebackref}                        %   for hyperlinks of footnotes -- https://www.ctan.org/pkg/footnotebackref
+\usepackage{xurl}                                   %   for better line breaks in long URLs/DOIs -- https://ctan.org/pkg/xurl
 \usepackage{hyperref}                               %   for highlighting/reference of links, i.e. websites -- https://www.ctan.org/pkg/hyperref
 \usepackage{listings}                               %   for typesetting code -- https://www.ctan.org/pkg/listings
 %\usepackage{minted}                                 %   for highlighting code -- https://www.ctan.org/pkg/minted
@@ -176,7 +177,10 @@
 
 %%% BIBLATEX SETUP %%%
 % source: https://tex.stackexchange.com/questions/534565/apply-empty-style-to-the-entire-bibliography
-\renewcommand{\bibsetup}{\thispagestyle{plain}}
+\setcounter{biburlnumpenalty}{9000}
+\setcounter{biburlucpenalty}{9000}
+\setcounter{biburllcpenalty}{9000}
+\renewcommand{\bibsetup}{\thispagestyle{plain}\sloppy\emergencystretch=3em\Urlmuskip=0mu plus 2mu\relax}
 \makeatletter
 \patchcmd{\blx@endenv@bibliography}{\endlist}{\endlist\clearpage}{}{}
 \makeatother
@@ -242,6 +246,7 @@
 %%%%%%%%%%%%%%%%%%
 
 %%% HYPER SETUP %%%
+\pdfstringdefDisableCommands{\def\\{ }}
 \hypersetup{   
     pdfpagemode = {UseNone},
     pdftitle = {\getTitleEN},

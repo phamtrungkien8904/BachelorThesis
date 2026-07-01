@@ -2,64 +2,55 @@
 \section{Scientific Questions}
 \label{sec:scientific_questions}
 
-The central question of this thesis is whether organic thin-film transistors can
-be fabricated and characterized in a way that separates the transport through
-the accumulated semiconductor sheet from contact-related artefacts. Demonstrating
-field-effect behaviour alone is not enough for this purpose. The more important
-question is how reliably mobility and threshold voltage can be extracted when
-contact resistance, charge injection, leakage, traps, and transient relaxation
-may all contribute to the measured current.
+The thesis is guided by the following main question:
 
-The first part of this question concerns the experimental platform. Before the
-gated van der Pauw method can be applied to molecular semiconductor devices, the
-prototype setup has to be checked for stable current driving and reliable
-voltage detection. On the fabrication side, the devices have to be produced in a
-layer-by-layer process that combines physical vapor deposition of the molecular
-semiconductor and metal contacts, chemical vapor deposition of the parylene-N
-insulator, and spin coating of the planarization layer. The completed structures
-must then show low gate leakage, reproducible field-effect modulation, and
-ordered transfer and output characteristics. Without these basic conditions,
-neither conventional transistor analysis nor gated van der Pauw analysis would
-give meaningful transport parameters.
+\begin{quote}
+\textbf{Can the transport properties of organic thin-film transistors be measured
+in a way that describes the accumulated semiconductor sheet, rather than being
+dominated by contact effects?}
+\end{quote}
 
-The second part concerns the role of the contacts. In a two-terminal
-measurement, the same electrodes inject current and define the measured voltage.
-Injection barriers and contact resistance can therefore change the slope of a
-transfer curve and distort the mobility extracted from standard FET relations.
-The gated van der Pauw measurement tests whether a sheet conductance obtained
-from non-injecting voltage probes gives a more robust result. If measurements at
-different imposed currents agree, this is an important indication that the
-extracted mobility reflects the accumulated film rather than a contact-limited
-current path.
+This question is divided into three subquestions:
+\begin{description}
+    \item[\textbf{Q1 -- Field-effect operation:}] Do the fabricated devices and
+    the measurement setup show stable field-effect operation with sufficiently
+    low gate leakage?
+    \item[\textbf{Q2 -- Contact influence:}] How strongly do contact resistance
+    and charge injection affect conventional transfer and output characteristics,
+    including threshold-voltage estimates?
+    \item[\textbf{Q3 -- Four-terminal method and dynamic response:}] How doese the gated van
+    der Pauw method give a  contact-independent sheet conductance,
+    mobility as well as background
+    resistance, and do transient or circuit effects have to be considered?
+\end{description}
 
-The third part concerns dynamic effects. Organic semiconductors often contain
-localized states that can trap and release carriers over long time scales. Such
-processes can influence threshold-voltage extraction, hysteresis, and circuit
-response even when a static transfer curve appears smooth
+The first part of the work tests the experimental platform. The prototype setup
+must provide stable current driving and reliable voltage detection, while the
+fabricated devices must show low gate leakage, reproducible field-effect
+modulation, and ordered transfer and output curves. Without these conditions,
+neither conventional transistor analysis nor gated van der Pauw analysis can give
+meaningful transport parameters.
+
+The second part examines contact influence. In two-terminal measurements, the
+same electrodes inject current and define the measured voltage, so injection
+barriers and contact resistance can change the slope and shape of the curves. The
+gated van der Pauw measurement tests whether a sheet conductance obtained from
+separate voltage probes is more robust. The resistance of the full
+current-injection path is analysed separately to compare the gate-dependent
+channel response with any gate-independent background contribution.
+
+The third part addresses dynamic effects. Localized states in organic
+semiconductors can trap and release carriers over long time scales, affecting
+threshold-voltage extraction, hysteresis, and circuit response
 \cite{Hirwa2015TrapStates,Bobbert2012OperationalStability}. DLTS-type transient
-measurements and a simple amplifier test are therefore used to examine whether
-slow relaxation and external circuit elements affect the device response.
+measurements and a simple amplifier test are therefore used to check whether
+slow relaxation and external circuit elements influence the device response.
 
-The work is guided by three working hypotheses. First, in a suitable
-accumulation regime, the sheet conductance measured by the gated van der Pauw
-method should increase approximately linearly with effective gate bias, and the
-mobility extracted from this slope should be similar for different sufficiently
-small measurement currents. Second, conventional two-terminal analysis should be
-more sensitive to contact effects than the four-terminal gated van der Pauw
-analysis. Evidence for this would include a finite background resistance,
-nonideal transfer or output curves, or a discrepancy between contact-sensitive
-and contact-independent interpretations. Third, transient measurements should
-show whether slow trap-related relaxation is relevant for the fabricated devices
-and whether it has to be considered when interpreting nominally static
-measurements.
-
-The following chapters test these hypotheses through controlled comparisons.
-The key checks are the stability of the measurement setup, the integrity of the
-fabricated device stack, the magnitude of the gate leakage, the shape of the
-transfer and output curves, the linearity of the gated van der Pauw conductance,
-the current independence of the extracted mobility, and the presence or absence
-of slow transient relaxation. In this way, the thesis connects setup
-characterization, fabrication, measurement geometry, and data analysis to the
-question of how reliably transport parameters can be obtained from organic
-thin-film transistors.
-
+Three working hypotheses follow from these questions. First, in a suitable
+accumulation regime, the gated van der Pauw sheet conductance should increase
+approximately linearly with effective gate bias, and the extracted mobility
+should be similar for different sufficiently small measurement currents. Second,
+two-terminal analysis should be more sensitive to contact and series effects than
+the four-terminal sheet-conductance extraction. Third, transient and amplifier
+measurements should reveal whether slow relaxation or external circuit time
+constants must be considered when interpreting nominally static measurements.

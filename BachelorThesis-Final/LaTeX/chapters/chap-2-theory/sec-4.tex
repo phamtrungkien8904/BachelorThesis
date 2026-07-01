@@ -1,4 +1,4 @@
-\section{Contact-Independent Gated Van-der-Pauw Method}
+\section{Contact-Independent Gated van der Pauw Method}
 \label{sec:gated_van_der_pauw_method}
 
 The mobility extracted from a conventional two-terminal field-effect
@@ -24,7 +24,7 @@ The present thesis uses the current-driven form of the method, hereafter
 denoted C-gVDP.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Classical Van-der-Pauw Method}
+\subsection{Classical van der Pauw Method}
 
 The classical van der Pauw method determines the sheet resistance of a thin
 conducting film without assigning a rectangular channel length and width. Its
@@ -32,7 +32,7 @@ standard assumptions are that the film is homogeneous, approximately isotropic
 in the plane, of uniform thickness, simply connected, and contacted by
 sufficiently small electrodes located at its boundary. Under these conditions,
 the sheet resistance is determined by the potential distribution inside the
-film rather than by its external shape.
+film rather than by its external shape~\cite{VanDerPauw1958}.
 
 \begin{figure}[htbp]
     \centering
@@ -56,7 +56,7 @@ four-terminal resistance is
 \end{equation}
 A second independent resistance is obtained after rotating the terminals, for
 example $R_{23,14}=|V_{14}/I_{23}|$. The sheet resistance $R_\mathrm{s}$ is the
-solution of the van der Pauw equation
+solution of the van der Pauw equation~\cite{VanDerPauw1958}
 \begin{equation}
     \exp\left(-\frac{\pi R_{34,21}}{R_\mathrm{s}}\right)
     +
@@ -120,26 +120,29 @@ the contact-sensitive transfer regime and the contact-independent conductance
 regime, respectively \cite{Lee2025VoltageDrivenGVDP}. The current-driven method
 used here employs the conductance regime for mobility extraction.
 
+A qualitative lateral electrostatic simulation of this geometry is shown in
+Figure~\ref{fig:vdp_sim_results}. The calculation is used only to visualize how
+fixed contact potentials and insulating boundaries can produce a nonuniform
+in-plane potential and a corresponding nonuniform hole-density map. It is not a
+quantitative simulation of the complete gated device, because the vertical gate
+stack is not solved explicitly. The numerical procedure is summarized in
+Appendix~\ref{app:vdp_simulation}.
+
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=\textwidth]{figures/gvdP-simulation.pdf}
-    \caption[Potential and carrier-density distributions in a gated van der
-    Pauw structure]{Numerically calculated potential and hole-density
-    distributions in a gated van der Pauw structure. A finite measurement
-    current produces a spatially varying sheet potential. Since the local
-    gate-induced charge depends on the voltage difference between the gate and
-    the semiconductor, the carrier density is spatially varying as well. The
-    two non-injecting probe potentials define the representative channel
-    potential $V_\mathrm{C}$ used in the charge-density correction. The
-    hole-density map shows pronounced accumulation of holes near the
-    current-injecting contacts, where the imposed current enters and leaves the
-    organic film. This local enhancement can result from the electrical
-    boundary conditions and does not, by itself, demonstrate the presence of a
-    Schottky barrier.}
-    \label{fig:gvdP_simulation}
+    \includegraphics[width=0.88\textwidth]
+        {figures/gvdP-simulation.pdf}
+    \caption[Simulated potential and hole-density distributions]
+    {Calculated potential and hole-density distributions in the lateral van der
+    Pauw structure. The potential map is obtained by iteratively solving
+    Poisson's equation on the two-dimensional grid with fixed contact
+    potentials and insulating outer boundaries. The hole-density map is then
+    calculated from the Boltzmann approximation and shows hole
+    accumulation near the current-carrying contacts.}
+    \label{fig:vdp_sim_results}
 \end{figure}
 
-Figure~\ref{fig:gvdP_simulation} illustrates why the internal potential
+This qualitative picture illustrates why the internal potential
 $V_\mathrm{C}$ must be included in the analysis. The gate does not act relative
 to an everywhere-grounded semiconductor sheet; it acts relative to the local
 semiconductor potential. Even when contact 4 is grounded, the central region of

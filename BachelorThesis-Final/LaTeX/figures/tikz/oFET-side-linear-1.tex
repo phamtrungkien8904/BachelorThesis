@@ -30,22 +30,22 @@
 \newcommand{\holes}[2]
 {
 \shade [ball color=red] (#1,#2) circle (0.1);
-};
+}
 \foreach \x in {-2.75,-2.25,...,2.75}{
   \foreach \y in {2.25,2.75}{
     \holes{\x}{\y}
   }
-};
+}
 \foreach \x in {-3.75,-3.25}{
   \foreach \y in {2.25,2.75, 3.25,3.75}{
     \holes{\x}{\y}
   }
-};
+}
 \foreach \x in {3.75,3.25}{
   \foreach \y in {2.25,2.75, 3.25,3.75}{
     \holes{\x}{\y}
   }
-};
+}
 % \holes{-3.5}{3.9};
 % \holes{3.5}{3.9};
 % \holes{-3.5}{2.5};

@@ -139,7 +139,8 @@ This appendix derives the relation between the measured sheet conductance and
 the gate-induced carrier density used in
 Section~\ref{subsec:gvdp_density_mobility}. The derivation follows the
 current-driven gated van der Pauw model introduced by Rolin et al.
-\cite{Rolin2017GVDP}.
+\cite{Rolin2017GVDP}, which builds on the classical van der Pauw relation
+\cite{VanDerPauw1958}.
 
 Consider the region between the two equipotential lines sensed by contacts 1 and
 2. It can be represented by an equivalent field-effect channel with potentials
@@ -284,17 +285,56 @@ voltage relative to the grounded current contact alone.
 \thispagestyle{plain}
 
 This appendix summarizes the numerical procedure used to calculate the
-potential and hole-density maps shown in the theory chapter. The calculation is
-only a qualitative visualization of lateral electrostatics in a four-contact
-van der Pauw geometry. It is not used to extract a mobility, sheet density, or
-representative channel potential. Therefore the experimental correction
-$V_\mathrm{C}$ is not a relevant output of this numerical appendix; the voltage
-probe contacts are included only as passive geometrical markers.
+potential and hole-density maps used as a qualitative visualization in the
+theory chapter. The calculation treats only lateral electrostatics in a
+four-contact van der Pauw geometry. It is not used to extract a mobility, sheet
+density, or representative channel potential, and it should not be interpreted
+as a quantitative gated-device simulation because the vertical gate stack is not
+solved explicitly. Therefore the experimental correction $V_\mathrm{C}$ is not a
+relevant output of this numerical appendix; the voltage probe contacts are
+included only as passive geometrical markers.
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{|p{0.34\textwidth}|p{0.56\textwidth}|}
+        \hline
+        Parameter & Value \\
+        \hline
+        Grid points & $201\times201$ \\
+        Device size & $\SI{1000.00}{\nano\metre}\times\SI{1000.00}{\nano\metre}$ \\
+        Contact width & $\SI{80.00}{\nano\metre}$ \\
+        Iterations performed & 4,518,820 \\
+        Runtime & 03:56:24 \\
+        Thermal voltage $V_\mathrm{th}$ & $\SI{0.025852}{\volt}$ \\
+        Flatband voltage & $\SI{0.129260}{\volt}=5.00\,V_\mathrm{th}$ \\
+        Contact-2 voltage & $\SI{-0.258520}{\volt}=-10.00\,V_\mathrm{th}$ \\
+        Barrier height & $\SI{0.108846}{\electronvolt}=4.21\,k_\mathrm{B}T$ \\
+        Contact-1 hole concentration & $\SI{1.484132e23}{\per\cubic\metre}$ \\
+        Acceptor density $N_\mathrm{A}$& $\SI{1.00e21}{\per\cubic\metre}$ \\
+        Valence DOS $N_\mathrm{V}$ & $\SI{1.00e25}{\per\cubic\metre}$ \\
+        Permittivity & $\SI{2.656256e-11}{\farad\per\metre}$ \\
+        \hline
+    \end{tabular}
+    \caption[Parameters used in the lateral van der Pauw simulation]{Parameters
+    used for the lateral van der Pauw simulation shown in
+    Figure~\ref{fig:vdp_sim_results} in the main text. The relaxation factor and tolerance were
+    numerical control parameters but were not stored together with the exported
+    simulation metadata.}
+    \label{tab:vdp_sim_parameters}
+\end{table}
 
 The semiconductor is represented by a square two-dimensional grid with spacing
 $h$. The biased contacts impose fixed electrostatic potentials, while insulating
-outer boundaries satisfy zero-normal-field conditions. The local hole density is
-approximated by a Boltzmann relation,
+outer boundaries satisfy zero-normal-field conditions. The calculation is
+formulated as a lateral slice with volumetric charge density and material
+permittivity, so the units remain those of the three-dimensional Poisson
+equation: $\nabla^2\phi$ has units of $\si{\volt\per\metre\squared}$,
+while $\rho/\varepsilon$ has units
+$\si{\coulomb\per\cubic\metre}/\si{\farad\per\metre}
+=\si{\volt\per\metre\squared}$. Thus the two-dimensional grid restricts the
+spatial dependence to the lateral plane, but it does not convert the charge
+density into a sheet charge. The local hole density is approximated by a
+Boltzmann relation,
 \begin{equation}
     p_{i,j}
     =N_\mathrm{v}
@@ -362,30 +402,17 @@ quasi-Fermi field is updated in a second conservative step from
 $\nabla\cdot(p\nabla F)=0$, but the central electrostatic part of the calculation
 is the iterative Poisson solve described above.
 
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.88\textwidth]
-        {figures/gvdP-simulation.pdf}
-    \caption[Simulated potential and hole-density distributions]
-    {Calculated potential and hole-density distributions in the gated van der
-    Pauw structure. The potential map is obtained by iteratively solving
-    Poisson's equation on the two-dimensional grid with fixed contact
-    potentials and insulating outer boundaries. The hole-density map is then
-    calculated from the local electrochemical energy and shows hole
-    accumulation near the current-carrying contacts.}
-    \label{fig:vdp_sim_results}
-\end{figure}
-
-Figure~\ref{fig:vdp_sim_results} illustrates the result of this iterative
-procedure. The potential is not uniform across the semiconductor sheet because
+Figure~\ref{fig:vdp_sim_results} in Section~\ref{subsec:current_driven_gvdp}
+illustrates the result of this iterative procedure. The potential is not uniform across the semiconductor sheet because
 the imposed contact potentials and insulating edges force the field lines to
 spread through the two-dimensional domain. Since the hole density is coupled to
 this potential through Equation~\eqref{eq:vdp_sim_compact_density}, the density
 also becomes spatially nonuniform and is enhanced near the current-carrying
 contacts. The model remains idealized: it uses constant material parameters,
-Boltzmann statistics, simplified contact boundary conditions, and no explicit
-vertical gate-stack electrostatics. It should therefore be interpreted as a
-visualization of the iterative electrostatic solution rather than a quantitative
-prediction of the experimental mobility or carrier concentration.
+% Boltzmann statistics, simplified contact boundary conditions, and no explicit
+% vertical gate-stack electrostatics. It should therefore be interpreted as a
+% visualization of the iterative lateral electrostatic solution rather than a
+% quantitative prediction of the experimental mobility, carrier concentration, or
+% vertical gate response.
 
 \end{appendix}

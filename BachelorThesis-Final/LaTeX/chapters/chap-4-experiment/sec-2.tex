@@ -4,7 +4,7 @@
 \begin{figure}[htbp]
 \centering
 \resizebox{0.8\textwidth}{!}{\input{figures/tikz/circuit-gvdP.tex}}
-\caption[Gated van der Pauw measurement circuit]{Gated van der Pauw measurement circuit used to extract the intrinsic sheet conductance. A constant current $I_\text{34}$ is driven between contacts 3 and 4 while the voltage $V_\text{34}$ is monitored. The transverse probe voltages $V_\text{14}$ and $V_\text{24}$ are measured with high-impedance voltmeters, and the gate branch applies $V_\text{G4}$ while monitoring the leakage current $I_\text{G4}$. Adapted from Ref.~\cite{Kersting2026FiguresCollection}.}
+\caption[Gated van der Pauw measurement circuit]{Gated van der Pauw measurement circuit used to extract the intrinsic sheet conductance. A constant current $I_\text{34}$ is driven between contacts 3 and 4 while the voltage $V_\text{34}$ is monitored. The transverse probe voltages $V_\text{14}$ and $V_\text{24}$ are measured with high-impedance voltmeters, and the gate branch applies $V_\text{G4}$ while monitoring the leakage current $I_\text{G4}$. Adapted from the figures in the internal laboratory archive.}
 \label{fig:gated_vdp_circuit}
 \end{figure}
 
@@ -15,18 +15,28 @@
 
 The gated van der Pauw measurement was used to separate the intrinsic sheet transport of the accumulated semiconductor film from the contact resistance of the injecting electrodes~\cite{Rolin2017GVDP,Lee2024GVDPIGZO}. A constant current $I_{34}$ is driven through the device, while the voltage probes measure the transverse van der Pauw voltage with negligible current draw. From the measured sheet conductance $\sigma$, the intrinsic mobility and threshold voltage are obtained from the linear gate-voltage dependence of the conductance,
 \begin{equation}
-\sigma = \mu C_\mathrm{i}\left(V_\mathrm{eff}-V_\mathrm{T,eff}\right),
+\sigma = \mu C_\mathrm{i}\left(V_\mathrm{eff}-V_\mathrm{T}\right),
 \qquad
 \mu=\frac{1}{C_\mathrm{i}}\frac{\mathrm{d}\sigma}{\mathrm{d}V_\mathrm{eff}},
 \qquad
 V_\mathrm{eff}=-(V_\text{G4}-V_\text{C}),
 \end{equation}
-where $C_\mathrm{i}=\SI{2}{\nano\farad}/\SI{32}{\milli\metre\squared}=\SI{6.25}{\nano\farad\per\centi\metre\squared}$ is the gate-insulator capacitance per unit area. The slope of the conductance fit gives the intrinsic mobility, while the extrapolated intercept gives the threshold voltage. 
+where the gate-insulator capacitance per unit area is obtained from the
+geometrical capacitance of the gate stack. For a parallel-plate approximation,
+$C=\varepsilon_0\varepsilon_\mathrm{r}A/d$, where $A$ is the overlap area of
+the gate and semiconductor, $d$ is the dielectric thickness, and
+$\varepsilon_\mathrm{r}$ is the effective relative permittivity of the dielectric
+stack. Using the measured total gate capacitance $C=\SI{2}{\nano\farad}$ and
+the device area $A=\SI{32}{\milli\metre\squared}$ gives
+$C_\mathrm{i}=C/A=\SI{2}{\nano\farad}/\SI{32}{\milli\metre\squared}
+=\SI{6.25}{\nano\farad\per\centi\metre\squared}$. The slope of the
+conductance fit gives the intrinsic mobility, while the extrapolated intercept
+gives the threshold voltage. 
 
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=\textwidth]{figures/gvdP}
-\caption[Gated van der Pauw extraction of intrinsic sheet conductance, mobility, and threshold voltage]{Gated van der Pauw extraction of the intrinsic sheet conductance, mobility, and threshold voltage for three applied currents, $I_{34}=\SI{-100}{\nano\ampere}$, $\SI{-200}{\nano\ampere}$, and $\SI{-300}{\nano\ampere}$. The bottom panels show the measured drain voltage $-V_{34}$ and van der Pauw voltage $-V_{12}$ as functions of gate voltage. Both voltages decrease as the negative gate bias increases, because the accumulated channel becomes more conductive. The top-left panel shows the resulting sheet conductance $\sigma$ as a function of effective gate voltage $-(V_\text{G4}-V_\text{C})$, and the top-right panel shows the mobility extracted from the conductance slope. The collapse of the data for different currents indicates linear-response behaviour and supports a current-independent extraction of both mobility and threshold voltage.}
+\caption[Gated van der Pauw extraction of intrinsic sheet conductance, mobility, and threshold voltage]{Gated van der Pauw extraction for $I_{34}=\SI{-100}{\nano\ampere}$, $\SI{-200}{\nano\ampere}$, and $\SI{-300}{\nano\ampere}$. The lower panels show the measured voltages, while the upper panels show the extracted sheet conductance $\sigma$ and mobility versus effective gate voltage. The overlap of the three current series indicates linear-response behaviour and supports a current-independent mobility extraction.}
 \label{fig:gated_vdp_intrinsic_mobility}
 \end{figure}
 
@@ -51,6 +61,86 @@ $-300$ & $3.10 \pm 0.02$ & $-10.11 \pm 0.13$ & $0.9991$ \\
 
 The fit results are listed in Table~\ref{tab:gated_vdp_fit_results}. The mobility values agree within their uncertainties for all three applied currents, giving an intrinsic mobility of approximately \SI{3.1}{\centi\metre\squared\per\volt\per\second}. The threshold voltages are also consistent, with values clustered around \SI{-10.2}{\volt}. The high coefficients of determination, $R^2>0.998$, confirm that the conductance is well described by a linear dependence on effective gate voltage over the fitted range. The small variation of both $\mu$ and $V_\text{T}$ with current demonstrates that the extraction is robust and that the gated van der Pauw geometry successfully suppresses contact-related artefacts in the mobility and threshold-voltage analysis. 
 
+
+
+
+\subsection{Extraction of Background Resistance}
+
+Figure~\ref{fig:gated_vdp_background_resistance} provides a complementary
+check of the gated van der Pauw data by looking at the full current path between
+contacts 3 and 4. In contrast to the sheet conductance extracted from the
+transverse voltage probes, $R_{34}$ still includes all voltage losses along the
+current-injection path. It is therefore a useful diagnostic for testing whether
+the chosen current bias changes the apparent resistance of the device.
+
+The total resistance decreases strongly as the effective gate voltage
+$V_\mathrm{eff}=-(V_\mathrm{G4}-V_\mathrm{C})$ increases. This trend is expected
+because a larger effective gate overdrive accumulates more holes at the
+semiconductor--dielectric interface and therefore lowers the channel part of the
+resistance. The three current series follow the same overall shape and remain
+close to one another over the full voltage range. At larger $V_\mathrm{eff}$,
+however, the $I_{34}=\SI{-300}{\nano\ampere}$ curve lies slightly above the two
+lower-current curves. Thus, the device behaves approximately Ohmically in this
+current range, but the full current path still shows a small current-dependent
+series contribution that is not visible in the four-terminal mobility extraction.
+
+The effective-gate-voltage dependence was fitted separately for each current
+with
+\begin{equation}
+    R_\mathrm{tot}=\left|\frac{V_{34}}{I_{34}}\right|
+    =R_\infty+\frac{A}{V_\mathrm{eff}-V_\mathrm{T}},
+    \label{eq:gated_vdp_background_fit}
+\end{equation}
+where $R_\infty$ represents the gate-independent background contribution,
+$A$ is an empirical fit coefficient, and
+$A/(V_\mathrm{eff}-V_\mathrm{T})$ describes the gate-dependent channel part.
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+$I_{34}$ (nA) & $R_\infty$ (\si{\mega\ohm}) & $R^2$ \\
+\hline
+$-100$ & $5.00 \pm 0.23$ & $0.9989$ \\
+$-200$ & $5.28 \pm 0.22$ & $0.9990$ \\
+$-300$ & $5.77 \pm 0.30$ & $0.9983$ \\
+\hline
+\end{tabular}
+\caption[Fit results from gated van der Pauw background-resistance analysis]{Fit
+results from the background-resistance analysis in
+Figure~\ref{fig:gated_vdp_background_resistance}, using
+Equation~\ref{eq:gated_vdp_background_fit}.}
+\label{tab:gated_vdp_background_fit_results}
+\end{table}
+
+The fitted values are listed in
+Table~\ref{tab:gated_vdp_background_fit_results}. All three fits have high
+coefficients of determination, $R^2>0.998$, showing that the inverse-overdrive
+form describes the measured resistance curves well. The extracted background
+resistance increases from $R_\infty=(5.00\pm0.23)\,\si{\mega\ohm}$ at
+$I_{34}=\SI{-100}{\nano\ampere}$ to
+$(5.77\pm0.30)\,\si{\mega\ohm}$ at
+$I_{34}=\SI{-300}{\nano\ampere}$. This modest increase indicates that the
+residual current path is not perfectly current independent, although all values
+remain close to the background resistance of approximately \SI{5.1}{\mega\ohm}
+obtained from the two-terminal linear-regime analysis in Subsection~4.1.2 and
+Figure~\ref{fig:ofet_resistance_linear_regime}. The agreement shows that both
+analyses identify a similar gate-independent series contribution. The
+four-terminal van der Pauw voltage probes therefore still provide the more
+direct measure of the accumulated sheet transport, whereas $R_{34}$ remains
+useful for identifying the background resistance in the injection path.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=1.1]{figures/resistance}
+\caption[Total resistance in the gated van der Pauw measurement]{Total
+resistance $R_{34}=|V_{34}/I_{34}|$ versus effective gate voltage
+$V_\mathrm{eff}=-(V_\mathrm{G4}-V_\mathrm{C})$ for three imposed currents. The
+resistance decreases with increasing $V_\mathrm{eff}$, and the three current
+series nearly overlap, with a small upward shift for the
+\SI{-300}{\nano\ampere} series at larger $V_\mathrm{eff}$.}
+\label{fig:gated_vdp_background_resistance}
+\end{figure}
 
 % \subsection{Temperature Analysis of Intrinsic Mobility}
 

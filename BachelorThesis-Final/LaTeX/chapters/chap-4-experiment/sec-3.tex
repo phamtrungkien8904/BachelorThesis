@@ -58,11 +58,20 @@ The OFET was also tested in a simple amplifier configuration to evaluate whether
 \begin{figure}[htbp]
 \centering
 \resizebox{0.65\textwidth}{!}{\input{figures/tikz/circuit-Amp.tex}}
-\caption[OFET amplification measurement circuit]{Circuit used to analyse the amplification properties of the OFET. The input signal is capacitively coupled to the gate through $C_i$, while the gate operating point is set by the bias divider $R_1$ and $R_2$. The drain is biased through $R_D$ at $V_\text{DD}=\SI{-30}{\volt}$, and the output signal is measured at the drain contact through $C_o$. The source branch contains $R_S$ and the bypass capacitor $C_S$, which set the source bias and influence the small-signal response.}
+\caption[OFET amplification measurement circuit]{Circuit used to analyse the amplification properties of the OFET. The input signal is capacitively coupled to the gate through $C_i=\SI{1}{\nano\farad}$, while the gate operating point is set by the bias divider with $R_2=\SI{100}{\kilo\ohm}$ and variable $R_1$. The drain is biased through $R_D$ at $V_\text{DD}=\SI{-30}{\volt}$, with $R_D$ varied from \SI{20}{\mega\ohm} to \SI{50}{\mega\ohm}. The output signal is measured at the drain contact through $C_o=\SI{1}{\nano\farad}$. The source branch contains $R_S$ and the bypass capacitor $C_S=\SI{1}{\nano\farad}$, which set the source bias and influence the small-signal response.}
 \label{fig:ofet_amplification_circuit}
 \end{figure}
 
-Figure~\ref{fig:ofet_amplification_circuit} shows the common-source amplifier circuit used for this test. The gate bias defines the operating point of the OFET, and the drain resistor $R_D$ converts a modulation of channel current into a voltage signal at the output. Because the device is a $p$-type transistor operated with a negative supply voltage, the sign convention differs from that of a standard $n$-channel amplifier, but the small-signal principle is the same: a change in gate voltage changes the channel current, and this current change produces a voltage drop across the load resistor~\cite{Neamen,Lundstrom2023Transistors}.
+Figure~\ref{fig:ofet_amplification_circuit} shows the common-source amplifier circuit used for this test. The gate bias defines the operating point of the OFET; it was adjusted with the variable resistor $R_1$ together with $R_2=\SI{100}{\kilo\ohm}$. The coupling and bypass capacitors were all \SI{1}{\nano\farad}. The drain resistor $R_D$, assembled from load-resistor combinations between \SI{20}{\mega\ohm} and \SI{50}{\mega\ohm}, converts a modulation of channel current into a voltage signal at the output. Because the device is a $p$-type transistor operated with a negative supply voltage, the sign convention differs from that of a standard $n$-channel amplifier, but the small-signal principle is the same: a change in gate voltage changes the channel current, and this current change produces a voltage drop across the load resistor~\cite{Neamen,Lundstrom2023Transistors}.
+
+
+
+The static amplifier characteristics are shown in Figure~\ref{fig:ofet_transfer_amplification}. At small input voltages the channel is weakly accumulated, while at large input voltages it is already close to strong accumulation. The strongest gate control therefore occurs in the intermediate range, where the output voltage changes most rapidly. The gain is negative, as expected for a common-source stage, and increases in magnitude when $R_D$ is raised from \SI{20}{\mega\ohm} to \SI{50}{\mega\ohm}. This larger load resistance also increases the influence of parasitic capacitances, so the highest-gain setting is not necessarily the fastest or most linear operating point.
+
+
+Figure~\ref{fig:ofet_amplifier_dynamic_response} shows the response to sinusoidal and square-wave inputs. The sinusoidal output is phase-inverted and larger than the input, confirming voltage amplification. The rounded waveform and the finite rise and fall times in the square-wave response show that the bandwidth is limited by the large load resistance, device and wiring capacitances, and trap-related relaxation~\cite{Bobbert2012OperationalStability,Hirwa2015TrapStates}. The output nevertheless follows the input reproducibly, so the OFET can operate as an active amplifying element under the chosen bias conditions.
+
+Together with the DLTS results, this measurement shows that the devices combine useful field-effect modulation with significant dynamic effects. Contact effects, trap states, and time-dependent charging must therefore be considered when extracting quantitative parameters or designing circuits based on these OFETs.
 
 \begin{figure}[htbp]
     \centering
@@ -72,16 +81,11 @@ Figure~\ref{fig:ofet_amplification_circuit} shows the common-source amplifier ci
     \label{fig:ofet_transfer_amplification}
 \end{figure}
 
-The static amplifier characteristics are shown in Figure~\ref{fig:ofet_transfer_amplification}. At small input voltages the channel is weakly accumulated, while at large input voltages it is already close to strong accumulation. The strongest gate control therefore occurs in the intermediate range, where the output voltage changes most rapidly. The gain is negative, as expected for a common-source stage, and increases in magnitude when $R_D$ is raised from \SI{20}{\mega\ohm} to \SI{50}{\mega\ohm}. This larger load resistance also increases the influence of parasitic capacitances, so the highest-gain setting is not necessarily the fastest or most linear operating point.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[scale=1]{figures/amp-response-sin}
     \includegraphics[scale=1]{figures/amp-response-square}
-    \caption[Dynamic response of the OFET amplifier]{Dynamic response of the OFET amplifier at $V_\text{DD}=\SI{-30}{\volt}$, $R_D=\SI{50}{\mega\ohm}$, and $f=\SI{10}{\kilo\hertz}$. The sinusoidal measurement demonstrates inverted voltage amplification, while the square-wave measurement shows the finite rise and fall times caused by the large circuit resistance, device capacitance, and trap-related relaxation.}
+    \caption[Dynamic response of the OFET amplifier]{Dynamic response of the OFET amplifier at $V_\text{DD}=\SI{-30}{\volt}$, $R_D=\SI{50}{\mega\ohm}$, $V_\mathrm{G,Q} = \SI{-18}{\volt}$, and $f=\SI{10}{\kilo\hertz}$. The sinusoidal measurement demonstrates inverted voltage amplification, while the square-wave measurement shows the finite rise and fall times caused by the large circuit resistance, device capacitance, and trap-related relaxation.}
     \label{fig:ofet_amplifier_dynamic_response}
 \end{figure}
-
-Figure~\ref{fig:ofet_amplifier_dynamic_response} shows the response to sinusoidal and square-wave inputs. The sinusoidal output is phase-inverted and larger than the input, confirming voltage amplification. The rounded waveform and the finite rise and fall times in the square-wave response show that the bandwidth is limited by the large load resistance, device and wiring capacitances, and trap-related relaxation~\cite{Bobbert2012OperationalStability,Hirwa2015TrapStates}. The output nevertheless follows the input reproducibly, so the OFET can operate as an active amplifying element under the chosen bias conditions.
-
-Together with the DLTS results, this measurement shows that the devices combine useful field-effect modulation with significant dynamic effects. Contact effects, trap states, and time-dependent charging must therefore be considered when extracting quantitative parameters or designing circuits based on these OFETs.

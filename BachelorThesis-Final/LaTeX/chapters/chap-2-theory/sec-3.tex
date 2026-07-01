@@ -80,7 +80,7 @@ positive magnitudes for the relevant terminal quantities,
     \qquad
     V_\mathrm{DS}=\left|V_\mathrm{D}-V_\mathrm{S}\right|,
     \qquad
-    I_\mathrm{D}=\left|I_\mathrm{D,phys}\right|.
+    I_\mathrm{D}=\left|I_\mathrm{D}\right|.
     \label{eq:pfet_magnitude_convention}
 \end{equation}
 The threshold voltage $V_\mathrm{T}$ is also written as a positive magnitude.
@@ -235,7 +235,7 @@ terminal voltage is divided between the channel and the contacts,
     R_\mathrm{tot}=R_\mathrm{C}+R_\mathrm{ch}.
     \label{eq:fet_total_resistance}
 \end{equation}
-A large or gate-dependent $R_\mathrm{C}$ changes the internal channel voltage and
+A large $R_\mathrm{C}$ could change the internal channel voltage and
 can distort the slope of the transfer curve. In OFETs, this can lead to mobility
 peaks or to a significant overestimation of the channel mobility
 ~\cite{Bittle2016MobilityOverestimation,Natali2012ChargeInjection}. This is one
@@ -247,10 +247,12 @@ Section~\ref{sec:gated_van_der_pauw_method}, is useful for the present work
 
 Besides switching, a FET can amplify small voltage variations. In a switching
 application, the transistor is driven between a high-resistance off state and a
-low-resistance on state. In an amplifier, by contrast, the device is biased at a
+low-resistance on state. In an amplifier, by contrast, the device is held at a
 stationary operating point and only small perturbations around this point are
-used. Figure~\ref{fig:fet_switch} illustrates the switching principle for a
-simple resistive-load circuit.
+used. The gate-voltage variation then modulates the channel current, and a load
+resistor converts this current variation into an output-voltage variation.
+Figure~\ref{fig:fet_switch} first illustrates the corresponding switching
+principle for a simple resistive-load circuit.
 
 \begin{figure}[htbp]
     \centering
@@ -312,12 +314,20 @@ width-to-length ratio, and bias current. In the ideal saturation model,
 $g_\mathrm{ds}=0$ and $r_\mathrm{o}$ is infinite. With channel-length modulation,
 $r_\mathrm{o}\approx 1/(\lambda I_\mathrm{D,Q})$.
 
-Figure~\ref{fig:fet_common_source_amplifier} shows a common-source amplifier. The
-resistors $R_1$ and $R_2$ set the gate bias, $R_\mathrm{D}$ converts drain-current
-variations into an output voltage, and $R_\mathrm{S}$ stabilizes the operating
-point. The coupling capacitors separate the DC bias from neighboring circuits. If
-the source-bypass capacitor acts as a short circuit for the signal frequency, the
-mid-band voltage gain is approximately
+Figure~\ref{fig:fet_common_source_amplifier} shows a common-source amplifier,
+which is the circuit principle used later for the OFET amplification
+measurement. The resistors $R_1$ and $R_2$ set the gate bias, $R_\mathrm{D}$
+converts drain-current variations into an output voltage, and $R_\mathrm{S}$
+stabilizes the operating point. The input and output coupling capacitors separate
+the DC bias from neighboring circuits, while the source-bypass capacitor can
+short-circuit $R_\mathrm{S}$ for the AC signal. The schematic is drawn with the
+usual $n$-channel polarity. For the $p$-channel OFETs investigated in this work,
+the physical supply and terminal polarities are reversed, but the small-signal
+relations have the same form when the positive voltage magnitudes of
+Equation~\ref{eq:pfet_magnitude_convention} are used.
+
+If the source-bypass capacitor acts as a short circuit for the signal frequency,
+the mid-band voltage gain is approximately
 \begin{equation}
     A_\mathrm{v}
     = \frac{v_\mathrm{out}}{v_\mathrm{in}}
@@ -325,8 +335,9 @@ mid-band voltage gain is approximately
     \left(R_\mathrm{D}\parallel r_\mathrm{o}\parallel R_\mathrm{L}\right).
     \label{eq:fet_common_source_gain}
 \end{equation}
-The minus sign denotes phase inversion. If $R_\mathrm{S}$ is not bypassed, source
-degeneration reduces the gain approximately to
+The minus sign denotes phase inversion between gate input and drain output. If
+$R_\mathrm{S}$ is not bypassed, source degeneration reduces the gain approximately
+to
 \begin{equation}
     A_\mathrm{v}
     \approx
@@ -335,8 +346,11 @@ degeneration reduces the gain approximately to
     {1+g_\mathrm{m}R_\mathrm{S}},
     \label{eq:fet_source_degenerated_gain}
 \end{equation}
-but improves bias stability and linearity. Because the gate is insulated, the
-low-frequency input resistance of an ideal FET is very high.
+but improves bias stability and linearity. In practice the effective load also
+contains the finite input resistance of the measuring instrument or following
+circuit. Because the gate is insulated, the low-frequency input resistance of an
+ideal FET is very high, so the gate-bias network mainly determines the input
+resistance of the amplifier stage.
 
 \begin{figure}[htbp]
     \centering
@@ -349,22 +363,30 @@ low-frequency input resistance of an ideal FET is very high.
     \label{fig:fet_common_source_amplifier}
 \end{figure}
 
-The useful bias point for voltage amplification lies where the large-signal
+The useful bias point for voltage amplification lies where the static amplifier
 transfer curve has a sufficiently steep and approximately linear slope, while the
 output voltage still has headroom for both positive and negative signal swings.
+Locally, the measured voltage gain is the slope
+\begin{equation}
+    A_\mathrm{v}(Q)
+    = \left.\frac{\partial V_\mathrm{out}}{\partial V_\mathrm{in}}
+      \right|_{Q}.
+    \label{eq:fet_static_gain_slope}
+\end{equation}
 This is illustrated in Figure~\ref{fig:fet_amplifier_transfer_gain}. Biasing too
 close to cut-off gives a small transconductance, whereas biasing too far into the
-linear regime reduces the output resistance and gain. A large input signal moves
-the device over a curved part of the transfer characteristic and therefore causes
-nonlinear distortion.
+strongly conducting regime leaves little output-voltage headroom and can reduce
+the small-signal gain. A large input signal moves the device over a curved part
+of the transfer characteristic and therefore causes nonlinear distortion. A
+larger $R_\mathrm{D}$ usually increases the magnitude of the gain, but it also
+narrows the useful bias range and increases the RC time constants of the circuit.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.48\textwidth]{figures/theo-amp-transfer}
     \hfill
     \includegraphics[width=0.48\textwidth]{figures/theo-amp-gain}
-    \caption[FET amplifier transfer characteristic and small-signal gain]{Example
-    of a resistively loaded FET amplifier. The left panel shows the static output
+    \caption[FET amplifier transfer characteristic and small-signal gain]{FET amplifier transfer characteristic and small-signal gain. The left panel shows the static output
     voltage as a function of gate bias. The local slope of this curve determines
     the voltage gain shown on the right. The gain is negative in the inverting
     common-source configuration and is largest in magnitude within the transition
@@ -372,19 +394,4 @@ nonlinear distortion.
     \label{fig:fet_amplifier_transfer_gain}
 \end{figure}
 
-At higher frequencies, the gain is reduced by the gate--source and gate--drain
-capacitances, wiring capacitances, contact resistance, and slow charging or
-trapping processes in the semiconductor. A useful estimate of the intrinsic
-current-gain bandwidth is the transition frequency
-\begin{equation}
-    f_\mathrm{T}
-    \approx \frac{g_\mathrm{m}}
-    {2\pi\left(C_\mathrm{GS}+C_\mathrm{GD}\right)}.
-    \label{eq:fet_transition_frequency}
-\end{equation}
-For OFETs, the experimentally observed bandwidth can be considerably lower than
-this estimate, because contacts, distributed channel resistance, and trapping
-introduce additional time constants~\cite{Sirringhaus2005DevicePhysics,Natali2012ChargeInjection}.
-The DC characteristics and the dynamic amplifier response therefore provide
-complementary information about charge accumulation, transport, and trapping in
-the investigated devices.
+
