@@ -16,8 +16,8 @@ plt.rcParams.update({
 plt.rcParams.update({
     # Figure settings
     'figure.dpi': 300,
-    'figure.figsize': (10/2.54, 6/2.54),  # 10x6 cm in inches (1 figure per line)
-    # 'figure.figsize': (8/2.54, 6/2.54),  # 10x6 cm in inches (2 figures per line)
+    # 'figure.figsize': (10/2.54, 6/2.54),  # 10x6 cm in inches (1 figure per line)
+    'figure.figsize': (8/2.54, 6/2.54),  # 10x6 cm in inches (2 figures per line)
     'figure.facecolor': 'white',
     'axes.facecolor': 'white',
     'axes.edgecolor': 'black',
