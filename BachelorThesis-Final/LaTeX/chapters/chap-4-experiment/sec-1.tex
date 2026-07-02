@@ -1,0 +1,70 @@
+\section{Current-Voltage Characteristics}
+
+Current-voltage ($I$--$V$) characteristics provide an initial assessment of the electrical quality and field-effect behaviour of the fabricated organic field-effect transistors (OFETs). The measurement configuration is shown schematically in Figure~\ref{fig:ofet_iv_circuit}. The voltage between contacts 3 and 4 is denoted by $V_{34}$, and the corresponding current is denoted by $I_{34}$. The gate voltage is applied between the gate electrode and contact 4 and is denoted by $V_\text{G4}$, while the gate leakage current is denoted by $I_\text{G4}$.
+
+\begin{figure}[htbp]
+\centering
+\resizebox{0.65\textwidth}{!}{\input{figures/tikz/circuit-IV.tex}}
+\caption[Circuit used for current-voltage characterization]{Circuit used for the current-voltage characterization of the OFET. The source--drain branch measures $V_{34}$ and $I_{34}$ between contacts 3 and 4, while the gate branch applies $V_\text{G4}$ and monitors the gate leakage current $I_\text{G4}$. Adapted from the figures in the internal laboratory archive.}
+\label{fig:ofet_iv_circuit}
+\end{figure}
+
+Because the devices operate as $p$-type channels, negative gate voltages accumulate holes at the semiconductor--dielectric interface~\cite{Sirringhaus2005DevicePhysics,Neamen}. The measured data are therefore plotted using the sign convention $-V_\text{G4}$, $-V_{34}$, and $-I_{34}$, so that increasing positive values on the axes correspond to stronger negative bias during the experiment. This convention also makes the transfer and output curves easier to compare, because larger plotted values indicate stronger hole accumulation or a larger hole current.
+
+The two most important representations are the transfer and output characteristics. The transfer characteristic shows how efficiently the gate voltage controls the channel current at fixed drain voltage, whereas the output characteristic shows how the current responds to the applied drain voltage at fixed gate voltage. Both measurements include contributions from the semiconductor channel, charge injection at the contacts, trap states, and possible bias-stress or hysteresis effects. Mobility values extracted directly from two-terminal OFET curves must therefore be interpreted as apparent mobilities, especially when contact resistance is not negligible~\cite{Natali2012ChargeInjection,Bittle2016MobilityOverestimation}. This limitation motivates the use of contact-independent methods, such as the gated van der Pauw method discussed in the following sections~\cite{Rolin2017GVDP}.
+
+The gate leakage current was monitored as an additional quality criterion using the gate branch shown in Figure~\ref{fig:ofet_iv_circuit}. This measurement verifies the integrity of the gate insulator and confirms that the measured source--drain current is not dominated by unintended current through the dielectric~\cite{Manda2018OrganicMISCapacitor}.
+
+
+\subsection{Insulator Leakage Current}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=1.1]{figures/leakage_PS9}
+\caption[Gate-insulator leakage current of the OFET]{Gate-insulator leakage current of the OFET, measured as $-I_\text{G4}$ while sweeping the gate voltage $-V_\text{G4}$. The leakage current remains in the nanoampere range over the full voltage sweep, well below the \SI{1}{\micro\ampere} limit. The isolated peak at low gate voltage is interpreted as a transient caused by a small dust particle, which is subsequently swept out by the applied electric field.}
+\label{fig:ofet_gate_leakage_current}
+\end{figure}
+
+Figure~\ref{fig:ofet_gate_leakage_current} shows the gate leakage current measured during the gate-voltage sweep. Apart from one pronounced transient peak at low gate voltage, the leakage remains below approximately \SI{1}{\nano\ampere} over the investigated voltage range. This value is several orders of magnitude below the limit of \SI{1}{\micro\ampere}, indicating that the gate dielectric is electrically insulating under the measurement conditions.
+
+The narrow peak is not followed by a sustained increase of leakage current. It is therefore most likely caused by a local, non-permanent defect such as a dust particle or surface residue near the gate-insulator interface. Once the electric field is increased, this contamination-related conduction path is swept out and the leakage current returns to the low background level. The absence of a persistent high-current state indicates that the feature does not correspond to dielectric breakdown. The leakage measurement therefore supports the validity of the subsequent transfer and output characteristics, because the measured drain current is dominated by channel transport rather than by parasitic gate leakage.
+
+\subsection{Transfer Characteristic}
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=1.1]{figures/transfer_PS9}
+\caption[Transfer characteristic of an organic FET]{Transfer characteristic of the organic FET, measured as drain current $-I_{34}$ as a function of gate voltage $-V_\text{G4}$ for different fixed drain voltages $V_{34}$.}
+\label{fig:ofet_transfer_characteristic}
+\end{figure}
+
+Figure~\ref{fig:ofet_transfer_characteristic} shows the drain current as a function of gate voltage at fixed drain voltages. In this measurement, the gate voltage in Figure~\ref{fig:ofet_iv_circuit} is swept while the voltage $V_{34}$ between contacts 3 and 4 is kept constant. At low $-V_\text{G4}$, the device is close to the off-state, because only a small density of holes is accumulated at the semiconductor--dielectric interface. As $-V_\text{G4}$ increases, the accumulated hole density rises and the channel becomes more conductive. The drain current therefore increases with gate-voltage overdrive, and the largest current is obtained at the largest drain bias, $V_{34}=\SI{-20}{\volt}$.
+
+The transfer curves do not show an abrupt ideal turn-on. Instead, the current increases gradually with gate voltage. This behaviour is typical of organic thin-film devices and can arise from trap filling, energetic disorder, interface states, and contact-related voltage drops~\cite{Bassler1993ChargeTransport,Sirringhaus2005DevicePhysics,Natali2012ChargeInjection}. A threshold voltage can, in principle, be estimated by extrapolating the approximately linear high-current region of the transfer curve. However, the resulting value should be treated with care, because the measured two-terminal current is not determined solely by the intrinsic channel. Contact resistance and charge injection can change the apparent slope of the transfer curve and therefore affect both the extracted mobility and the threshold voltage~\cite{Bittle2016MobilityOverestimation,Natali2012ChargeInjection}.
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=1.1]{figures/resistance_PS9}
+\caption[Drain--source resistance in the linear regime]{Drain--source resistance $R_{34}=V_{34}/I_{34}$ extracted from the low-drain-bias linear regime as a function of gate voltage. The resistance decreases as the negative gate bias accumulates a more conductive hole channel. The fitted background resistance represents the gate-independent part of the two-terminal resistance and is attributed mainly to injection/contact resistance associated with the Schottky barrier at the metal--organic semiconductor interface.}
+\label{fig:ofet_resistance_linear_regime}
+\end{figure}
+
+The same behaviour is shown in resistance form in Figure~\ref{fig:ofet_resistance_linear_regime}. The drain--source resistance is high near the off-state, where the accumulation layer is weak, and decreases strongly as the gate voltage becomes more negative. This decrease confirms that the gate voltage forms a progressively more conductive $p$-type channel between contacts 3 and 4.
+
+The fit in Figure~\ref{fig:ofet_resistance_linear_regime} does not extrapolate to zero resistance at high gate bias. Instead, it gives a finite background resistance. This offset indicates that the measured two-terminal resistance contains more than the gate-dependent channel resistance. A major contribution is expected from the metal--semiconductor contacts, where charge injection across a Schottky barrier adds a series resistance~\cite{Natali2012ChargeInjection,LaraBullejos2009InjectionContacts}. The resistance analysis therefore supports the interpretation of the transfer curve: the device shows clear field-effect behaviour, but quantitative parameters extracted from the two-terminal measurement include contact and injection effects as well as the intrinsic channel response.
+
+\subsection{Output Characteristic}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=1.1]{figures/output_PS9}
+\caption[Output characteristic of an organic FET]{Output characteristic of the organic FET, measured as drain current $-I_{34}$ as a function of drain voltage $-V_{34}$ for different fixed gate voltages $V_\text{G4}$.}
+\label{fig:ofet_output_characteristic}
+\end{figure}
+
+Figure~\ref{fig:ofet_output_characteristic} shows the drain current as a function of drain voltage for different fixed gate voltages. In this measurement, $V_\text{G4}$ is fixed and the drain voltage $V_{34}$ is swept. For $V_\text{G4}=\SI{-5}{\volt}$, the current remains close to zero, corresponding to a weakly accumulated or nearly off-state channel. For more negative gate voltages, the accumulated hole density increases and the output current becomes larger. The highest current is obtained at $V_\text{G4}=\SI{-20}{\volt}$.
+
+At small drain voltages, the current increases approximately linearly. This indicates that the device forms a continuous conducting path and that the contacts inject holes into the organic semiconductor. At larger drain voltages, the curves bend over and approach a saturation-like regime. In a field-effect transistor, this occurs because the local gate-voltage overdrive decreases along the channel towards the drain electrode~\cite{Neamen,Hu2010ModernSemiconductorDevices}. Once the channel near the drain becomes strongly depleted, the current no longer increases linearly with drain voltage.
+
+The output curves are smooth and ordered with gate voltage, which is a positive sign for the electrical stability of the device. Nevertheless, deviations from ideal transistor behaviour may still be present. In organic thin-film transistors, the shape of the output curves can be influenced by trap filling, field-dependent mobility, grain boundaries, and voltage drops at the metal--semiconductor contacts~\cite{Sirringhaus2005DevicePhysics,Darwish2020DriftDiffusionOFET,Natali2012ChargeInjection}. These effects are especially important when mobility is extracted from standard OFET equations, because the extracted value may describe the complete two-terminal device rather than the intrinsic semiconductor film.
+
+Overall, the transfer and output characteristics show that the fabricated device behaves as a $p$-type OFET and that the gate voltage effectively modulates the current between contacts 3 and 4. At the same time, the limited current level and the possible influence of contact resistance show why a four-terminal method is needed. The gated van der Pauw method used in the following sections reduces the influence of injecting contacts and allows a more reliable extraction of sheet conductance, mobility, and threshold voltage~\cite{Rolin2017GVDP,Lee2024GVDPIGZO}.
