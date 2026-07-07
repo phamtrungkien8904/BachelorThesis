@@ -1,0 +1,1459 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global/global}
+    \entry{Bruetting2005}{book}{}{}
+      \name{editor}{1}{}{%
+        {{hash=a5d14e2304b6a018e0d55b36fdb4697e}{%
+           family={Brütting},
+           familyi={B\bibinitperiod},
+           given={Wolfgang},
+           giveni={W\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Wiley-VCH Verlag GmbH \& Co. KGaA}%
+      }
+      \strng{namehash}{a5d14e2304b6a018e0d55b36fdb4697e}
+      \strng{fullhash}{a5d14e2304b6a018e0d55b36fdb4697e}
+      \strng{fullhashraw}{a5d14e2304b6a018e0d55b36fdb4697e}
+      \strng{bibnamehash}{a5d14e2304b6a018e0d55b36fdb4697e}
+      \strng{editorbibnamehash}{a5d14e2304b6a018e0d55b36fdb4697e}
+      \strng{editornamehash}{a5d14e2304b6a018e0d55b36fdb4697e}
+      \strng{editorfullhash}{a5d14e2304b6a018e0d55b36fdb4697e}
+      \strng{editorfullhashraw}{a5d14e2304b6a018e0d55b36fdb4697e}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{editor}
+      \field{labeltitlesource}{title}
+      \field{day}{9}
+      \field{edition}{1}
+      \field{isbn}{9783527405503}
+      \field{month}{5}
+      \field{title}{Physics of Organic Semiconductors}
+      \field{year}{2005}
+      \field{dateera}{ce}
+      \verb{doi}
+      \verb 10.1002/3527606637
+      \endverb
+    \endentry
+    \entry{Sirringhaus2005DevicePhysics}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=35e555955436128493e12a25b4ac4be3}{%
+           family={Sirringhaus},
+           familyi={S\bibinitperiod},
+           given={Henning},
+           giveni={H\bibinitperiod}}}%
+      }
+      \strng{namehash}{35e555955436128493e12a25b4ac4be3}
+      \strng{fullhash}{35e555955436128493e12a25b4ac4be3}
+      \strng{fullhashraw}{35e555955436128493e12a25b4ac4be3}
+      \strng{bibnamehash}{35e555955436128493e12a25b4ac4be3}
+      \strng{authorbibnamehash}{35e555955436128493e12a25b4ac4be3}
+      \strng{authornamehash}{35e555955436128493e12a25b4ac4be3}
+      \strng{authorfullhash}{35e555955436128493e12a25b4ac4be3}
+      \strng{authorfullhashraw}{35e555955436128493e12a25b4ac4be3}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Advanced Materials}
+      \field{number}{20}
+      \field{title}{Device Physics of Solution-Processed Organic Field-Effect Transistors}
+      \field{volume}{17}
+      \field{year}{2005}
+      \field{pages}{2411\bibrangedash 2425}
+      \range{pages}{15}
+      \verb{doi}
+      \verb 10.1002/adma.200501152
+      \endverb
+    \endentry
+    \entry{Natali2012ChargeInjection}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=048c3e9b0b52a67fbf0a6b50b7a18b8b}{%
+           family={Natali},
+           familyi={N\bibinitperiod},
+           given={Dario},
+           giveni={D\bibinitperiod}}}%
+        {{hash=51e7c590e214d4a1281daaa0eb4ea60e}{%
+           family={Caironi},
+           familyi={C\bibinitperiod},
+           given={Mario},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{f54b21f758ae270c5eef40ecbade7421}
+      \strng{fullhash}{f54b21f758ae270c5eef40ecbade7421}
+      \strng{fullhashraw}{f54b21f758ae270c5eef40ecbade7421}
+      \strng{bibnamehash}{f54b21f758ae270c5eef40ecbade7421}
+      \strng{authorbibnamehash}{f54b21f758ae270c5eef40ecbade7421}
+      \strng{authornamehash}{f54b21f758ae270c5eef40ecbade7421}
+      \strng{authorfullhash}{f54b21f758ae270c5eef40ecbade7421}
+      \strng{authorfullhashraw}{f54b21f758ae270c5eef40ecbade7421}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Advanced Materials}
+      \field{number}{11}
+      \field{title}{Charge injection in solution-processed organic field-effect transistors: Physics, models and characterization methods}
+      \field{volume}{24}
+      \field{year}{2012}
+      \field{dateera}{ce}
+      \field{pages}{1357\bibrangedash 1387}
+      \range{pages}{31}
+      \verb{doi}
+      \verb 10.1002/adma.201104206
+      \endverb
+    \endentry
+    \entry{Bittle2016MobilityOverestimation}{article}{}{}
+      \name{author}{5}{}{%
+        {{hash=41b4c136462975f1882d37ffcc531803}{%
+           family={Bittle},
+           familyi={B\bibinitperiod},
+           given={Emily\bibnamedelima G.},
+           giveni={E\bibinitperiod\bibinitdelim G\bibinitperiod}}}%
+        {{hash=7d1c82ec2c88c0a589c25596b0ffba2c}{%
+           family={Basham},
+           familyi={B\bibinitperiod},
+           given={James\bibnamedelima I.},
+           giveni={J\bibinitperiod\bibinitdelim I\bibinitperiod}}}%
+        {{hash=5ec67a10db88cd8d2ccbba51203d57e5}{%
+           family={Jackson},
+           familyi={J\bibinitperiod},
+           given={Thomas\bibnamedelima N.},
+           giveni={T\bibinitperiod\bibinitdelim N\bibinitperiod}}}%
+        {{hash=d95121f451f1a93118a19f0e127ec7ef}{%
+           family={Jurchescu},
+           familyi={J\bibinitperiod},
+           given={Oana\bibnamedelima D.},
+           giveni={O\bibinitperiod\bibinitdelim D\bibinitperiod}}}%
+        {{hash=ab4953cd35ee2a4b2bc2ffcf77339876}{%
+           family={Gundlach},
+           familyi={G\bibinitperiod},
+           given={David\bibnamedelima J.},
+           giveni={D\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+      }
+      \strng{namehash}{47502ac4ebd3ae67a44779a94f4db73a}
+      \strng{fullhash}{32e9695c5b2dc8d0fa9ef421fde6b0ae}
+      \strng{fullhashraw}{32e9695c5b2dc8d0fa9ef421fde6b0ae}
+      \strng{bibnamehash}{47502ac4ebd3ae67a44779a94f4db73a}
+      \strng{authorbibnamehash}{47502ac4ebd3ae67a44779a94f4db73a}
+      \strng{authornamehash}{47502ac4ebd3ae67a44779a94f4db73a}
+      \strng{authorfullhash}{32e9695c5b2dc8d0fa9ef421fde6b0ae}
+      \strng{authorfullhashraw}{32e9695c5b2dc8d0fa9ef421fde6b0ae}
+      \field{sortinit}{2}
+      \field{sortinithash}{8b555b3791beccb63322c22f3320aa9a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Nature Communications}
+      \field{title}{Mobility overestimation due to gated contacts in organic field-effect transistors}
+      \field{volume}{7}
+      \field{year}{2016}
+      \field{dateera}{ce}
+      \field{pages}{10908}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1038/ncomms10908
+      \endverb
+    \endentry
+    \entry{VanDerPauw1958}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=8c0321533be59af7ad2971df5cfff09f}{%
+           family={Pauw},
+           familyi={P\bibinitperiod},
+           given={L.\bibnamedelimi J.},
+           giveni={L\bibinitperiod\bibinitdelim J\bibinitperiod},
+           prefix={van\bibnamedelima der},
+           prefixi={v\bibinitperiod\bibinitdelim d\bibinitperiod}}}%
+      }
+      \strng{namehash}{8c0321533be59af7ad2971df5cfff09f}
+      \strng{fullhash}{8c0321533be59af7ad2971df5cfff09f}
+      \strng{fullhashraw}{8c0321533be59af7ad2971df5cfff09f}
+      \strng{bibnamehash}{8c0321533be59af7ad2971df5cfff09f}
+      \strng{authorbibnamehash}{8c0321533be59af7ad2971df5cfff09f}
+      \strng{authornamehash}{8c0321533be59af7ad2971df5cfff09f}
+      \strng{authorfullhash}{8c0321533be59af7ad2971df5cfff09f}
+      \strng{authorfullhashraw}{8c0321533be59af7ad2971df5cfff09f}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Philips Technical Review}
+      \field{number}{8}
+      \field{title}{A Method of Measuring the Resistivity and Hall Coefficient on Lamellae of Arbitrary Shape}
+      \field{volume}{20}
+      \field{year}{1958}
+      \field{dateera}{ce}
+      \field{pages}{220\bibrangedash 224}
+      \range{pages}{5}
+    \endentry
+    \entry{Rolin2017GVDP}{article}{}{}
+      \name{author}{6}{}{%
+        {{hash=11162c86b6346b8a56820bdc40f6b1a1}{%
+           family={Rolin},
+           familyi={R\bibinitperiod},
+           given={Cedric},
+           giveni={C\bibinitperiod}}}%
+        {{hash=17be0aadae0e7b1aa3260ee8444a8c19}{%
+           family={Kang},
+           familyi={K\bibinitperiod},
+           given={Enpu},
+           giveni={E\bibinitperiod}}}%
+        {{hash=19f2b2b5bfe3ec70b91b940a6cd1f0f3}{%
+           family={Lee},
+           familyi={L\bibinitperiod},
+           given={Jeong-Hwan},
+           giveni={J\bibinithyphendelim H\bibinitperiod}}}%
+        {{hash=f620c5fe7b8085d0fc9c184dbb172808}{%
+           family={Borghs},
+           familyi={B\bibinitperiod},
+           given={Gustaaf},
+           giveni={G\bibinitperiod}}}%
+        {{hash=91a4b0d599ae7047b6f9339f3c7c6a5a}{%
+           family={Heremans},
+           familyi={H\bibinitperiod},
+           given={Paul},
+           giveni={P\bibinitperiod}}}%
+        {{hash=9d8cc4ab1171e27f727b209a07777c7a}{%
+           family={Genoe},
+           familyi={G\bibinitperiod},
+           given={Jan},
+           giveni={J\bibinitperiod}}}%
+      }
+      \strng{namehash}{d3c6882644aa8504e34c8ee0e6745b4e}
+      \strng{fullhash}{5d28df4d075d23df237aa4ea7c76a1d2}
+      \strng{fullhashraw}{5d28df4d075d23df237aa4ea7c76a1d2}
+      \strng{bibnamehash}{d3c6882644aa8504e34c8ee0e6745b4e}
+      \strng{authorbibnamehash}{d3c6882644aa8504e34c8ee0e6745b4e}
+      \strng{authornamehash}{d3c6882644aa8504e34c8ee0e6745b4e}
+      \strng{authorfullhash}{5d28df4d075d23df237aa4ea7c76a1d2}
+      \strng{authorfullhashraw}{5d28df4d075d23df237aa4ea7c76a1d2}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Nature Communications}
+      \field{title}{Charge carrier mobility in thin films of organic semiconductors by the gated van der Pauw method}
+      \field{volume}{8}
+      \field{year}{2017}
+      \field{dateera}{ce}
+      \field{pages}{14975}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1038/ncomms14975
+      \endverb
+    \endentry
+    \entry{Bonafe2021EgVDP}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=a3e3bfca0b8db689b2bd17eb5c7c7e3e}{%
+           family={Bonafè},
+           familyi={B\bibinitperiod},
+           given={Filippo},
+           giveni={F\bibinitperiod}}}%
+        {{hash=34cfb632139bba1bde05801bfaee5ccf}{%
+           family={Decataldo},
+           familyi={D\bibinitperiod},
+           given={Francesco},
+           giveni={F\bibinitperiod}}}%
+        {{hash=ddecc3b7e54939609da3cc08d4c96ff5}{%
+           family={Fraboni},
+           familyi={F\bibinitperiod},
+           given={Beatrice},
+           giveni={B\bibinitperiod}}}%
+        {{hash=7ae0afddd6f3aefea13d6cc78e3ad4aa}{%
+           family={Cramer},
+           familyi={C\bibinitperiod},
+           given={Tobias},
+           giveni={T\bibinitperiod}}}%
+      }
+      \strng{namehash}{f9bb3237e53567edba2f18d63881918f}
+      \strng{fullhash}{cc4e4e92230a6d183be2cffa1a44f728}
+      \strng{fullhashraw}{cc4e4e92230a6d183be2cffa1a44f728}
+      \strng{bibnamehash}{f9bb3237e53567edba2f18d63881918f}
+      \strng{authorbibnamehash}{f9bb3237e53567edba2f18d63881918f}
+      \strng{authornamehash}{f9bb3237e53567edba2f18d63881918f}
+      \strng{authorfullhash}{cc4e4e92230a6d183be2cffa1a44f728}
+      \strng{authorfullhashraw}{cc4e4e92230a6d183be2cffa1a44f728}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Advanced Electronic Materials}
+      \field{number}{7}
+      \field{title}{Charge carrier mobility in organic mixed ionic--electronic conductors by the electrolyte-gated van der Pauw method}
+      \field{volume}{7}
+      \field{year}{2021}
+      \field{dateera}{ce}
+      \field{pages}{2100086}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1002/aelm.202100086
+      \endverb
+    \endentry
+    \entry{Lee2024GVDPIGZO}{article}{}{}
+      \name{author}{7}{}{%
+        {{hash=ab7fc83c4f62a810ed909bdd4fe49743}{%
+           family={Lee},
+           familyi={L\bibinitperiod},
+           given={Woo-Seok},
+           giveni={W\bibinithyphendelim S\bibinitperiod}}}%
+        {{hash=e9fd86a8a2ac27e648bcaa3454a6db01}{%
+           family={Lee},
+           familyi={L\bibinitperiod},
+           given={Jaeho},
+           giveni={J\bibinitperiod}}}%
+        {{hash=c77aa027103fef730a613d82c8dedc5f}{%
+           family={Katware},
+           familyi={K\bibinitperiod},
+           given={Amarja},
+           giveni={A\bibinitperiod}}}%
+        {{hash=0c6257bb1b94e5050275658d11d86b75}{%
+           family={Park},
+           familyi={P\bibinitperiod},
+           given={Noh-Hwal},
+           giveni={N\bibinithyphendelim H\bibinitperiod}}}%
+        {{hash=b2986965fc22bb469d72e6f126570f6a}{%
+           family={Kim},
+           familyi={K\bibinitperiod},
+           given={Jiyoung},
+           giveni={J\bibinitperiod}}}%
+        {{hash=ce223b5c568cbde393e9ea3ffec20b1e}{%
+           family={Choi},
+           familyi={C\bibinitperiod},
+           given={Rino},
+           giveni={R\bibinitperiod}}}%
+        {{hash=19f2b2b5bfe3ec70b91b940a6cd1f0f3}{%
+           family={Lee},
+           familyi={L\bibinitperiod},
+           given={Jeong-Hwan},
+           giveni={J\bibinithyphendelim H\bibinitperiod}}}%
+      }
+      \strng{namehash}{4f43b437a6ffd5d41b420edd28de4f2b}
+      \strng{fullhash}{d27fdc6a61d862d277c48c5bbd4c753f}
+      \strng{fullhashraw}{d27fdc6a61d862d277c48c5bbd4c753f}
+      \strng{bibnamehash}{4f43b437a6ffd5d41b420edd28de4f2b}
+      \strng{authorbibnamehash}{4f43b437a6ffd5d41b420edd28de4f2b}
+      \strng{authornamehash}{4f43b437a6ffd5d41b420edd28de4f2b}
+      \strng{authorfullhash}{d27fdc6a61d862d277c48c5bbd4c753f}
+      \strng{authorfullhashraw}{d27fdc6a61d862d277c48c5bbd4c753f}
+      \field{extraname}{1}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{ACS Applied Materials \& Interfaces}
+      \field{title}{Addressing mobility overestimation in short-channel {IGZO} {TFTs} using the gated van der Pauw method}
+      \field{volume}{16}
+      \field{year}{2024}
+      \field{dateera}{ce}
+      \field{pages}{63778\bibrangedash 63785}
+      \range{pages}{8}
+      \verb{doi}
+      \verb 10.1021/acsami.4c14405
+      \endverb
+    \endentry
+    \entry{Lee2025VoltageDrivenGVDP}{article}{}{}
+      \name{author}{6}{}{%
+        {{hash=ab7fc83c4f62a810ed909bdd4fe49743}{%
+           family={Lee},
+           familyi={L\bibinitperiod},
+           given={Woo-Seok},
+           giveni={W\bibinithyphendelim S\bibinitperiod}}}%
+        {{hash=3c37f7ee48308a6ffa7ed356b11d373c}{%
+           family={Ali},
+           familyi={A\bibinitperiod},
+           given={Arqum},
+           giveni={A\bibinitperiod}}}%
+        {{hash=e9fd86a8a2ac27e648bcaa3454a6db01}{%
+           family={Lee},
+           familyi={L\bibinitperiod},
+           given={Jaeho},
+           giveni={J\bibinitperiod}}}%
+        {{hash=b2986965fc22bb469d72e6f126570f6a}{%
+           family={Kim},
+           familyi={K\bibinitperiod},
+           given={Jiyoung},
+           giveni={J\bibinitperiod}}}%
+        {{hash=ce223b5c568cbde393e9ea3ffec20b1e}{%
+           family={Choi},
+           familyi={C\bibinitperiod},
+           given={Rino},
+           giveni={R\bibinitperiod}}}%
+        {{hash=19f2b2b5bfe3ec70b91b940a6cd1f0f3}{%
+           family={Lee},
+           familyi={L\bibinitperiod},
+           given={Jeong-Hwan},
+           giveni={J\bibinithyphendelim H\bibinitperiod}}}%
+      }
+      \strng{namehash}{4f43b437a6ffd5d41b420edd28de4f2b}
+      \strng{fullhash}{c7442bab6aa4b7981fbd6111e5cc2d72}
+      \strng{fullhashraw}{c7442bab6aa4b7981fbd6111e5cc2d72}
+      \strng{bibnamehash}{4f43b437a6ffd5d41b420edd28de4f2b}
+      \strng{authorbibnamehash}{4f43b437a6ffd5d41b420edd28de4f2b}
+      \strng{authornamehash}{4f43b437a6ffd5d41b420edd28de4f2b}
+      \strng{authorfullhash}{c7442bab6aa4b7981fbd6111e5cc2d72}
+      \strng{authorfullhashraw}{c7442bab6aa4b7981fbd6111e5cc2d72}
+      \field{extraname}{2}
+      \field{sortinit}{7}
+      \field{sortinithash}{108d0be1b1bee9773a1173443802c0a3}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Materials Today Physics}
+      \field{title}{Voltage-driven gated van der Pauw method for accurate channel and contact resistance extraction in oxide thin-film transistors}
+      \field{volume}{58}
+      \field{year}{2025}
+      \field{dateera}{ce}
+      \field{pages}{101880}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1016/j.mtphys.2025.101880
+      \endverb
+    \endentry
+    \entry{Hirwa2015TrapStates}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=f3ee385e8da4d2e28654aa49f98e5f7e}{%
+           family={Hirwa},
+           familyi={H\bibinitperiod},
+           given={Hippolyte},
+           giveni={H\bibinitperiod}}}%
+        {{hash=4b221fe70acd492f1dd88f7d100857a3}{%
+           family={Wagner},
+           familyi={W\bibinitperiod},
+           given={Veit},
+           giveni={V\bibinitperiod}}}%
+      }
+      \strng{namehash}{e15d18df4ae093a2f609ec10e1ff2c4d}
+      \strng{fullhash}{e15d18df4ae093a2f609ec10e1ff2c4d}
+      \strng{fullhashraw}{e15d18df4ae093a2f609ec10e1ff2c4d}
+      \strng{bibnamehash}{e15d18df4ae093a2f609ec10e1ff2c4d}
+      \strng{authorbibnamehash}{e15d18df4ae093a2f609ec10e1ff2c4d}
+      \strng{authornamehash}{e15d18df4ae093a2f609ec10e1ff2c4d}
+      \strng{authorfullhash}{e15d18df4ae093a2f609ec10e1ff2c4d}
+      \strng{authorfullhashraw}{e15d18df4ae093a2f609ec10e1ff2c4d}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Organic Electronics}
+      \field{title}{New insights on trap states in organic semiconductors applying an illumination-free transient current method}
+      \field{volume}{25}
+      \field{year}{2015}
+      \field{dateera}{ce}
+      \field{pages}{112\bibrangedash 120}
+      \range{pages}{9}
+      \verb{doi}
+      \verb 10.1016/j.orgel.2015.06.025
+      \endverb
+    \endentry
+    \entry{Bobbert2012OperationalStability}{article}{}{}
+      \name{author}{5}{}{%
+        {{hash=de482a2a1610f2a5526fd691f859e52c}{%
+           family={Bobbert},
+           familyi={B\bibinitperiod},
+           given={Peter\bibnamedelima A.},
+           giveni={P\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=6bdea21e7182e30e59bc4e42d4a6378a}{%
+           family={Sharma},
+           familyi={S\bibinitperiod},
+           given={Abhinav},
+           giveni={A\bibinitperiod}}}%
+        {{hash=d93c3d17091555ee672a58a9fec3b996}{%
+           family={Mathijssen},
+           familyi={M\bibinitperiod},
+           given={Simon\bibnamedelimb G.\bibnamedelimi J.},
+           giveni={S\bibinitperiod\bibinitdelim G\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=9d70380fcfcd808966f00db5586c6b03}{%
+           family={Kemerink},
+           familyi={K\bibinitperiod},
+           given={Martijn},
+           giveni={M\bibinitperiod}}}%
+        {{hash=8fb51e561615632883d356098ee41c45}{%
+           family={Leeuw},
+           familyi={L\bibinitperiod},
+           given={Dago\bibnamedelima M.},
+           giveni={D\bibinitperiod\bibinitdelim M\bibinitperiod},
+           prefix={de},
+           prefixi={d\bibinitperiod}}}%
+      }
+      \strng{namehash}{4b6928f1d12ed76725e3473752de5040}
+      \strng{fullhash}{79dda234241df81799d2591650f567b0}
+      \strng{fullhashraw}{79dda234241df81799d2591650f567b0}
+      \strng{bibnamehash}{4b6928f1d12ed76725e3473752de5040}
+      \strng{authorbibnamehash}{4b6928f1d12ed76725e3473752de5040}
+      \strng{authornamehash}{4b6928f1d12ed76725e3473752de5040}
+      \strng{authorfullhash}{79dda234241df81799d2591650f567b0}
+      \strng{authorfullhashraw}{79dda234241df81799d2591650f567b0}
+      \field{sortinit}{8}
+      \field{sortinithash}{a231b008ebf0ecbe0b4d96dcc159445f}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Advanced Materials}
+      \field{number}{9}
+      \field{title}{Operational stability of organic field-effect transistors}
+      \field{volume}{24}
+      \field{year}{2012}
+      \field{dateera}{ce}
+      \field{pages}{1146\bibrangedash 1158}
+      \range{pages}{13}
+      \verb{doi}
+      \verb 10.1002/adma.201104580
+      \endverb
+    \endentry
+    \entry{Kittel2004}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=2c6d8b1aea5118299879670708080fe1}{%
+           family={Kittel},
+           familyi={K\bibinitperiod},
+           given={Charles},
+           giveni={C\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Wiley}%
+      }
+      \strng{namehash}{2c6d8b1aea5118299879670708080fe1}
+      \strng{fullhash}{2c6d8b1aea5118299879670708080fe1}
+      \strng{fullhashraw}{2c6d8b1aea5118299879670708080fe1}
+      \strng{bibnamehash}{2c6d8b1aea5118299879670708080fe1}
+      \strng{authorbibnamehash}{2c6d8b1aea5118299879670708080fe1}
+      \strng{authornamehash}{2c6d8b1aea5118299879670708080fe1}
+      \strng{authorfullhash}{2c6d8b1aea5118299879670708080fe1}
+      \strng{authorfullhashraw}{2c6d8b1aea5118299879670708080fe1}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{8}
+      \field{isbn}{9780471415268}
+      \field{title}{Introduction to Solid State Physics}
+      \field{year}{2004}
+      \field{dateera}{ce}
+    \endentry
+    \entry{Neamen}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=ba23b5b50e91c8ffed7d3ba41e95ef9e}{%
+           family={Neamen},
+           familyi={N\bibinitperiod},
+           given={Donald\bibnamedelima A.},
+           giveni={D\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {New York, NY}%
+      }
+      \list{publisher}{1}{%
+        {McGraw-Hill}%
+      }
+      \strng{namehash}{ba23b5b50e91c8ffed7d3ba41e95ef9e}
+      \strng{fullhash}{ba23b5b50e91c8ffed7d3ba41e95ef9e}
+      \strng{fullhashraw}{ba23b5b50e91c8ffed7d3ba41e95ef9e}
+      \strng{bibnamehash}{ba23b5b50e91c8ffed7d3ba41e95ef9e}
+      \strng{authorbibnamehash}{ba23b5b50e91c8ffed7d3ba41e95ef9e}
+      \strng{authornamehash}{ba23b5b50e91c8ffed7d3ba41e95ef9e}
+      \strng{authorfullhash}{ba23b5b50e91c8ffed7d3ba41e95ef9e}
+      \strng{authorfullhashraw}{ba23b5b50e91c8ffed7d3ba41e95ef9e}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{3}
+      \field{isbn}{978-0-07-232107-4}
+      \field{title}{Semiconductor Physics and Devices}
+      \field{year}{2008}
+      \field{dateera}{ce}
+    \endentry
+    \entry{ElKareh2015RectifyingOhmicContacts}{inbook}{}{}
+      \name{author}{2}{}{%
+        {{hash=7b9f0717c4af1d1d544415f7593b3093}{%
+           family={El-Kareh},
+           familyi={E\bibinithyphendelim K\bibinitperiod},
+           given={Badih},
+           giveni={B\bibinitperiod}}}%
+        {{hash=7970f86f2242b1c823ec464f7ee69ac2}{%
+           family={Hutter},
+           familyi={H\bibinitperiod},
+           given={Lou\bibnamedelima N.},
+           giveni={L\bibinitperiod\bibinitdelim N\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {New York}%
+      }
+      \list{publisher}{1}{%
+        {Springer}%
+      }
+      \strng{namehash}{3724eb9e174b53f84df99becfcfa4031}
+      \strng{fullhash}{3724eb9e174b53f84df99becfcfa4031}
+      \strng{fullhashraw}{3724eb9e174b53f84df99becfcfa4031}
+      \strng{bibnamehash}{3724eb9e174b53f84df99becfcfa4031}
+      \strng{authorbibnamehash}{3724eb9e174b53f84df99becfcfa4031}
+      \strng{authornamehash}{3724eb9e174b53f84df99becfcfa4031}
+      \strng{authorfullhash}{3724eb9e174b53f84df99becfcfa4031}
+      \strng{authorfullhashraw}{3724eb9e174b53f84df99becfcfa4031}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Silicon Analog Components: Device Design, Process Integration, Characterization, and Reliability}
+      \field{isbn}{978-1-4939-2751-7}
+      \field{title}{Rectifying and Ohmic Contacts}
+      \field{year}{2015}
+      \field{dateera}{ce}
+      \field{pages}{111\bibrangedash 146}
+      \range{pages}{36}
+    \endentry
+    \entry{Michaelson1977WorkFunctionElements}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=b77fcb3e2dfdc332050bf20682fb3cfc}{%
+           family={Michaelson},
+           familyi={M\bibinitperiod},
+           given={Herbert\bibnamedelima B.},
+           giveni={H\bibinitperiod\bibinitdelim B\bibinitperiod}}}%
+      }
+      \strng{namehash}{b77fcb3e2dfdc332050bf20682fb3cfc}
+      \strng{fullhash}{b77fcb3e2dfdc332050bf20682fb3cfc}
+      \strng{fullhashraw}{b77fcb3e2dfdc332050bf20682fb3cfc}
+      \strng{bibnamehash}{b77fcb3e2dfdc332050bf20682fb3cfc}
+      \strng{authorbibnamehash}{b77fcb3e2dfdc332050bf20682fb3cfc}
+      \strng{authornamehash}{b77fcb3e2dfdc332050bf20682fb3cfc}
+      \strng{authorfullhash}{b77fcb3e2dfdc332050bf20682fb3cfc}
+      \strng{authorfullhashraw}{b77fcb3e2dfdc332050bf20682fb3cfc}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Applied Physics}
+      \field{number}{11}
+      \field{title}{The work function of the elements and its periodicity}
+      \field{volume}{48}
+      \field{year}{1977}
+      \field{pages}{4729\bibrangedash 4733}
+      \range{pages}{5}
+      \verb{doi}
+      \verb 10.1063/1.323539
+      \endverb
+    \endentry
+    \entry{Wang2017LowVoltageC8BTBT}{article}{}{}
+      \name{author}{12}{}{%
+        {{hash=e1d2ef6f8ce4ae05ed8cd56a16c70b99}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Qijing},
+           giveni={Q\bibinitperiod}}}%
+        {{hash=6f29f2a2745ada7581393353111e3c07}{%
+           family={Jiang},
+           familyi={J\bibinitperiod},
+           given={Sai},
+           giveni={S\bibinitperiod}}}%
+        {{hash=a0cd015dbb722e4ecbba9337481684b6}{%
+           family={Qian},
+           familyi={Q\bibinitperiod},
+           given={Jun},
+           giveni={J\bibinitperiod}}}%
+        {{hash=d369dc9fb63d777180c9182aac13f944}{%
+           family={Song},
+           familyi={S\bibinitperiod},
+           given={Lei},
+           giveni={L\bibinitperiod}}}%
+        {{hash=f4a4cbf770add19c206827116c68732e}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Lei},
+           giveni={L\bibinitperiod}}}%
+        {{hash=7c7b958a3eaaacfd3bf99dc47518d3b5}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Yujia},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=a56af66ec399fd8ca9e5ccca445915ad}{%
+           family={Zhang},
+           familyi={Z\bibinitperiod},
+           given={Yuhan},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=b2eccb185095fccfeb40fdffd8b2105f}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Yu},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=3faba9f811e536a7d268c4e4b066c53c}{%
+           family={Wang},
+           familyi={W\bibinitperiod},
+           given={Xinran},
+           giveni={X\bibinitperiod}}}%
+        {{hash=ade05bacd3ec25a70865057b0bd3d588}{%
+           family={Shi},
+           familyi={S\bibinitperiod},
+           given={Yi},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=4436ae47b372e5d5e0c63cd5a461d15c}{%
+           family={Zheng},
+           familyi={Z\bibinitperiod},
+           given={Youdou},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=28aa5e4b66ee78162017f27b0b9d360b}{%
+           family={Li},
+           familyi={L\bibinitperiod},
+           given={Yun},
+           giveni={Y\bibinitperiod}}}%
+      }
+      \strng{namehash}{bdd8935d5c635bbc4b6088edf99fb6a5}
+      \strng{fullhash}{73608b02248873223233f0a4823525c7}
+      \strng{fullhashraw}{73608b02248873223233f0a4823525c7}
+      \strng{bibnamehash}{bdd8935d5c635bbc4b6088edf99fb6a5}
+      \strng{authorbibnamehash}{bdd8935d5c635bbc4b6088edf99fb6a5}
+      \strng{authornamehash}{bdd8935d5c635bbc4b6088edf99fb6a5}
+      \strng{authorfullhash}{73608b02248873223233f0a4823525c7}
+      \strng{authorfullhashraw}{73608b02248873223233f0a4823525c7}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Scientific Reports}
+      \field{title}{Low-voltage, High-performance Organic Field-Effect Transistors Based on 2D Crystalline Molecular Semiconductors}
+      \field{volume}{7}
+      \field{year}{2017}
+      \field{pages}{7830}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1038/s41598-017-08280-8
+      \endverb
+    \endentry
+    \entry{Greiner2013ThinFilmMetalOxides}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=ec360fb56a7e2875af3ca7854a3051f5}{%
+           family={Greiner},
+           familyi={G\bibinitperiod},
+           given={Mark\bibnamedelima T.},
+           giveni={M\bibinitperiod\bibinitdelim T\bibinitperiod}}}%
+        {{hash=1899fe5699148d8acf42c99425a6fa59}{%
+           family={Lu},
+           familyi={L\bibinitperiod},
+           given={Zheng-Hong},
+           giveni={Z\bibinithyphendelim H\bibinitperiod}}}%
+      }
+      \strng{namehash}{671d38d71e4dae6956a88d895de8e7ad}
+      \strng{fullhash}{671d38d71e4dae6956a88d895de8e7ad}
+      \strng{fullhashraw}{671d38d71e4dae6956a88d895de8e7ad}
+      \strng{bibnamehash}{671d38d71e4dae6956a88d895de8e7ad}
+      \strng{authorbibnamehash}{671d38d71e4dae6956a88d895de8e7ad}
+      \strng{authornamehash}{671d38d71e4dae6956a88d895de8e7ad}
+      \strng{authorfullhash}{671d38d71e4dae6956a88d895de8e7ad}
+      \strng{authorfullhashraw}{671d38d71e4dae6956a88d895de8e7ad}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{NPG Asia Materials}
+      \field{title}{Thin-film metal oxides in organic semiconductor devices: their electronic structures, work functions and interfaces}
+      \field{volume}{5}
+      \field{year}{2013}
+      \field{pages}{e55}
+      \range{pages}{-1}
+      \verb{doi}
+      \verb 10.1038/am.2013.29
+      \endverb
+    \endentry
+    \entry{Ablat2019OxideMetalBilayerElectrodes}{article}{}{}
+      \name{author}{6}{}{%
+        {{hash=4414aebc451e4a601e7caf79278cea6c}{%
+           family={Ablat},
+           familyi={A\bibinitperiod},
+           given={Abduleziz},
+           giveni={A\bibinitperiod}}}%
+        {{hash=3cbf64600248074bfb299f3295c0d562}{%
+           family={Kyndiah},
+           familyi={K\bibinitperiod},
+           given={Adrica},
+           giveni={A\bibinitperiod}}}%
+        {{hash=8bbc01b72e14b2ff016fef39f858fcb3}{%
+           family={Houin},
+           familyi={H\bibinitperiod},
+           given={Geoffroy},
+           giveni={G\bibinitperiod}}}%
+        {{hash=59a51848d65b7ad044514943d80095ce}{%
+           family={Alic},
+           familyi={A\bibinitperiod},
+           given={Tugbahan\bibnamedelima Yilmaz},
+           giveni={T\bibinitperiod\bibinitdelim Y\bibinitperiod}}}%
+        {{hash=388b88c92916648724e557d7df9cc230}{%
+           family={Hirsch},
+           familyi={H\bibinitperiod},
+           given={Lionel},
+           giveni={L\bibinitperiod}}}%
+        {{hash=811ed8c36972cdd98f7db3f28b83288e}{%
+           family={Abbas},
+           familyi={A\bibinitperiod},
+           given={Mamatimin},
+           giveni={M\bibinitperiod}}}%
+      }
+      \strng{namehash}{50d61191ddc0d1a2bea62daa3e506b75}
+      \strng{fullhash}{b130e4c8b8569568441e32c7ec686a08}
+      \strng{fullhashraw}{b130e4c8b8569568441e32c7ec686a08}
+      \strng{bibnamehash}{50d61191ddc0d1a2bea62daa3e506b75}
+      \strng{authorbibnamehash}{50d61191ddc0d1a2bea62daa3e506b75}
+      \strng{authornamehash}{50d61191ddc0d1a2bea62daa3e506b75}
+      \strng{authorfullhash}{b130e4c8b8569568441e32c7ec686a08}
+      \strng{authorfullhashraw}{b130e4c8b8569568441e32c7ec686a08}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Scientific Reports}
+      \field{title}{Role of Oxide/Metal Bilayer Electrodes in Solution Processed Organic Field Effect Transistors}
+      \field{volume}{9}
+      \field{year}{2019}
+      \field{pages}{6685}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1038/s41598-019-43237-z
+      \endverb
+    \endentry
+    \entry{Hu2010MOSCapacitor}{inbook}{}{}
+      \name{author}{1}{}{%
+        {{hash=3b9ee1f721743a91bf5234a00e9ea352}{%
+           family={Hu},
+           familyi={H\bibinitperiod},
+           given={Chenming\bibnamedelima C.},
+           giveni={C\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Upper Saddle River, NJ}%
+      }
+      \list{publisher}{1}{%
+        {Prentice Hall}%
+      }
+      \strng{namehash}{3b9ee1f721743a91bf5234a00e9ea352}
+      \strng{fullhash}{3b9ee1f721743a91bf5234a00e9ea352}
+      \strng{fullhashraw}{3b9ee1f721743a91bf5234a00e9ea352}
+      \strng{bibnamehash}{3b9ee1f721743a91bf5234a00e9ea352}
+      \strng{authorbibnamehash}{3b9ee1f721743a91bf5234a00e9ea352}
+      \strng{authornamehash}{3b9ee1f721743a91bf5234a00e9ea352}
+      \strng{authorfullhash}{3b9ee1f721743a91bf5234a00e9ea352}
+      \strng{authorfullhashraw}{3b9ee1f721743a91bf5234a00e9ea352}
+      \field{extraname}{1}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{booktitle}{Modern Semiconductor Devices for Integrated Circuits}
+      \field{chapter}{5}
+      \field{isbn}{9780136085256}
+      \field{title}{{MOS} capacitor}
+      \field{year}{2010}
+      \field{dateera}{ce}
+    \endentry
+    \entry{Manda2018OrganicMISCapacitor}{misc}{}{}
+      \name{author}{5}{}{%
+        {{hash=4f247551b6d8653740c5a47d17b146b4}{%
+           family={Manda},
+           familyi={M\bibinitperiod},
+           given={Prashanth\bibnamedelima Kumar},
+           giveni={P\bibinitperiod\bibinitdelim K\bibinitperiod}}}%
+        {{hash=13321d5748d5e4f43484de8947256e0b}{%
+           family={Karunakaran},
+           familyi={K\bibinitperiod},
+           given={Logesh},
+           giveni={L\bibinitperiod}}}%
+        {{hash=a9388795917c93559d9ebfa1db80f527}{%
+           family={Thirumala},
+           familyi={T\bibinitperiod},
+           given={Sandeep},
+           giveni={S\bibinitperiod}}}%
+        {{hash=519d89aaff7e5a96981725e891345367}{%
+           family={Chakravorty},
+           familyi={C\bibinitperiod},
+           given={Anjan},
+           giveni={A\bibinitperiod}}}%
+        {{hash=67f11c36751a6e52e908d6c8013b4be1}{%
+           family={Dutta},
+           familyi={D\bibinitperiod},
+           given={Soumya},
+           giveni={S\bibinitperiod}}}%
+      }
+      \strng{namehash}{e5778d340887f17ac1e3e587c69c3f95}
+      \strng{fullhash}{de230e28417f25fd3c3f8be3dba6391e}
+      \strng{fullhashraw}{de230e28417f25fd3c3f8be3dba6391e}
+      \strng{bibnamehash}{e5778d340887f17ac1e3e587c69c3f95}
+      \strng{authorbibnamehash}{e5778d340887f17ac1e3e587c69c3f95}
+      \strng{authornamehash}{e5778d340887f17ac1e3e587c69c3f95}
+      \strng{authorfullhash}{de230e28417f25fd3c3f8be3dba6391e}
+      \strng{authorfullhashraw}{de230e28417f25fd3c3f8be3dba6391e}
+      \field{sortinit}{3}
+      \field{sortinithash}{ad6fe7482ffbd7b9f99c9e8b5dccd3d7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprinttype}{arxiv}
+      \field{title}{Modeling of organic metal-insulator-semiconductor capacitor}
+      \field{year}{2018}
+      \field{dateera}{ce}
+      \verb{doi}
+      \verb 10.48550/arXiv.1810.12120
+      \endverb
+      \verb{eprint}
+      \verb 1810.12120
+      \endverb
+    \endentry
+    \entry{Coropceanu2007ChargeTransport}{article}{}{}
+      \name{author}{6}{}{%
+        {{hash=2b1dce7cf0979d9f6b4a98ec3043e0e6}{%
+           family={Coropceanu},
+           familyi={C\bibinitperiod},
+           given={Veaceslav},
+           giveni={V\bibinitperiod}}}%
+        {{hash=f5d04e26c46520f81800b53fdf54da57}{%
+           family={Cornil},
+           familyi={C\bibinitperiod},
+           given={Jérôme},
+           giveni={J\bibinitperiod}}}%
+        {{hash=9f4d7ecd28a4f62c58c4448fb6744401}{%
+           family={Silva\bibnamedelima Filho},
+           familyi={S\bibinitperiod\bibinitdelim F\bibinitperiod},
+           given={Demetrio\bibnamedelima A.},
+           giveni={D\bibinitperiod\bibinitdelim A\bibinitperiod},
+           prefix={da},
+           prefixi={d\bibinitperiod}}}%
+        {{hash=6ca269151f96ba33274c5738a4cdb781}{%
+           family={Olivier},
+           familyi={O\bibinitperiod},
+           given={Yoann},
+           giveni={Y\bibinitperiod}}}%
+        {{hash=46367de0322f587da6cf4e30cd7af172}{%
+           family={Silbey},
+           familyi={S\bibinitperiod},
+           given={Robert},
+           giveni={R\bibinitperiod}}}%
+        {{hash=19b0c9188114fbeb34140053c4d0840b}{%
+           family={Brédas},
+           familyi={B\bibinitperiod},
+           given={Jean-Luc},
+           giveni={J\bibinithyphendelim L\bibinitperiod}}}%
+      }
+      \strng{namehash}{aafff115aaa5f09be3f6b3617ffb6cd2}
+      \strng{fullhash}{0aab360ae103aa3746bfb01f744faa7f}
+      \strng{fullhashraw}{0aab360ae103aa3746bfb01f744faa7f}
+      \strng{bibnamehash}{aafff115aaa5f09be3f6b3617ffb6cd2}
+      \strng{authorbibnamehash}{aafff115aaa5f09be3f6b3617ffb6cd2}
+      \strng{authornamehash}{aafff115aaa5f09be3f6b3617ffb6cd2}
+      \strng{authorfullhash}{0aab360ae103aa3746bfb01f744faa7f}
+      \strng{authorfullhashraw}{0aab360ae103aa3746bfb01f744faa7f}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Chemical Reviews}
+      \field{number}{4}
+      \field{title}{Charge Transport in Organic Semiconductors}
+      \field{volume}{107}
+      \field{year}{2007}
+      \field{pages}{926\bibrangedash 952}
+      \range{pages}{27}
+      \verb{doi}
+      \verb 10.1021/cr050140x
+      \endverb
+    \endentry
+    \entry{Riederer2023Dissertation}{thesis}{}{}
+      \name{author}{1}{}{%
+        {{hash=cf4a012cf1ce6b590da10a06d7b13229}{%
+           family={Riederer},
+           familyi={R\bibinitperiod},
+           given={Philipp},
+           giveni={P\bibinitperiod}}}%
+      }
+      \list{institution}{1}{%
+        {Fakultät für Physik, Ludwig-Maximilians-Universität München}%
+      }
+      \list{location}{1}{%
+        {München}%
+      }
+      \strng{namehash}{cf4a012cf1ce6b590da10a06d7b13229}
+      \strng{fullhash}{cf4a012cf1ce6b590da10a06d7b13229}
+      \strng{fullhashraw}{cf4a012cf1ce6b590da10a06d7b13229}
+      \strng{bibnamehash}{cf4a012cf1ce6b590da10a06d7b13229}
+      \strng{authorbibnamehash}{cf4a012cf1ce6b590da10a06d7b13229}
+      \strng{authornamehash}{cf4a012cf1ce6b590da10a06d7b13229}
+      \strng{authorfullhash}{cf4a012cf1ce6b590da10a06d7b13229}
+      \strng{authorfullhashraw}{cf4a012cf1ce6b590da10a06d7b13229}
+      \field{sortinit}{4}
+      \field{sortinithash}{9381316451d1b9788675a07e972a12a7}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{title}{Terahertz Electromodulation Spectroscopy on Organic Semiconductors}
+      \field{type}{phdthesis}
+      \field{year}{2023}
+      \verb{urlraw}
+      \verb https://edoc.ub.uni-muenchen.de/32592/1/Riederer_Philipp.pdf
+      \endverb
+      \verb{url}
+      \verb https://edoc.ub.uni-muenchen.de/32592/1/Riederer_Philipp.pdf
+      \endverb
+    \endentry
+    \entry{Bassler1993ChargeTransport}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=194755c471874484a5432b556ff93e50}{%
+           family={Bässler},
+           familyi={B\bibinitperiod},
+           given={Heinz},
+           giveni={H\bibinitperiod}}}%
+      }
+      \strng{namehash}{194755c471874484a5432b556ff93e50}
+      \strng{fullhash}{194755c471874484a5432b556ff93e50}
+      \strng{fullhashraw}{194755c471874484a5432b556ff93e50}
+      \strng{bibnamehash}{194755c471874484a5432b556ff93e50}
+      \strng{authorbibnamehash}{194755c471874484a5432b556ff93e50}
+      \strng{authornamehash}{194755c471874484a5432b556ff93e50}
+      \strng{authorfullhash}{194755c471874484a5432b556ff93e50}
+      \strng{authorfullhashraw}{194755c471874484a5432b556ff93e50}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{physica status solidi (b)}
+      \field{number}{1}
+      \field{title}{Charge Transport in Disordered Organic Photoconductors: A Monte Carlo Simulation Study}
+      \field{volume}{175}
+      \field{year}{1993}
+      \field{pages}{15\bibrangedash 56}
+      \range{pages}{42}
+      \verb{doi}
+      \verb 10.1002/pssb.2221750102
+      \endverb
+    \endentry
+    \entry{Darwish2020DriftDiffusionOFET}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=245543b15092d6930450911832e255e3}{%
+           family={Darwish},
+           familyi={D\bibinitperiod},
+           given={Mohammed},
+           giveni={M\bibinitperiod}}}%
+        {{hash=29f26c8ffc095d5f7f6b7c2d09edb3ad}{%
+           family={Gagliardi},
+           familyi={G\bibinitperiod},
+           given={Alessio},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{55758d48a7430f39540a266b81c5071d}
+      \strng{fullhash}{55758d48a7430f39540a266b81c5071d}
+      \strng{fullhashraw}{55758d48a7430f39540a266b81c5071d}
+      \strng{bibnamehash}{55758d48a7430f39540a266b81c5071d}
+      \strng{authorbibnamehash}{55758d48a7430f39540a266b81c5071d}
+      \strng{authornamehash}{55758d48a7430f39540a266b81c5071d}
+      \strng{authorfullhash}{55758d48a7430f39540a266b81c5071d}
+      \strng{authorfullhashraw}{55758d48a7430f39540a266b81c5071d}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Physics D: Applied Physics}
+      \field{number}{10}
+      \field{title}{A drift-diffusion simulation model for organic field effect transistors: On the importance of the Gaussian density of states and traps}
+      \field{volume}{53}
+      \field{year}{2020}
+      \field{dateera}{ce}
+      \field{pages}{105102}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1088/1361-6463/ab605d
+      \endverb
+    \endentry
+    \entry{Stodtmann2012OrganicSimulation}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=2078a9022f941e98ddbd3db035e4c0ea}{%
+           family={Stodtmann},
+           familyi={S\bibinitperiod},
+           given={S.},
+           giveni={S\bibinitperiod}}}%
+        {{hash=44f15eba48a1c329ebbcd224e502ff8e}{%
+           family={Lee},
+           familyi={L\bibinitperiod},
+           given={R.\bibnamedelimi M.},
+           giveni={R\bibinitperiod\bibinitdelim M\bibinitperiod}}}%
+        {{hash=d13fe2ea7d77105f000c6c97307f5f1a}{%
+           family={Weiler},
+           familyi={W\bibinitperiod},
+           given={C.\bibnamedelimi K.\bibnamedelimi F.},
+           giveni={C\bibinitperiod\bibinitdelim K\bibinitperiod\bibinitdelim F\bibinitperiod}}}%
+        {{hash=5d76475ecfff05e25c2579181a1a64be}{%
+           family={Badinski},
+           familyi={B\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod}}}%
+      }
+      \strng{namehash}{49ba684345dcec424c2cab1d3aef7df0}
+      \strng{fullhash}{f2fc2725760638865c84d3040829d166}
+      \strng{fullhashraw}{f2fc2725760638865c84d3040829d166}
+      \strng{bibnamehash}{49ba684345dcec424c2cab1d3aef7df0}
+      \strng{authorbibnamehash}{49ba684345dcec424c2cab1d3aef7df0}
+      \strng{authornamehash}{49ba684345dcec424c2cab1d3aef7df0}
+      \strng{authorfullhash}{f2fc2725760638865c84d3040829d166}
+      \strng{authorfullhashraw}{f2fc2725760638865c84d3040829d166}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Applied Physics}
+      \field{number}{11}
+      \field{title}{Numerical simulation of organic semiconductor devices with high carrier densities}
+      \field{volume}{112}
+      \field{year}{2012}
+      \field{dateera}{ce}
+      \field{pages}{114909}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1063/1.4768710
+      \endverb
+    \endentry
+    \entry{Sakanoue2010BandLikeMobility}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=99ac460b7f11bac0e996f8b9792af80f}{%
+           family={Sakanoue},
+           familyi={S\bibinitperiod},
+           given={Tomo},
+           giveni={T\bibinitperiod}}}%
+        {{hash=35e555955436128493e12a25b4ac4be3}{%
+           family={Sirringhaus},
+           familyi={S\bibinitperiod},
+           given={Henning},
+           giveni={H\bibinitperiod}}}%
+      }
+      \strng{namehash}{6107e0b67995a783331f775ce24795b4}
+      \strng{fullhash}{6107e0b67995a783331f775ce24795b4}
+      \strng{fullhashraw}{6107e0b67995a783331f775ce24795b4}
+      \strng{bibnamehash}{6107e0b67995a783331f775ce24795b4}
+      \strng{authorbibnamehash}{6107e0b67995a783331f775ce24795b4}
+      \strng{authornamehash}{6107e0b67995a783331f775ce24795b4}
+      \strng{authorfullhash}{6107e0b67995a783331f775ce24795b4}
+      \strng{authorfullhashraw}{6107e0b67995a783331f775ce24795b4}
+      \field{sortinit}{5}
+      \field{sortinithash}{20e9b4b0b173788c5dace24730f47d8c}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Nature Materials}
+      \field{number}{9}
+      \field{title}{Band-like temperature dependence of mobility in a solution-processed organic semiconductor}
+      \field{volume}{9}
+      \field{year}{2010}
+      \field{dateera}{ce}
+      \field{pages}{736\bibrangedash 740}
+      \range{pages}{5}
+      \verb{doi}
+      \verb 10.1038/nmat2825
+      \endverb
+    \endentry
+    \entry{Hu2010ModernSemiconductorDevices}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=3b9ee1f721743a91bf5234a00e9ea352}{%
+           family={Hu},
+           familyi={H\bibinitperiod},
+           given={Chenming\bibnamedelima C.},
+           giveni={C\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Upper Saddle River, NJ}%
+      }
+      \list{publisher}{1}{%
+        {Prentice Hall}%
+      }
+      \strng{namehash}{3b9ee1f721743a91bf5234a00e9ea352}
+      \strng{fullhash}{3b9ee1f721743a91bf5234a00e9ea352}
+      \strng{fullhashraw}{3b9ee1f721743a91bf5234a00e9ea352}
+      \strng{bibnamehash}{3b9ee1f721743a91bf5234a00e9ea352}
+      \strng{authorbibnamehash}{3b9ee1f721743a91bf5234a00e9ea352}
+      \strng{authornamehash}{3b9ee1f721743a91bf5234a00e9ea352}
+      \strng{authorfullhash}{3b9ee1f721743a91bf5234a00e9ea352}
+      \strng{authorfullhashraw}{3b9ee1f721743a91bf5234a00e9ea352}
+      \field{extraname}{2}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{9780136085256}
+      \field{title}{Modern Semiconductor Devices for Integrated Circuits}
+      \field{year}{2010}
+      \field{dateera}{ce}
+    \endentry
+    \entry{Marinov2009OTFTPartI}{article}{}{}
+      \name{author}{4}{}{%
+        {{hash=fc69bf41a7409bded35eeeac3b33830b}{%
+           family={Marinov},
+           familyi={M\bibinitperiod},
+           given={O.},
+           giveni={O\bibinitperiod}}}%
+        {{hash=86a7a3976ced1ed8af17c144ee79a9f3}{%
+           family={Deen},
+           familyi={D\bibinitperiod},
+           given={M.\bibnamedelimi J.},
+           giveni={M\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=0560d9a96c135c7192a0587d69246646}{%
+           family={Zschieschang},
+           familyi={Z\bibinitperiod},
+           given={U.},
+           giveni={U\bibinitperiod}}}%
+        {{hash=cf8e4f0e09e5a0c142598587dcd2a65d}{%
+           family={Klauk},
+           familyi={K\bibinitperiod},
+           given={H.},
+           giveni={H\bibinitperiod}}}%
+      }
+      \strng{namehash}{9d83f2ddad0d624807603a4076979716}
+      \strng{fullhash}{2a11e351eb1db000fc4fde23c45525f6}
+      \strng{fullhashraw}{2a11e351eb1db000fc4fde23c45525f6}
+      \strng{bibnamehash}{9d83f2ddad0d624807603a4076979716}
+      \strng{authorbibnamehash}{9d83f2ddad0d624807603a4076979716}
+      \strng{authornamehash}{9d83f2ddad0d624807603a4076979716}
+      \strng{authorfullhash}{2a11e351eb1db000fc4fde23c45525f6}
+      \strng{authorfullhashraw}{2a11e351eb1db000fc4fde23c45525f6}
+      \field{sortinit}{6}
+      \field{sortinithash}{b33bc299efb3c36abec520a4c896a66d}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{IEEE Transactions on Electron Devices}
+      \field{number}{12}
+      \field{title}{Organic thin-film transistors: Part {I}---compact {DC} modeling}
+      \field{volume}{56}
+      \field{year}{2009}
+      \field{dateera}{ce}
+      \field{pages}{2952\bibrangedash 2961}
+      \range{pages}{10}
+      \verb{doi}
+      \verb 10.1109/TED.2009.2033308
+      \endverb
+    \endentry
+    \entry{LaraBullejos2009InjectionContacts}{article}{}{}
+      \name{author}{5}{}{%
+        {{hash=426595056a8bf135b5b4dd9b4e86fde0}{%
+           family={Lara\bibnamedelima Bullejos},
+           familyi={L\bibinitperiod\bibinitdelim B\bibinitperiod},
+           given={Pablo},
+           giveni={P\bibinitperiod}}}%
+        {{hash=c4be478fe76b9592f953714668323a0f}{%
+           family={Jiménez\bibnamedelima Tejada},
+           familyi={J\bibinitperiod\bibinitdelim T\bibinitperiod},
+           given={Juan\bibnamedelima A.},
+           giveni={J\bibinitperiod\bibinitdelim A\bibinitperiod}}}%
+        {{hash=00e14b87e83cc90a18ef79b39c54c205}{%
+           family={Rodríguez-Bolívar},
+           familyi={R\bibinithyphendelim B\bibinitperiod},
+           given={S.},
+           giveni={S\bibinitperiod}}}%
+        {{hash=86a7a3976ced1ed8af17c144ee79a9f3}{%
+           family={Deen},
+           familyi={D\bibinitperiod},
+           given={M.\bibnamedelimi J.},
+           giveni={M\bibinitperiod\bibinitdelim J\bibinitperiod}}}%
+        {{hash=fc69bf41a7409bded35eeeac3b33830b}{%
+           family={Marinov},
+           familyi={M\bibinitperiod},
+           given={O.},
+           giveni={O\bibinitperiod}}}%
+      }
+      \strng{namehash}{cb1835f4b27d7237a32e48e9c6e9db40}
+      \strng{fullhash}{78b14bc2886714eda1040cfd559af9e3}
+      \strng{fullhashraw}{78b14bc2886714eda1040cfd559af9e3}
+      \strng{bibnamehash}{cb1835f4b27d7237a32e48e9c6e9db40}
+      \strng{authorbibnamehash}{cb1835f4b27d7237a32e48e9c6e9db40}
+      \strng{authornamehash}{cb1835f4b27d7237a32e48e9c6e9db40}
+      \strng{authorfullhash}{78b14bc2886714eda1040cfd559af9e3}
+      \strng{authorfullhashraw}{78b14bc2886714eda1040cfd559af9e3}
+      \field{sortinit}{9}
+      \field{sortinithash}{0a5ebc79d83c96b6579069544c73c7d4}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Applied Physics}
+      \field{number}{8}
+      \field{title}{Model for the injection of charge through the contacts of organic transistors}
+      \field{volume}{105}
+      \field{year}{2009}
+      \field{dateera}{ce}
+      \field{pages}{084516}
+      \range{pages}{1}
+      \verb{doi}
+      \verb 10.1063/1.3106611
+      \endverb
+    \endentry
+    \entry{Lang1974DLTS}{article}{}{}
+      \name{author}{1}{}{%
+        {{hash=5eaba1d01cd160043cebeec602cadd6f}{%
+           family={Lang},
+           familyi={L\bibinitperiod},
+           given={D.\bibnamedelimi V.},
+           giveni={D\bibinitperiod\bibinitdelim V\bibinitperiod}}}%
+      }
+      \strng{namehash}{5eaba1d01cd160043cebeec602cadd6f}
+      \strng{fullhash}{5eaba1d01cd160043cebeec602cadd6f}
+      \strng{fullhashraw}{5eaba1d01cd160043cebeec602cadd6f}
+      \strng{bibnamehash}{5eaba1d01cd160043cebeec602cadd6f}
+      \strng{authorbibnamehash}{5eaba1d01cd160043cebeec602cadd6f}
+      \strng{authornamehash}{5eaba1d01cd160043cebeec602cadd6f}
+      \strng{authorfullhash}{5eaba1d01cd160043cebeec602cadd6f}
+      \strng{authorfullhashraw}{5eaba1d01cd160043cebeec602cadd6f}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Applied Physics}
+      \field{number}{7}
+      \field{title}{Deep-level transient spectroscopy: A new method to characterize traps in semiconductors}
+      \field{volume}{45}
+      \field{year}{1974}
+      \field{dateera}{ce}
+      \field{pages}{3023\bibrangedash 3032}
+      \range{pages}{10}
+      \verb{doi}
+      \verb 10.1063/1.1663719
+      \endverb
+    \endentry
+    \entry{Williams1970KWW}{article}{}{}
+      \name{author}{2}{}{%
+        {{hash=ff8264eedbccec0e13a81fba31f0ff02}{%
+           family={Williams},
+           familyi={W\bibinitperiod},
+           given={Graham},
+           giveni={G\bibinitperiod}}}%
+        {{hash=dce26aea87fc616a7592d0fe600582d0}{%
+           family={Watts},
+           familyi={W\bibinitperiod},
+           given={David\bibnamedelima C.},
+           giveni={D\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+      }
+      \strng{namehash}{879b6bb15f0e941d858e5b63693138ea}
+      \strng{fullhash}{879b6bb15f0e941d858e5b63693138ea}
+      \strng{fullhashraw}{879b6bb15f0e941d858e5b63693138ea}
+      \strng{bibnamehash}{879b6bb15f0e941d858e5b63693138ea}
+      \strng{authorbibnamehash}{879b6bb15f0e941d858e5b63693138ea}
+      \strng{authornamehash}{879b6bb15f0e941d858e5b63693138ea}
+      \strng{authorfullhash}{879b6bb15f0e941d858e5b63693138ea}
+      \strng{authorfullhashraw}{879b6bb15f0e941d858e5b63693138ea}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Transactions of the Faraday Society}
+      \field{title}{Non-symmetrical dielectric relaxation behaviour arising from a simple empirical decay function}
+      \field{volume}{66}
+      \field{year}{1970}
+      \field{dateera}{ce}
+      \field{pages}{80\bibrangedash 85}
+      \range{pages}{6}
+      \verb{doi}
+      \verb 10.1039/TF9706600080
+      \endverb
+    \endentry
+    \entry{Elton2018StretchedExponential}{misc}{}{}
+      \name{author}{1}{}{%
+        {{hash=e9e3c7454d9ab277e128c574829a241b}{%
+           family={Elton},
+           familyi={E\bibinitperiod},
+           given={Daniel\bibnamedelima C.},
+           giveni={D\bibinitperiod\bibinitdelim C\bibinitperiod}}}%
+      }
+      \strng{namehash}{e9e3c7454d9ab277e128c574829a241b}
+      \strng{fullhash}{e9e3c7454d9ab277e128c574829a241b}
+      \strng{fullhashraw}{e9e3c7454d9ab277e128c574829a241b}
+      \strng{bibnamehash}{e9e3c7454d9ab277e128c574829a241b}
+      \strng{authorbibnamehash}{e9e3c7454d9ab277e128c574829a241b}
+      \strng{authornamehash}{e9e3c7454d9ab277e128c574829a241b}
+      \strng{authorfullhash}{e9e3c7454d9ab277e128c574829a241b}
+      \strng{authorfullhashraw}{e9e3c7454d9ab277e128c574829a241b}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{eprinttype}{arxiv}
+      \field{title}{Stretched exponential relaxation}
+      \field{year}{2018}
+      \field{dateera}{ce}
+      \verb{doi}
+      \verb 10.48550/arXiv.1808.00881
+      \endverb
+      \verb{eprint}
+      \verb 1808.00881
+      \endverb
+    \endentry
+    \entry{Lundstrom2023Transistors}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=5ccfb22e08a5c7fb7c4cb214fc82f17b}{%
+           family={Lundstrom},
+           familyi={L\bibinitperiod},
+           given={Mark\bibnamedelima S.},
+           giveni={M\bibinitperiod\bibinitdelim S\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Singapore}%
+      }
+      \list{publisher}{1}{%
+        {World Scientific}%
+      }
+      \strng{namehash}{5ccfb22e08a5c7fb7c4cb214fc82f17b}
+      \strng{fullhash}{5ccfb22e08a5c7fb7c4cb214fc82f17b}
+      \strng{fullhashraw}{5ccfb22e08a5c7fb7c4cb214fc82f17b}
+      \strng{bibnamehash}{5ccfb22e08a5c7fb7c4cb214fc82f17b}
+      \strng{authorbibnamehash}{5ccfb22e08a5c7fb7c4cb214fc82f17b}
+      \strng{authornamehash}{5ccfb22e08a5c7fb7c4cb214fc82f17b}
+      \strng{authorfullhash}{5ccfb22e08a5c7fb7c4cb214fc82f17b}
+      \strng{authorfullhashraw}{5ccfb22e08a5c7fb7c4cb214fc82f17b}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{isbn}{9789811267260}
+      \field{series}{New Era Electronics: A Lecture Notes Series}
+      \field{title}{Transistors!}
+      \field{volume}{1}
+      \field{year}{2023}
+      \field{dateera}{ce}
+      \verb{doi}
+      \verb 10.1142/13168
+      \endverb
+    \endentry
+    \entry{hackbusch2016iterative}{book}{}{}
+      \name{author}{1}{}{%
+        {{hash=01bcfafc59c11a565163fcf9ef2a0907}{%
+           family={Hackbusch},
+           familyi={H\bibinitperiod},
+           given={Wolfgang},
+           giveni={W\bibinitperiod}}}%
+      }
+      \list{location}{1}{%
+        {Switzerland}%
+      }
+      \list{publisher}{1}{%
+        {Springer International Publishing}%
+      }
+      \strng{namehash}{01bcfafc59c11a565163fcf9ef2a0907}
+      \strng{fullhash}{01bcfafc59c11a565163fcf9ef2a0907}
+      \strng{fullhashraw}{01bcfafc59c11a565163fcf9ef2a0907}
+      \strng{bibnamehash}{01bcfafc59c11a565163fcf9ef2a0907}
+      \strng{authorbibnamehash}{01bcfafc59c11a565163fcf9ef2a0907}
+      \strng{authornamehash}{01bcfafc59c11a565163fcf9ef2a0907}
+      \strng{authorfullhash}{01bcfafc59c11a565163fcf9ef2a0907}
+      \strng{authorfullhashraw}{01bcfafc59c11a565163fcf9ef2a0907}
+      \field{sortinit}{1}
+      \field{sortinithash}{4f6aaa89bab872aa0999fec09ff8e98a}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{edition}{Second}
+      \field{isbn}{978-3-319-28481-1}
+      \field{title}{Iterative Solution of Large Sparse Systems of Equations}
+      \field{volume}{95}
+      \field{year}{2016}
+      \verb{doi}
+      \verb 10.1007/978-3-319-28483-5
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
